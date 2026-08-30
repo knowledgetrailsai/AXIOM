@@ -84,6 +84,13 @@ See:
 
 This repo focuses on **model architecture**. RAG, MCP, vector databases, tool calling and agent orchestration are intentionally kept outside the core taxonomy.
 
+## Relationship to companion repositories
+
+Axiom is a background reference underpinning [OASIS](https://github.com/knowledgetrailsai/OASIS) Chapter 14's model-selection guidance — it is not itself a Part III chapter companion the way Forge, Loom, Helm, Verity, Compass, and Fulcrum are. See the [Companion Repository Index](https://github.com/knowledgetrailsai/OASIS/blob/main/References/companion-repository-index.md) for the full map.
+
+- **[Forge](https://github.com/knowledgetrailsai/Forge)** (Chapter 15, data and knowledge engineering) — Forge's [long-context-vs-rag.md](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md) and [embedding-model-selection.md](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md) make retrieval-architecture tradeoffs that depend on the attention-mechanism and embedding background in this repo's [long-context-and-efficient-attention.md](03-attention-and-transformers/long-context-and-efficient-attention.md) and [embeddings.md](01-deep-learning-foundations/embeddings.md) — Axiom owns the underlying mechanism, Forge owns the applied retrieval decision.
+- **[Ageis](https://github.com/knowledgetrailsai/Ageis)** — uses "model" to mean a coding-tool deployment model, not model architecture; there is no direct content dependency between the two repos despite the shared word.
+
 ## Status
 
 Expanded release: full navigable structure with formula-level technical depth, worked numeric examples and verified academic citations across all major architecture families and frontier topics.

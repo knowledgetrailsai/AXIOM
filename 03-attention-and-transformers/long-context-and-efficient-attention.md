@@ -4,6 +4,8 @@
 
 Dense self-attention costs `O(n^2)` in sequence length `n`, both in compute and in the memory needed for the score matrix. Efficient attention methods restrict which pairs of positions actually compute a score (sparse or local patterns), approximate the softmax computation (kernel methods), or process the sequence in blocks that never materialize the full `n × n` matrix at once (blockwise/flash-style methods).
 
+For the applied consequence of long-context attention behavior on retrieval-system design — including the Lost-in-the-Middle positional effect and when to retrieve versus include everything in context — see [Forge's long-context-vs-RAG decision guide](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md).
+
 ## Why This Architecture Exists
 
 In practical terms, **Long-Context and Efficient Attention** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.

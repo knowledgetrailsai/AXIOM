@@ -6,6 +6,8 @@ An embedding maps a discrete or complex object (a token, a category, an image pa
 
 Embeddings are not one architecture. They are the interface layer that turns anything into something a differentiable network can process, and they are what similarity search, retrieval, and multimodal alignment operate on.
 
+For how to pick a specific embedding model for a production retrieval system — benchmarking against MTEB, dimension/cost/latency tradeoffs, domain fine-tuning — see [Forge's embedding model selection guide](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md).
+
 ## Why This Architecture Exists
 
 In practical terms, **Embeddings** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
