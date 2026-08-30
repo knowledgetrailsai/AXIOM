@@ -99,6 +99,12 @@ Large-scale pretraining where you want more parameters (more capacity) without a
 
 Small models, where the fixed overhead of routing and dispatch outweighs any compute savings. Latency-critical single-request serving with small batch sizes, where all-to-all dispatch cost isn't amortized across many tokens. Memory-constrained or edge deployment, where holding all N experts' weights is infeasible even though only k execute per token.
 
+## Practical Applicability
+
+MoE is most useful for large-scale training or high-throughput serving, where many accelerators and a fast interconnect can amortize token dispatch. It is less attractive for a small local model: inactive experts still consume storage, and routing can add latency. Before choosing MoE, measure end-to-end throughput and tail latency, not just theoretical active FLOPs.
+
+Mixtral 8x7B is a public example. Google’s Switch Transformer and several later open and commercial model families have also publicly described sparse expert designs. For proprietary systems, treat the exact expert count, routing policy and active parameter count as unverified unless the provider documents them.
+
 ## Comparison with Alternatives
 
 A dense model with the same active-parameter count is operationally simpler (no routing, no dispatch, no imbalance) but cannot match the total capacity of the MoE model without also matching its FLOPs per token. Sparse attention addresses a different axis — it reduces the cost of token-to-token interaction, not feed-forward capacity. Retrieval augmentation adds external, non-parametric capacity instead of internal routed capacity.

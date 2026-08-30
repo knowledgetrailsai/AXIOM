@@ -99,6 +99,12 @@ Use the standard pre-norm Transformer block as the default sequence-modeling uni
 
 Consider alternatives when quadratic attention cost dominates at the target sequence length (see Long-Context and Efficient Attention, Mamba and SSM Families) or when the FFN's dense parameter cost is the binding constraint and sparse MoE FFNs are a better fit for the available compute/parameter budget (see Mixture of Experts).
 
+## Practical Applicability
+
+Transformer blocks are the default building unit for many commercial language, vision and multimodal systems. They are a good fit when the workload benefits from flexible token-to-token interaction and the deployment stack can provide enough memory for attention state. In practice, teams choose variants such as grouped-query attention, gated FFNs, quantization or MoE routing to meet latency and cost targets rather than using the textbook block unchanged.
+
+Publicly documented or widely reported examples include GPT-family models, Llama-family models and Claude-family models. These names identify Transformer-based model families; they do not imply that every internal implementation detail is public or identical.
+
 ## Comparison with Alternatives
 
 - **MoE blocks** replace the dense FFN with a router plus several expert FFNs, changing total-vs-active parameter trade-offs without touching the attention sublayer.

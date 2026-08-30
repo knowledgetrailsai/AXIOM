@@ -77,6 +77,12 @@ Use JEPA-style pretraining when you need a self-supervised visual or video encod
 
 Do not use JEPA when the end task requires generating pixels, such as image editing or inpainting meant for a human viewer. A generative model is the right architecture there, not a latent predictor.
 
+## Practical Applicability
+
+JEPA-style pretraining is a candidate for products that need a reusable visual representation: image search, video understanding, robotics perception or anomaly detection. It is especially appealing when exact pixel reconstruction is unnecessary and the downstream system can attach a task-specific prediction or control head. Validate the learned representation on the actual downstream task; low self-supervised loss alone does not establish usefulness.
+
+I-JEPA and V-JEPA are public research examples from Meta. Commercial adoption of JEPA specifically is less transparent, so product claims should be treated cautiously unless the provider has published the architecture.
+
 ## Comparison with Alternatives
 
 Masked autoencoders (MAE) reconstruct raw pixels from a masked input. JEPA reconstructs an embedding instead. Contrastive methods such as SimCLR or DINO compare two augmented views of the same image directly. JEPA instead trains a predictor to map one embedding to another, which reduces the need for aggressive, hand-designed augmentations.

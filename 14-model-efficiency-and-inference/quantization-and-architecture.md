@@ -75,6 +75,12 @@ Whenever memory capacity or memory bandwidth is the binding constraint on servin
 
 Tasks with very tight numerical accuracy requirements where even a small quantization-induced degradation is unacceptable, or where the model is already compute-bound rather than memory-bound (quantization's main benefit doesn't help a compute-bound workload as directly).
 
+## Practical Applicability
+
+Quantization is often the first serving optimization to test when a model barely fits in GPU memory, when decode is bandwidth-bound, or when a model must run on a workstation or edge device. Compare quality, tokens per second, first-token latency and peak memory on representative prompts. A model that fits after INT4 quantization may still be too slow if the runtime lacks efficient low-bit kernels.
+
+Public examples include GPTQ- and AWQ-quantized releases of Llama, Mistral and other open-weight model families. Commercial APIs may quantize internally, but providers generally do not disclose the exact scheme; do not infer their production precision from the model’s public name alone.
+
 ## Comparison with Alternatives
 
 Distillation trains a genuinely smaller model to imitate a larger one, reducing both memory and active compute, but requires a training run; quantization compresses an existing model's memory footprint without changing parameter count or requiring full retraining. The two are complementary — a distilled model can also be quantized.

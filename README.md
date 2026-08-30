@@ -60,6 +60,19 @@ Examples:
 
 The numbered folders form the learning path. Each section starts simple, then adds computational structure, trade-offs and representative research.
 
+### How to Read a Page
+
+Each architecture page answers the same practical questions:
+
+1. **What is it?** A short explanation before the formal terminology.
+2. **What problem does it solve?** The limitation or cost that motivated the design.
+3. **How does it work?** The data flow, equations and components.
+4. **What does it cost?** Training and inference compute, memory, latency and hardware considerations.
+5. **When is it useful?** Concrete application scenarios and deployment constraints.
+6. **What should it be compared with?** Alternatives that solve a similar problem, and the trade-offs between them.
+
+Commercial model names are included as examples of where an architectural pattern has appeared in a public model or product. They are not proof that a company uses one exact implementation internally; proprietary details are often unavailable. The architecture, training objective, data, post-training and serving system should be evaluated separately.
+
 See:
 - [Knowledge Map](00-navigation-and-methodology/knowledge-map.md)
 - [Full Index](INDEX.md)
