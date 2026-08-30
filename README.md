@@ -1,4 +1,4 @@
-# AI Model Architectures
+# Axiom
 
 A structured field guide to the architectures behind modern AI — from deep-learning foundations through Transformers, Mixture-of-Experts, state-space models, multimodal architectures, test-time memory, JEPA-style predictive models, world models and embodied AI.
 
@@ -7,6 +7,39 @@ FOUNDATIONS → CLASSICAL NETWORKS → ATTENTION/TRANSFORMERS → FOUNDATION MOD
 → SPARSITY/MoE → SSM & RECURRENT ALTERNATIVES → GENERATIVE → MULTIMODAL
 → WORLD MODELS → MEMORY → REASONING → EMBODIED AI → HYBRIDS → EFFICIENCY
 ```
+
+## Table of Contents
+
+- [Why This Exists](#why-this-exists)
+- [How This Repository Is Organized](#how-this-repository-is-organized)
+  - [Knowledge Map](00-navigation-and-methodology/knowledge-map.md)
+  - [Full Index](INDEX.md)
+  - [Glossary](glossary/terminology.md)
+  - [Architecture Template](templates/architecture-page-template.md)
+  - [Sources](SOURCES.md)
+- [Learning Path](#learning-path)
+  - [00 — Navigation and Methodology](00-navigation-and-methodology/README.md)
+  - [01 — Deep-Learning Foundations](01-deep-learning-foundations/README.md)
+  - [02 — Classical Neural Architectures](02-classical-neural-architectures/README.md)
+  - [03 — Attention and Transformers](03-attention-and-transformers/README.md)
+  - [04 — Foundation Model Architectures](04-foundation-model-architectures/README.md)
+  - [05 — Sparse and Mixture-of-Experts](05-sparse-and-mixture-of-experts/README.md)
+  - [06 — State-Space and Recurrent Alternatives](06-state-space-and-recurrent-alternatives/README.md)
+  - [07 — Generative Model Architectures](07-generative-model-architectures/README.md)
+  - [08 — Multimodal Architectures](08-multimodal-architectures/README.md)
+  - [09 — Predictive and World Models](09-predictive-and-world-models/README.md)
+  - [10 — Memory and Adaptive Computation](10-memory-and-adaptive-computation/README.md)
+  - [11 — Reasoning-Oriented Architectures](11-reasoning-oriented-architectures/README.md)
+  - [12 — Embodied and Robotics Models](12-embodied-and-robotics-models/README.md)
+  - [13 — Hybrid Architectures](13-hybrid-architectures/README.md)
+  - [14 — Model Efficiency and Inference](14-model-efficiency-and-inference/README.md)
+  - [15 — Architecture Comparisons](15-architecture-comparisons/README.md)
+  - [16 — Architecture Patterns](16-architecture-patterns/README.md)
+  - [17 — Reference Model Families](17-reference-model-families/README.md)
+  - [18 — Research Frontier](18-research-frontier/README.md)
+- [Scope](#scope)
+- [Status](#status)
+- [License](#license)
 
 ## Why This Exists
 
@@ -22,6 +55,8 @@ Examples:
 - **RAG or multi-agent orchestration** is mainly system architecture, not model architecture.
 
 ## How This Repository Is Organized
+
+### Learning Path
 
 The numbered folders form the learning path. Each section starts simple, then adds computational structure, trade-offs and representative research.
 
