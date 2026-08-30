@@ -4,7 +4,9 @@
 
 BLT drops the fixed subword tokenizer entirely and models raw bytes. It groups those bytes into dynamically sized "patches" using a separate small model, spending more compute on hard-to-predict stretches of the byte stream and less on easy, predictable ones, then runs a Transformer over the patches rather than over individual bytes.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Byte Latent Transformer (BLT)** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A fixed subword tokenizer (BPE or similar) makes vocabulary decisions once, at training time, using heuristics tuned to common text. That fixed vocabulary can fragment rare words, code identifiers, and text in low-resource languages into many small, awkward pieces, and cannot adapt its granularity to how predictable a given stretch of text actually is.
 

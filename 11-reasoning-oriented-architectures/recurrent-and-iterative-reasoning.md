@@ -4,7 +4,9 @@
 
 Applying the same learned computation block to a hidden state several times in a row creates effective depth without adding new parameters for every additional step. A 4-layer block applied 6 times behaves, in terms of sequential transformations, like a 24-layer network — but with the parameter count of only 4 layers.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Recurrent and Iterative Reasoning** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Some problems need more sequential transformation steps than a fixed shallow network provides. Simply making the network deeper adds parameters for every extra layer, and deep fixed networks cannot adapt how many transformations they apply per input.
 

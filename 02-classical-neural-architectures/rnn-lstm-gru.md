@@ -4,7 +4,9 @@
 
 A recurrent network carries a hidden state forward through a sequence, combining it with each new input: `h_t = f(h_{t-1}, x_t)`. A vanilla RNN's simple version of `f` loses distant information quickly. LSTM and GRU add learned gates that decide what to keep, forget, and output, which lets useful information survive many more timesteps.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **RNN, LSTM and GRU** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Sequential data (text, audio, time series) has order-dependent structure: earlier elements affect how later ones should be interpreted. A model needs a mechanism to carry information forward without reprocessing the entire history at every step.
 

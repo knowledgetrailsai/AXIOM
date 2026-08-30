@@ -4,7 +4,9 @@
 
 Latent reasoning does intermediate computation in a continuous hidden-state loop instead of generating each reasoning step as a natural-language token. The model refines an internal vector representation, then decodes only the final answer.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Latent Reasoning** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Chain-of-thought reasoning expressed as generated text is bottlenecked by token-by-token generation: every intermediate step has to be serialized into words, decoded one token at a time, and re-encoded by the model to continue reasoning. That serialization is slow and forces the reasoning trace into a natural-language format that may not match the most efficient internal representation of the problem.
 

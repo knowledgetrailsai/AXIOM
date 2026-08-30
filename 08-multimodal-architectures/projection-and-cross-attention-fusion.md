@@ -4,7 +4,9 @@
 
 A pretrained vision or audio encoder and a pretrained language model live in different representation spaces — their hidden states aren't directly comparable. Projection maps one modality's features into the other's space with a small trained adapter. Cross-attention then lets one stream attend directly to the other's tokens, giving richer interaction than a dual encoder's single fixed-size embedding comparison.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Projection and Cross-Attention Fusion** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Retraining a vision encoder and a language model from scratch, jointly, is expensive. Reusing strong pretrained components (a vision encoder, a language model) is far cheaper, but their internal representations don't line up — a vision Transformer's hidden states and a language model's hidden states are not directly compatible dimensions or semantics. Something has to bridge them.
 

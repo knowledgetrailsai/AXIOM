@@ -4,7 +4,9 @@
 
 A small, cheap draft model proposes several tokens ahead. The large target model then checks all of them in a single forward pass, instead of generating them one expensive step at a time. Correct guesses are accepted for free; the first wrong guess is discarded and the target model's own prediction is used instead.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Speculative Decoding** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Ordinary autoregressive decoding needs one full forward pass through the (large, expensive) target model per generated token. Most of that per-token cost is spent reading model weights and the KV cache from memory (see [kv-cache-and-memory-bandwidth.md](kv-cache-and-memory-bandwidth.md)), and that memory-bandwidth cost doesn't scale down just because a token happens to be easy to predict. Speculative decoding tries to get several tokens verified for close to the price of one target-model pass.
 

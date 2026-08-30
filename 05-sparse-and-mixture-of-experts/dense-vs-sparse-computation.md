@@ -4,7 +4,9 @@
 
 A dense model activates every parameter for every token. A sparse model (MoE being the main example in this repo) activates only a subset per token, chosen by a router. The two families can hold the same total parameter count while spending very different FLOPs per token.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Dense vs Sparse Computation** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 In a dense network, capacity and compute are the same number: adding parameters always adds proportional FLOPs per token. Past a certain scale, the compute budget for training and serving becomes the binding constraint, even when more capacity would still improve quality. Sparse computation decouples these two quantities.
 

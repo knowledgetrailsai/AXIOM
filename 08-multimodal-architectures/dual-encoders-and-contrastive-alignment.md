@@ -4,7 +4,9 @@
 
 Two separate encoders map different modalities (e.g. image and text) into the same embedding space. Training pulls matching pairs' embeddings together and pushes non-matching pairs apart, using a contrastive loss. Once trained, either encoder can run independently — encode all images once, encode a text query once, compare embeddings by a simple similarity score.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Dual Encoders and Contrastive Alignment** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Images and text are structurally very different, but a caption and its image describe the same thing. A shared embedding space lets you compare across modalities with a plain similarity score (like cosine similarity), enabling retrieval and zero-shot classification without a per-pair joint model.
 

@@ -4,7 +4,9 @@
 
 A robotic world model predicts future states under candidate actions, so a planner can compare outcomes and choose controls with better expected results instead of acting on a fixed policy alone.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **World Models for Robotics** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A policy trained purely by imitation copies demonstrated behavior. In states far from any demonstration, it has little guidance for what to do — imitation gives no mechanism for the policy to reason about consequences it has never seen demonstrated. A world model gives the agent a way to evaluate "what happens if" even in states outside the demonstration distribution, as long as the model's dynamics generalize there.
 

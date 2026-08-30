@@ -4,7 +4,9 @@
 
 An MoE layer's FLOPs-per-token count looks cheap on paper, but real latency depends on how tokens physically move between devices. When experts live on different accelerators, every MoE layer requires an all-to-all exchange: dispatch tokens to their assigned expert's device, then gather results back. That exchange, not the matrix multiply itself, is often what determines wall-clock throughput.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **MoE Systems Trade-offs** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A FLOPs count assumes compute is the bottleneck. Once experts are spread across a cluster, network bandwidth and dispatch latency compete directly with the compute savings MoE was supposed to deliver. A system that ignores this can end up slower than a dense model with equivalent active FLOPs.
 

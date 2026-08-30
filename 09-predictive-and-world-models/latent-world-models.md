@@ -4,7 +4,9 @@
 
 A latent world model encodes an observation into a compact state vector `z`, then predicts future `z` under candidate actions, instead of predicting every raw pixel or sensor value. Decoding back to raw observations happens only if something needs to be displayed.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Latent World Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Raw observations carry unpredictable or task-irrelevant detail — lighting, texture, sensor noise. Predicting all of it wastes model capacity on things that do not affect the outcome the agent cares about.
 

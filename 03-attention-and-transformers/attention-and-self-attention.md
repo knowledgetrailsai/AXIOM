@@ -4,7 +4,9 @@
 
 Attention lets a query vector retrieve a weighted combination of value vectors, where the weights come from how well the query matches each key. Self-attention derives all three — query, key, and value — from the same input sequence, so every position can directly gather information from every other position in one step.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Attention and Self-Attention** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A recurrent model compresses everything before position `t` into one hidden state before it can affect position `t+1`. Information from far back has to survive that compression at every intermediate step. Attention instead gives every position direct, weighted access to every other position's representation, with no compression bottleneck in between.
 

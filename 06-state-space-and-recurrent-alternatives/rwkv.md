@@ -4,7 +4,9 @@
 
 RWKV is a recurrent architecture built to train like a Transformer (parallel over the sequence) and run like an RNN (constant-size state per step, no growing cache). Its name comes from its core learned quantities: Receptance, Weight, Key, Value.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **RWKV** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Transformers need a KV cache that grows with context length during decoding. Classical RNNs had a constant-size state, but historically lagged Transformers at large-scale language modeling, in part because their strictly sequential training didn't parallelize across the sequence dimension the way attention does. RWKV aims to keep the constant-size recurrent state while matching Transformer-style parallel trainability.
 

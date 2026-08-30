@@ -4,7 +4,9 @@
 
 A planner proposes candidate actions or action sequences. A world model predicts the outcome of each. A scoring function picks the sequence whose predicted outcome is closest to the goal. This is the trajectory-optimization pattern behind model-predictive control (MPC).
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Planning with World Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A direct policy maps observation to action without comparing alternatives first. It cannot ask "what would happen if I did X instead of Y" before committing. Planning with a world model makes that comparison explicit before any action is executed.
 

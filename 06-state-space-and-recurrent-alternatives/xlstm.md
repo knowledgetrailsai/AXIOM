@@ -4,7 +4,9 @@
 
 xLSTM takes the classic LSTM cell and changes its gating and memory to be more expressive and more scalable. The main change is exponential gating in place of the LSTM's original sigmoid gates, paired with a normalization/stabilization mechanism needed to keep exponential values from overflowing, plus new memory variants (a scalar-memory cell, sLSTM, and a matrix-memory cell, mLSTM).
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **xLSTM** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 The classical LSTM has real strengths — an explicit, gated recurrent memory cell — but its sigmoid gates saturate, which limits how strongly the model can revise a stored memory once training pushes a gate toward its extreme. That, combined with strictly sequential processing, left LSTMs behind Transformers at large scale.
 

@@ -4,7 +4,9 @@
 
 Test-time compute spends extra inference-time computation on hard problems instead of extra parameters. The model stays the same size; it just runs longer, samples more, or searches more before answering.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Test-Time Compute and Planning** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A single fixed-cost forward pass spends the same effort on a trivial question and a hard one. Increasing model size to handle the hard cases raises the cost of every query, including the easy ones. Test-time compute instead lets effort scale with problem difficulty, on a per-query basis.
 

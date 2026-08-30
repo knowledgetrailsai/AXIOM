@@ -4,7 +4,9 @@
 
 In-context memory (the KV cache) holds every token's activations but is bounded by the context window. External memory stores information in a separate, larger structure that a controller explicitly reads and writes, at the cost of an extra retrieval step. Recurrent memory compresses all history into one fixed-size state vector, unbounded in principle but lossy in practice.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **External and Recurrent Memory** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A fixed hidden state can lose details that mattered but got compressed away. Attending to all of history explicitly (an ever-growing KV cache) avoids that loss but its storage and compute cost grow with sequence length. Neither is free; the right choice depends on whether the task needs exact recall of specific past facts or just a useful summary of the past.
 

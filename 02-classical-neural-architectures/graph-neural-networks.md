@@ -4,7 +4,9 @@
 
 A GNN updates each node's representation by aggregating information from its graph neighbors, then transforming the result. Stacking `k` such layers lets information from `k` hops away reach a node.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Graph Neural Networks** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Relational data — social networks, molecules, knowledge graphs, meshes — has no fixed grid or sequence order. A CNN's locality assumes a regular grid; an RNN's assumes a linear order. Neither fits a graph where each node can have a different, irregular number of neighbors.
 

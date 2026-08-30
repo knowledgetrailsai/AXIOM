@@ -4,7 +4,9 @@
 
 DiT keeps the diffusion training and sampling procedure (see [diffusion-models.md](diffusion-models.md)) but replaces the denoiser network's backbone. Instead of a convolutional U-Net, DiT uses a Transformer operating over patchified latent tokens.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Diffusion Transformers (DiT)** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 U-Nets were the default diffusion backbone, but their inductive biases and scaling behavior differ from Transformers. Large diffusion models want the same predictable scaling laws, flexible conditioning mechanisms (via attention), and mature training infrastructure that Transformers already have in the language-model world.
 

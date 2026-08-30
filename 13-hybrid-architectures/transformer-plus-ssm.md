@@ -4,7 +4,9 @@
 
 A Transformer-SSM hybrid interleaves standard self-attention blocks with state-space or selective-SSM blocks (see [06-state-space-and-recurrent-alternatives/mamba.md](../06-state-space-and-recurrent-alternatives/mamba.md)) through the depth of the network. Attention layers provide explicit, addressable access to earlier tokens where that matters; SSM layers provide cheap, constant-size streaming state everywhere else.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Transformer + SSM** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Pure attention gives exact addressability over the full context but costs O(n²) compute and a KV cache that grows with context length (see [06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md](../06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md)). Pure SSM gives O(n) compute and constant inference memory but compresses history into a fixed-size state, losing exact recall of arbitrary earlier content. A hybrid tries to get most of the memory savings of SSM while keeping enough attention layers to preserve exact recall where the model actually needs it.
 

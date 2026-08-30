@@ -4,7 +4,9 @@
 
 Routing decides which expert parameters run for each token. It is MoE's control plane. The router is a small linear layer; everything downstream of it (which expert, how many, whether tokens overflow) is a design choice with real throughput and quality consequences.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Routing and Top-k Experts** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 An MoE layer only saves compute if the router sends tokens to a small, well-chosen subset of experts. Without capacity limits and balancing pressure, routing can concentrate on a handful of experts, wasting the other experts' parameters and overloading the chosen ones' devices.
 

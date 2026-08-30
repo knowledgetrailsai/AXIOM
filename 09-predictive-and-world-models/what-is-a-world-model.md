@@ -4,7 +4,9 @@
 
 A world model learns how the relevant parts of an environment change over time, usually conditioned on an action, so an agent can predict the consequences of a choice before making it.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **What Is a World Model?** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A purely reactive model maps the current observation to an action, with no explicit representation of what happens next. That is enough for simple reflex behavior, but it cannot support deliberate planning, where an agent needs to compare the likely outcomes of several different choices before acting.
 

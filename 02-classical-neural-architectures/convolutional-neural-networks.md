@@ -4,7 +4,9 @@
 
 A CNN applies a small learned filter (kernel) across every position of an input grid, sharing the same weights at every position. Each filter detects one local pattern; stacking layers combines local patterns into increasingly global ones.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Convolutional Neural Networks** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 An image has translation structure: an edge detector useful in one corner is useful everywhere else too. A dense (fully connected) layer would need a separate weight for every pixel pair, ignoring this structure and using far more parameters than necessary.
 

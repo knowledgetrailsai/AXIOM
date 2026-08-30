@@ -4,7 +4,9 @@
 
 Mamba is a state-space model with one key change from S4: the parameters that control the state update (B, C, and the discretization step Δ) are computed from the current input, instead of being fixed weights shared across every position. This makes the recurrence content-aware — the model can decide, token by token, what to keep in its state and what to discard.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Mamba** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 S4's A, B, C matrices are the same at every position, regardless of what token is being processed. That's efficient but inflexible: the model cannot choose to remember one token strongly and ignore the next based on content. Tasks that need selective memory (e.g. copying a specific earlier token, or ignoring irrelevant filler) are hard for a fixed linear recurrence to solve well.
 

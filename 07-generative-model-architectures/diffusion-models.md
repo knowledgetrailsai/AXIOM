@@ -4,7 +4,9 @@
 
 A diffusion model learns to reverse a gradual noising process. Training corrupts real data with increasing amounts of noise across many timesteps, and trains a network to predict the noise that was added at each step. Sampling starts from pure noise and repeatedly applies the trained denoiser, stepping back toward a clean sample.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Diffusion Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Directly generating complex, high-dimensional continuous data (a realistic image, in one shot) is hard for a single forward pass to learn well. Breaking generation into many small denoising steps turns one hard problem into many easier ones, each of which is just "remove a bit of known-magnitude noise."
 

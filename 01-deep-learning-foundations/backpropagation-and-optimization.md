@@ -6,7 +6,9 @@ Backpropagation computes the gradient of a loss with respect to every parameter 
 
 This pair, backpropagation plus a gradient-based optimizer, is how every architecture in this repository learns. The architecture defines the graph. Backpropagation and optimization walk that graph to produce updates.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Backpropagation and Optimization** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A network with many layers has millions to billions of parameters. Computing the effect of each parameter on the loss by brute force (perturb one weight, re-run the forward pass, measure the change) costs one forward pass per parameter. That is infeasible at scale.
 

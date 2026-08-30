@@ -4,7 +4,9 @@
 
 A state-space model (SSM) carries a hidden state vector forward through a sequence using linear dynamics. At each step, the state updates from the previous state plus the current input, and the output reads out from the state. S4 (Structured State Space Sequence model) made this practical for long sequences by choosing a structured, initialized-with-care state matrix that can be trained efficiently and still capture long-range dependencies.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **State-Space Models and S4** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Attention compares every token to every other token, which costs O(n²) in sequence length n. For very long sequences, that quadratic cost in both compute and the growing key/value cache becomes the bottleneck. SSMs offer an alternative with O(n) compute and a fixed-size state, at the cost of compressing history into that state instead of keeping it explicitly addressable.
 

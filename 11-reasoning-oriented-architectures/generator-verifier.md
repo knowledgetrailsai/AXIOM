@@ -4,7 +4,9 @@
 
 A generator proposes candidate solutions. A verifier — sometimes a separate, cheaper model, sometimes a learned scoring head — checks or scores each candidate. The system selects or refines based on those scores, instead of committing to the generator's first output.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Generator-Verifier Architectures** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 One-shot generation commits to an answer without explicitly comparing it to alternatives. For many problems, checking a proposed solution is much cheaper or much more reliable than generating a correct one directly — verifying a math proof step, or checking whether generated code passes a test, is often easier than producing the proof or code from scratch. A pure generator has no way to exploit that asymmetry.
 

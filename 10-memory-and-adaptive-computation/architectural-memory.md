@@ -4,7 +4,9 @@
 
 Architectural memory is any information a model deliberately carries across computation steps: context activations, a KV cache, recurrent hidden state, dedicated memory tokens, or an adaptive neural memory module. It is what lets a model use information from earlier than the current step.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Architectural Memory** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A stateless feed-forward layer has no access to anything outside its current input. Without some form of carried state, a model cannot use information from five tokens ago, five minutes ago, or five sessions ago — every one of those requires memory to be represented explicitly somewhere in the architecture.
 

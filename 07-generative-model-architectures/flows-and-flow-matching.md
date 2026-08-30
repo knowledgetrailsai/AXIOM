@@ -4,7 +4,9 @@
 
 A normalizing flow learns an invertible mapping between a simple distribution (e.g. Gaussian noise) and the data distribution, so sampling is one forward pass and likelihood is computed exactly via the inverse. Flow matching learns something related but easier to train: a continuous vector field that transports the simple distribution to the data distribution over a continuous "time" variable, without requiring the mapping to be invertible layer-by-layer.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Normalizing Flows and Flow Matching** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Diffusion models learn to reverse a noising process defined step-by-step. Flow matching asks a more direct question: can we learn a smooth, continuous path from noise to data, and train that path's velocity field with a simple regression loss, without simulating any diffusion process at all? Classical normalizing flows solve a related but stricter problem: build an exactly invertible transformation so exact data likelihood is computable, which constrains architecture choices (every layer must be invertible with a tractable Jacobian determinant).
 

@@ -4,7 +4,9 @@
 
 A generative world model produces literal future observations — frames of video or images — conditioned on past observations and an action. Genie goes further: it learns a latent action space from unlabeled video, then generates an interactive, playable environment frame-by-frame conditioned on those latent actions.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Generative World Models and Genie** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Training agents needs diverse environments. Hand-built simulators are expensive to build and narrow in scope. Genie's specific problem is stronger: almost all internet video has no action labels at all, so learning an interactive world model from it requires first inventing what "actions" even mean from unlabeled footage.
 

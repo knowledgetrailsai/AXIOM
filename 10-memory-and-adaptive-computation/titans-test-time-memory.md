@@ -4,7 +4,9 @@
 
 Titans adds a neural memory module that updates its own weights at inference time, driven by a "surprise" signal. This is different from a standard Transformer, whose weights are frozen after training and only the KV cache changes during inference.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Titans and Test-Time Neural Memory** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Attention over a KV cache is precise but its cost grows with context length, and it forgets nothing selectively — every token stays in the cache until it falls out of the window. A fixed-size recurrent state avoids that cost but overwrites old information indiscriminately. Neither gives the model a way to decide, at test time, which information is worth keeping for the long term.
 

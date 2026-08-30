@@ -4,7 +4,9 @@
 
 An autoregressive model predicts the next unit of a sequence given everything before it, then feeds its own output back in as input to predict the next one. This turns the hard problem of modeling a joint probability over an entire sequence into a sequence of much simpler next-step predictions.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Autoregressive Language Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Modeling the joint probability `P(x_1, ..., x_n)` directly over an entire sequence is intractable for any realistic vocabulary and length — the number of possible sequences grows exponentially. Autoregressive factorization turns this into `n` tractable conditional predictions instead.
 

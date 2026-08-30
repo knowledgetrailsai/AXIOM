@@ -4,7 +4,9 @@
 
 An embodied agent repeats a loop: observe, update internal state, choose an action, act, and observe the new consequence. Every step in the loop changes the world the next observation comes from — the agent is not predicting a fixed, external sequence, it is shaping the sequence it will see next.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Perception-Action Loop** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Offline prediction (predict the next frame of a fixed video, translate a fixed sentence) treats the input stream as something the model has no effect on. An embodied agent's actions change the environment, which changes future observations. Any architecture that treats the observation stream as independent of its own outputs will fail to model this properly — it needs an explicit closed loop.
 

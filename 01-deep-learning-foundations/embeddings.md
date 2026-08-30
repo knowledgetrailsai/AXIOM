@@ -6,7 +6,9 @@ An embedding maps a discrete or complex object (a token, a category, an image pa
 
 Embeddings are not one architecture. They are the interface layer that turns anything into something a differentiable network can process, and they are what similarity search, retrieval, and multimodal alignment operate on.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Embeddings** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Neural networks compute with continuous, differentiable operations. A word, a category label, or a user ID is discrete and has no inherent geometry. Embeddings give these objects a position in a vector space so a network can compute with them, and so similarity between objects has a well-defined numeric meaning.
 

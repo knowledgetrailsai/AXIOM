@@ -4,7 +4,9 @@
 
 Quantization stores weights (and sometimes activations) using fewer bits per value than the fp16/bf16 or fp32 formats a model is normally trained in. Fewer bits per value means less memory to store the model and less memory bandwidth to move it during inference — directly addressing the bandwidth bottleneck described in [kv-cache-and-memory-bandwidth.md](kv-cache-and-memory-bandwidth.md).
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Quantization and Architecture** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Large models are frequently limited by how much memory they occupy and how fast that memory can be read, not by raw compute availability. A model too large to fit in available device memory at full precision can't be served at all; a model that fits but requires reading many gigabytes of weights per decode step is bandwidth-bound regardless of accelerator FLOPs. Reducing bits per parameter addresses both problems directly.
 

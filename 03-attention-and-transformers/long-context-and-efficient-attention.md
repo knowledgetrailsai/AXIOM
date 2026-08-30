@@ -4,7 +4,9 @@
 
 Dense self-attention costs `O(n^2)` in sequence length `n`, both in compute and in the memory needed for the score matrix. Efficient attention methods restrict which pairs of positions actually compute a score (sparse or local patterns), approximate the softmax computation (kernel methods), or process the sequence in blocks that never materialize the full `n × n` matrix at once (blockwise/flash-style methods).
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Long-Context and Efficient Attention** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 At `n = 8192`, the score matrix already has 67 million entries per head; at `n = 128000`, it has 16.4 billion entries per head. Full dense attention becomes the dominant cost — in both FLOPs and memory — well before sequence lengths reach what many applications need (long documents, codebases, multi-turn conversations, video).
 

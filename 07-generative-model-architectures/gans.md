@@ -4,7 +4,9 @@
 
 A GAN trains two networks against each other. A generator maps random noise to samples that should look like real data. A discriminator tries to tell real samples from generated ones. Training pushes the generator to fool the discriminator and the discriminator to keep improving at catching it.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Generative Adversarial Networks** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Some generative approaches (like a VAE) require an explicit likelihood or an explicit reconstruction target. A GAN instead uses a learned critic — the discriminator — as the training signal, sidestepping the need to define or compute an explicit density over the data.
 

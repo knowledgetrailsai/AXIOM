@@ -4,7 +4,9 @@
 
 A dense Transformer feed-forward block runs every token through the same weights. An MoE block replaces that single feed-forward network with N parallel expert feed-forward networks and a router. The router picks k experts per token, usually k=1 or k=2. Only the chosen experts run. Total parameters scale with N. Compute per token scales with k, not N.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Mixture of Experts (MoE)** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 In a dense model, adding parameters means adding compute. A 47B-parameter dense model spends FLOPs proportional to all 47B parameters on every token. If you want more model capacity without a proportional rise in inference cost, you need a way to activate only part of the network per token. MoE is that mechanism, applied to the feed-forward sublayer.
 

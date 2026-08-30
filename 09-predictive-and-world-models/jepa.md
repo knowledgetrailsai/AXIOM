@@ -4,7 +4,9 @@
 
 JEPA predicts the embedding of a target from the embedding of a context. It does not reconstruct raw pixels or tokens. The prediction happens entirely in representation space.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Joint Embedding Predictive Architecture (JEPA)** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Reconstruction objectives force a model to predict every pixel or token, including noise and detail that carry no signal. A model trained this way spends capacity on things it cannot actually predict, like the exact texture of grass or the exact phrasing of a paraphrase. JEPA removes that waste. It only asks the model to predict a compressed representation of the target, not the target itself.
 

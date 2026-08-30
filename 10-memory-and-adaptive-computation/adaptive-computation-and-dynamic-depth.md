@@ -4,7 +4,9 @@
 
 Adaptive computation lets a model spend different amounts of compute on different inputs. An easy input can exit early; a hard one uses the full network depth. This is different from mixture-of-experts, which changes *which* parameters run rather than *how many layers* run.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Adaptive Computation and Dynamic Depth** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A fixed-depth network runs every layer for every input, regardless of difficulty. A trivial input and a hard one get exactly the same amount of computation. That wastes compute on easy cases and, just as importantly, gives no mechanism for spending *more* compute on genuinely hard cases beyond the network's fixed depth.
 

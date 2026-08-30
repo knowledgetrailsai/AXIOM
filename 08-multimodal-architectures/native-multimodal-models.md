@@ -4,7 +4,9 @@
 
 A native multimodal model treats several modalities as first-class training inputs and outputs from the start, rather than attaching a projector to a language model pretrained on text alone (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)). The backbone — or a substantial part of it — is shared across modalities and trained jointly on all of them together.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Native Multimodal Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Bridging two separately pretrained models (a vision encoder, a language model) with a projector inherits whatever representational mismatch exists between them, and the projector can only pass through what both sides already happen to represent compatibly. Training modalities jointly from the start avoids this mismatch by construction, at the cost of much larger data and compute requirements.
 

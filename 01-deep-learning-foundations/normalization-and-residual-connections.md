@@ -6,7 +6,9 @@ A residual connection adds a layer's input back to its output: `x_out = x + F(x)
 
 Together, these two patterns are why 100+ layer networks train at all. Neither is a complete architecture on its own — both are enabling patterns used inside CNNs, Transformers, and most hybrids.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Normalization and Residual Connections** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Two related problems appear in deep stacks of layers:
 

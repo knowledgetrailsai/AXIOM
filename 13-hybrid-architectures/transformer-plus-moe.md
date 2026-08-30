@@ -4,7 +4,9 @@
 
 A Transformer-MoE keeps the standard self-attention sublayer for token-to-token interaction, and replaces some or all of the dense feed-forward sublayers with routed MoE layers (see [05-sparse-and-mixture-of-experts/mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md)). Attention still owns "which tokens talk to which"; MoE owns "how much capacity is applied to transform each token."
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Transformer + MoE** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A fully dense Transformer's feed-forward capacity scales in lockstep with its per-token compute. If you want more total capacity than a given compute budget for attention and dense FFN allows, routing lets you add feed-forward capacity that isn't fully active on every token.
 

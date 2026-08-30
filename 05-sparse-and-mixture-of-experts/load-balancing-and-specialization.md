@@ -4,7 +4,9 @@
 
 MoE training has to solve two goals that pull in opposite directions. Experts should specialize, so different experts learn genuinely different functions. Load should stay balanced, so no expert is starved of training signal or overloaded at serving time. Pure specialization pressure alone tends to collapse onto a few experts; pure balance pressure alone can force artificial uniformity that erases useful specialization.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Load Balancing and Expert Specialization** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Left unconstrained, the router's own optimization dynamics are self-reinforcing: an expert that receives slightly more tokens gets slightly more gradient updates, which can make it slightly better, which attracts still more tokens. Without a countervailing force, this runs away and most experts end up rarely used — wasting their parameters and undertraining them.
 

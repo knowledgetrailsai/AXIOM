@@ -4,7 +4,9 @@
 
 Instead of predicting left-to-right, a masked or denoising model corrupts the input first — hiding some tokens or spans — then predicts the missing content using context from both directions at once. This forces the model to build representations that use the full sentence, not just a one-sided prefix.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Masked and Denoising Language Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Autoregressive training only ever conditions on a prefix. Many representation-learning tasks (classification, tagging, retrieval) benefit from representations built with knowledge of the entire input, both before and after each position — information an autoregressive causal mask explicitly withholds.
 

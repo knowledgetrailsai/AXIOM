@@ -4,9 +4,11 @@
 
 Begin with the real-world context: what kind of input or task is involved, what limitation prompted this design, and where the architecture sits in a larger system. Then explain the idea in plain language before introducing equations or specialist vocabulary. Define each necessary term when it first appears, use a small concrete example, and state what the model can and cannot do because of this design.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
 
-Describe the concrete limitation: for example, latency, memory, sequence length, data efficiency, controllability or the need to model a particular input type.
+In practical terms, **<Architecture Name>** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
+
+Start with the user-facing or engineering problem in ordinary language. Give a small concrete example before explaining the formal limitation—for example, why a model struggles with long inputs, repeated computation, memory use, data efficiency, controllability, or a particular input type. Introduce equations only after the reader understands what they are helping to express.
 
 ## Core Architectural Idea
 

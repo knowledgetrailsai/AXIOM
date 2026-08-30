@@ -4,7 +4,9 @@
 
 Self-attention's score `QK^T` is the same regardless of token order — swapping two tokens' positions gives the same set of pairwise scores. A position mechanism has to inject order. RoPE injects it by rotating each query and key vector by an angle proportional to its position, so the dot product between a query and key naturally depends on their relative offset.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Position Encoding and RoPE** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Attention treats its input as a set, not a sequence, unless something tells it where each token sits. Language and most sequential data are order-dependent — "dog bites man" and "man bites dog" have the same tokens, different meaning — so the model needs positional information injected somewhere.
 

@@ -4,7 +4,9 @@
 
 The same Transformer block supports three access patterns, controlled entirely by the attention mask and whether cross-attention is present. Encoders let every position see every other position. Decoders restrict each position to positions at or before it (causal masking). Encoder-decoder models add a third attention type — cross-attention — that lets the decoder read the encoder's output directly.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Encoder, Decoder and Encoder-Decoder Transformers** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Different tasks need different information-flow guarantees. Understanding a sentence for classification benefits from full bidirectional context. Generating text token by token requires that position `t`'s prediction cannot see positions after `t`, or the model would trivially cheat at training time by looking at the answer. Translating one sequence into another needs both: full understanding of the source, causal generation of the target, and a bridge between them.
 

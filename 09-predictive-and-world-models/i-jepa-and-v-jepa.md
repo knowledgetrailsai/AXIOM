@@ -4,7 +4,9 @@
 
 I-JEPA applies joint-embedding prediction to still images. V-JEPA extends the same idea to video, so the predicted embedding must capture motion and temporal structure, not just spatial layout.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **I-JEPA and V-JEPA** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Self-supervised visual learning needs an objective that captures useful structure without labels and without forcing full pixel reconstruction. For video specifically, the objective also needs to force the model to represent how things move and change over time, not just what a single frame looks like.
 

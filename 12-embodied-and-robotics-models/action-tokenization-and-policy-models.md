@@ -4,7 +4,9 @@
 
 Robot actions are naturally continuous vectors — joint angles, end-effector position deltas. Action tokenization discretizes each continuous dimension into a fixed number of bins, so a sequence model built for discrete tokens (like a language model) can generate actions the same way it generates words.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Action Tokenization and Policy Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Foundation model backbones — Transformers trained as language models — are built to predict discrete tokens from a fixed vocabulary. Motor control is continuous and high-frequency. Without a bridge between the two, a language-model backbone cannot directly output the continuous values a robot controller needs.
 

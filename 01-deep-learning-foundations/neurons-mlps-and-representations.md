@@ -6,9 +6,17 @@ A neuron computes a weighted sum of its inputs, adds a bias, and passes the resu
 
 The MLP is the generic transformation engine. It sits inside every Transformer block as the feed-forward network, inside every MoE expert, and inside most encoder/decoder heads.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
 
-A single linear layer, `y = Wx + b`, can only represent linear functions. Stacking linear layers without nonlinearity collapses back to one linear layer, since `W2(W1x) = (W2W1)x`. Real data (images, language, physical dynamics) needs nonlinear decision boundaries and nonlinear feature interactions.
+In practical terms, **Neurons, MLPs and Representation Learning** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
+
+A single linear layer can only draw a straight boundary between categories. That works for simple decisions, but real data is rarely arranged so neatly. For example, deciding whether a photo contains a cat may depend on a combination of edges, shapes, textures, and their relationships—not on one weighted sum of pixel values.
+
+Adding more linear layers does not solve this problem by itself. Two linear layers are still equivalent to one larger linear layer:
+
+`W2(W1x) = (W2W1)x`
+
+The activation function between layers—such as ReLU or GELU—creates the needed nonlinearity. It allows the network to combine simple signals into curved decision boundaries and progressively richer features. In formal terms, a linear layer is `y = Wx + b`; an MLP inserts a nonlinear function between these transformations.
 
 ## Core Architectural Idea
 

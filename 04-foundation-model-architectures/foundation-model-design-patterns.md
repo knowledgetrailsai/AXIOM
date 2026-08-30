@@ -4,7 +4,9 @@
 
 A foundation model is a large model pretrained on broad data with a general objective, then adapted to many downstream tasks. "Foundation model" describes a training and deployment methodology, not one architecture — a Transformer, a diffusion model, or an SSM can all serve as the backbone.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Foundation Model Design Patterns** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Training a separate model from scratch for every downstream task discards representations and structure that would transfer across tasks. It also multiplies data collection, compute, and engineering effort by the number of tasks, most of which share substantial underlying structure (grammar, visual features, physical regularities).
 

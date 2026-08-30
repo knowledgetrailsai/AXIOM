@@ -4,7 +4,9 @@
 
 A Vision Transformer (ViT) cuts an image into fixed-size patches, flattens and linearly projects each patch into a token, adds position information, and runs the result through a standard Transformer encoder. The image becomes a sequence, and the Transformer treats it exactly like a sequence of word tokens.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Vision Transformers** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 CNNs bake in a locality prior — a pixel only directly interacts with nearby pixels within each layer's receptive field, and global relationships require depth to accumulate. Attention can model relationships between any two positions in one layer, so applying it to images lets the model learn which spatial relationships matter, rather than assuming only local ones do a priori.
 

@@ -4,7 +4,9 @@
 
 A Transformer block combines two sublayers wrapped in residual connections: attention, which mixes information across positions, and a feed-forward network (FFN), which transforms each position independently. Stacking this block many times is the entire architecture of a Transformer.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Transformer Block** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 A sequence model needs two distinct kinds of computation: communication (letting positions exchange information) and computation (transforming each position's representation once it has that information). A single mechanism does not do both well — attention mixes but does not add much nonlinear transformation capacity per position, and a dense layer transforms but has no way to look at other positions.
 

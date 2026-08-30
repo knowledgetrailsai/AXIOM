@@ -4,7 +4,9 @@
 
 V-JEPA 2 is a video JEPA model that adds action-conditioning to the predictor. It connects self-supervised video representation learning to prediction and planning: given a state embedding and a candidate action, it predicts the resulting future state embedding.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **V-JEPA 2 and Action-Conditioned Prediction** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Planning requires predicting how a specific candidate action changes the future state, not just recognizing what is currently in view. A passive video model (plain V-JEPA) learns to predict plausible future embeddings, but it has no way to condition that prediction on "what happens if the robot does X."
 

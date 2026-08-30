@@ -4,7 +4,9 @@
 
 An encoder reads a full source sequence and compresses it into representations. A decoder generates a target sequence conditioned on those representations, one unit at a time. Translation, summarization, and speech recognition are all instances of mapping one sequence to another.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Encoder-Decoder and Sequence-to-Sequence** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Many tasks are not classification or single-vector regression — they transform one structured sequence into a different structured sequence, possibly of a different length and in a different space (source language to target language, audio to text, image to caption).
 

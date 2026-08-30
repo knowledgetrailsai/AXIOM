@@ -4,7 +4,9 @@
 
 Neuro-symbolic systems pair a neural component (good at perception, approximation, and pattern matching over noisy input) with a symbolic component (good at exact rule application, constraint satisfaction, or search). Neither replaces the other; each handles the part of the problem it's structurally suited for.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **Neuro-Symbolic Architectures** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Neural networks approximate functions well from data but don't guarantee that hard constraints are satisfied — a neural planner can produce an output that violates a rule it was never forced to respect. Symbolic systems (logic solvers, constraint solvers, formal grammars) enforce exact constraints but can't directly process raw, noisy perceptual input like images or natural language. Combining them lets perception feed a symbolic module that then guarantees the constraints the neural part alone couldn't.
 

@@ -4,7 +4,9 @@
 
 During autoregressive decoding, a Transformer caches every past position's key and value vectors so it does not recompute them at each new step. That KV cache grows linearly with sequence length and is proportional to the number of KV heads. Multi-Query Attention (MQA) shares a single KV head across all query heads; Grouped-Query Attention (GQA) shares a small number of KV groups. Both cut cache memory directly, since fewer distinct K/V vectors need to be stored per token.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **MQA, GQA and KV Cache** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Standard multi-head attention (MHA) keeps a separate K and V projection per head. At long context and high concurrency (many simultaneous requests), the KV cache becomes the dominant memory consumer during serving, often exceeding the model weights themselves, and it directly limits how many requests can be served in parallel on a fixed amount of accelerator memory.
 

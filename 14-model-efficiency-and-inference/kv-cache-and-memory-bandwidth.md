@@ -4,7 +4,9 @@
 
 An autoregressive Transformer caches the key and value projections it computed for every past token, so generating the next token doesn't require recomputing the whole prefix. This cache grows with context length, and reading it back on every decode step is what usually limits decoding speed, not the arithmetic itself.
 
-## Problem It Tries to Solve
+## Why This Architecture Exists
+
+In practical terms, **KV Cache and Memory Bandwidth** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
 Without a cache, generating token n+1 would require rerunning attention over all n previous tokens from scratch, and generating token n+2 would rerun over n+1 tokens, and so on — the total work to generate a sequence of length n would scale roughly with n², even though each individual attention computation only needs each past token's key/value once. Caching those key/value tensors after they're computed avoids recomputing them.
 
