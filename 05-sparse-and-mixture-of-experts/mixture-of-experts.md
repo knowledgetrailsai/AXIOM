@@ -1,6 +1,6 @@
 # Mixture of Experts (MoE)
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A dense Transformer feed-forward block runs every token through the same weights. An MoE block replaces that single feed-forward network with N parallel expert feed-forward networks and a router. The router picks k experts per token, usually k=1 or k=2. Only the chosen experts run. Total parameters scale with N. Compute per token scales with k, not N.
 

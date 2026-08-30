@@ -1,6 +1,6 @@
 # V-JEPA 2 and Action-Conditioned Prediction
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 V-JEPA 2 is a video JEPA model that adds action-conditioning to the predictor. It connects self-supervised video representation learning to prediction and planning: given a state embedding and a candidate action, it predicts the resulting future state embedding.
 

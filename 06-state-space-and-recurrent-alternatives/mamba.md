@@ -1,6 +1,6 @@
 # Mamba
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Mamba is a state-space model with one key change from S4: the parameters that control the state update (B, C, and the discretization step Δ) are computed from the current input, instead of being fixed weights shared across every position. This makes the recurrence content-aware — the model can decide, token by token, what to keep in its state and what to discard.
 

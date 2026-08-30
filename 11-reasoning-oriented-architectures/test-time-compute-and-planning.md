@@ -1,6 +1,6 @@
 # Test-Time Compute and Planning
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Test-time compute spends extra inference-time computation on hard problems instead of extra parameters. The model stays the same size; it just runs longer, samples more, or searches more before answering.
 

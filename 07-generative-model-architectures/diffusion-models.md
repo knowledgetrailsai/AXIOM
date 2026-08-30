@@ -1,6 +1,6 @@
 # Diffusion Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A diffusion model learns to reverse a gradual noising process. Training corrupts real data with increasing amounts of noise across many timesteps, and trains a network to predict the noise that was added at each step. Sampling starts from pure noise and repeatedly applies the trained denoiser, stepping back toward a clean sample.
 

@@ -1,6 +1,6 @@
 # Routing and Top-k Experts
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Routing decides which expert parameters run for each token. It is MoE's control plane. The router is a small linear layer; everything downstream of it (which expert, how many, whether tokens overflow) is a design choice with real throughput and quality consequences.
 

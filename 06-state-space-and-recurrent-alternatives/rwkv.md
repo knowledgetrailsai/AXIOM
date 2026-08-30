@@ -1,6 +1,6 @@
 # RWKV
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 RWKV is a recurrent architecture built to train like a Transformer (parallel over the sequence) and run like an RNN (constant-size state per step, no growing cache). Its name comes from its core learned quantities: Receptance, Weight, Key, Value.
 

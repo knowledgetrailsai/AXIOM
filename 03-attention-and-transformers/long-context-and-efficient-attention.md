@@ -1,6 +1,6 @@
 # Long-Context and Efficient Attention
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Dense self-attention costs `O(n^2)` in sequence length `n`, both in compute and in the memory needed for the score matrix. Efficient attention methods restrict which pairs of positions actually compute a score (sparse or local patterns), approximate the softmax computation (kernel methods), or process the sequence in blocks that never materialize the full `n × n` matrix at once (blockwise/flash-style methods).
 

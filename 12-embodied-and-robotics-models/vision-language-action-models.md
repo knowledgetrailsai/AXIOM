@@ -1,6 +1,6 @@
 # Vision-Language-Action (VLA) Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A VLA model is a vision-language model fine-tuned to output robot actions as tokens, in the same vocabulary and format as text. This lets web-scale vision-language pretraining transfer directly into action prediction, instead of training a control policy from scratch.
 

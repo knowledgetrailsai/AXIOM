@@ -1,6 +1,6 @@
 # Generative World Models and Genie
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A generative world model produces literal future observations — frames of video or images — conditioned on past observations and an action. Genie goes further: it learns a latent action space from unlabeled video, then generates an interactive, playable environment frame-by-frame conditioned on those latent actions.
 

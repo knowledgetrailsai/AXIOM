@@ -1,6 +1,6 @@
 # Latent World Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A latent world model encodes an observation into a compact state vector `z`, then predicts future `z` under candidate actions, instead of predicting every raw pixel or sensor value. Decoding back to raw observations happens only if something needs to be displayed.
 

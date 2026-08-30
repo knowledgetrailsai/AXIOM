@@ -1,6 +1,6 @@
 # Byte Latent Transformer (BLT)
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 BLT drops the fixed subword tokenizer entirely and models raw bytes. It groups those bytes into dynamically sized "patches" using a separate small model, spending more compute on hard-to-predict stretches of the byte stream and less on easy, predictable ones, then runs a Transformer over the patches rather than over individual bytes.
 

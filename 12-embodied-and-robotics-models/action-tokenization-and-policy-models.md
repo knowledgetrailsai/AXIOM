@@ -1,6 +1,6 @@
 # Action Tokenization and Policy Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Robot actions are naturally continuous vectors — joint angles, end-effector position deltas. Action tokenization discretizes each continuous dimension into a fixed number of bins, so a sequence model built for discrete tokens (like a language model) can generate actions the same way it generates words.
 

@@ -1,6 +1,6 @@
 # Native Multimodal Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A native multimodal model treats several modalities as first-class training inputs and outputs from the start, rather than attaching a projector to a language model pretrained on text alone (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)). The backbone — or a substantial part of it — is shared across modalities and trained jointly on all of them together.
 

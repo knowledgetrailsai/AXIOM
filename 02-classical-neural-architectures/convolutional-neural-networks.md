@@ -1,6 +1,6 @@
 # Convolutional Neural Networks
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A CNN applies a small learned filter (kernel) across every position of an input grid, sharing the same weights at every position. Each filter detects one local pattern; stacking layers combines local patterns into increasingly global ones.
 

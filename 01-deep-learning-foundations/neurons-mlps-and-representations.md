@@ -1,6 +1,6 @@
 # Neurons, MLPs and Representation Learning
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A neuron computes a weighted sum of its inputs, adds a bias, and passes the result through a nonlinear activation function. A multilayer perceptron (MLP) stacks layers of neurons. Depth lets the network compose simple functions into complex ones.
 

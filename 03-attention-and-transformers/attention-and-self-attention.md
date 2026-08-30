@@ -1,6 +1,6 @@
 # Attention and Self-Attention
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Attention lets a query vector retrieve a weighted combination of value vectors, where the weights come from how well the query matches each key. Self-attention derives all three — query, key, and value — from the same input sequence, so every position can directly gather information from every other position in one step.
 

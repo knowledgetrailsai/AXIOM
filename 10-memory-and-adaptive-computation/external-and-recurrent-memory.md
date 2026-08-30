@@ -1,6 +1,6 @@
 # External and Recurrent Memory
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 In-context memory (the KV cache) holds every token's activations but is bounded by the context window. External memory stores information in a separate, larger structure that a controller explicitly reads and writes, at the cost of an extra retrieval step. Recurrent memory compresses all history into one fixed-size state vector, unbounded in principle but lossy in practice.
 

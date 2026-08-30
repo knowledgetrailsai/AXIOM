@@ -1,6 +1,6 @@
 # Position Encoding and RoPE
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Self-attention's score `QK^T` is the same regardless of token order — swapping two tokens' positions gives the same set of pairwise scores. A position mechanism has to inject order. RoPE injects it by rotating each query and key vector by an angle proportional to its position, so the dot product between a query and key naturally depends on their relative offset.
 

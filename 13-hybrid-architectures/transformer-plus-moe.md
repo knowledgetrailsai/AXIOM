@@ -1,6 +1,6 @@
 # Transformer + MoE
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A Transformer-MoE keeps the standard self-attention sublayer for token-to-token interaction, and replaces some or all of the dense feed-forward sublayers with routed MoE layers (see [05-sparse-and-mixture-of-experts/mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md)). Attention still owns "which tokens talk to which"; MoE owns "how much capacity is applied to transform each token."
 

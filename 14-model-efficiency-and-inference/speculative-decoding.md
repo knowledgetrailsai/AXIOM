@@ -1,6 +1,6 @@
 # Speculative Decoding
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A small, cheap draft model proposes several tokens ahead. The large target model then checks all of them in a single forward pass, instead of generating them one expensive step at a time. Correct guesses are accepted for free; the first wrong guess is discarded and the target model's own prediction is used instead.
 

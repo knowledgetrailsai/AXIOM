@@ -1,6 +1,6 @@
 # Transformer Block
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A Transformer block combines two sublayers wrapped in residual connections: attention, which mixes information across positions, and a feed-forward network (FFN), which transforms each position independently. Stacking this block many times is the entire architecture of a Transformer.
 

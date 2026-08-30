@@ -1,6 +1,6 @@
 # Transformer + SSM
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A Transformer-SSM hybrid interleaves standard self-attention blocks with state-space or selective-SSM blocks (see [06-state-space-and-recurrent-alternatives/mamba.md](../06-state-space-and-recurrent-alternatives/mamba.md)) through the depth of the network. Attention layers provide explicit, addressable access to earlier tokens where that matters; SSM layers provide cheap, constant-size streaming state everywhere else.
 

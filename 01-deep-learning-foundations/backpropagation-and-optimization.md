@@ -1,6 +1,6 @@
 # Backpropagation and Optimization
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Backpropagation computes the gradient of a loss with respect to every parameter in a network. It applies the chain rule backward through the computation graph, layer by layer. An optimizer then uses those gradients to update parameters and reduce the loss.
 

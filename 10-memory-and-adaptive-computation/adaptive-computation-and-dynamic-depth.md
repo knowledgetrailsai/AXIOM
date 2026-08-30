@@ -1,6 +1,6 @@
 # Adaptive Computation and Dynamic Depth
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Adaptive computation lets a model spend different amounts of compute on different inputs. An easy input can exit early; a hard one uses the full network depth. This is different from mixture-of-experts, which changes *which* parameters run rather than *how many layers* run.
 

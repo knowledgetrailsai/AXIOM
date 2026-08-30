@@ -1,6 +1,6 @@
 # Planning with World Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A planner proposes candidate actions or action sequences. A world model predicts the outcome of each. A scoring function picks the sequence whose predicted outcome is closest to the goal. This is the trajectory-optimization pattern behind model-predictive control (MPC).
 

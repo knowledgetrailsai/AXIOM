@@ -1,6 +1,6 @@
 # Normalization and Residual Connections
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A residual connection adds a layer's input back to its output: `x_out = x + F(x)`. The network only has to learn the update `F(x)`, not the full transformation. Normalization rescales activations so their mean and variance stay in a fixed range as they pass through many layers.
 

@@ -1,6 +1,6 @@
 # What Is a World Model?
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A world model learns how the relevant parts of an environment change over time, usually conditioned on an action, so an agent can predict the consequences of a choice before making it.
 

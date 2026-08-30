@@ -1,6 +1,6 @@
 # KV Cache and Memory Bandwidth
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An autoregressive Transformer caches the key and value projections it computed for every past token, so generating the next token doesn't require recomputing the whole prefix. This cache grows with context length, and reading it back on every decode step is what usually limits decoding speed, not the arithmetic itself.
 

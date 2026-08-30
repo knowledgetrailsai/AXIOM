@@ -1,6 +1,6 @@
 # Embeddings
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An embedding maps a discrete or complex object (a token, a category, an image patch) to a continuous vector. Distances and angles between vectors then encode learned relationships between the objects.
 

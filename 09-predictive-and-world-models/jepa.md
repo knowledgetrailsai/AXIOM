@@ -1,6 +1,6 @@
 # Joint Embedding Predictive Architecture (JEPA)
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 JEPA predicts the embedding of a target from the embedding of a context. It does not reconstruct raw pixels or tokens. The prediction happens entirely in representation space.
 

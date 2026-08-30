@@ -1,6 +1,6 @@
 # Generative Adversarial Networks
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A GAN trains two networks against each other. A generator maps random noise to samples that should look like real data. A discriminator tries to tell real samples from generated ones. Training pushes the generator to fool the discriminator and the discriminator to keep improving at catching it.
 

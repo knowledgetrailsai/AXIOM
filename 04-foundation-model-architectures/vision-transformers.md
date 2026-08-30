@@ -1,6 +1,6 @@
 # Vision Transformers
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A Vision Transformer (ViT) cuts an image into fixed-size patches, flattens and linearly projects each patch into a token, adds position information, and runs the result through a standard Transformer encoder. The image becomes a sequence, and the Transformer treats it exactly like a sequence of word tokens.
 

@@ -1,6 +1,6 @@
 # Perception-Action Loop
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An embodied agent repeats a loop: observe, update internal state, choose an action, act, and observe the new consequence. Every step in the loop changes the world the next observation comes from — the agent is not predicting a fixed, external sequence, it is shaping the sequence it will see next.
 

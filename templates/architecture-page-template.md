@@ -1,8 +1,8 @@
 # <Architecture Name>
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
-Explain the idea in plain language first. Define specialized terms when they first appear, and state what the model can do because of this design.
+Begin with the real-world context: what kind of input or task is involved, what limitation prompted this design, and where the architecture sits in a larger system. Then explain the idea in plain language before introducing equations or specialist vocabulary. Define each necessary term when it first appears, use a small concrete example, and state what the model can and cannot do because of this design.
 
 ## Problem It Tries to Solve
 

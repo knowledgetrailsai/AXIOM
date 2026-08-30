@@ -1,6 +1,6 @@
 # Generator-Verifier Architectures
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A generator proposes candidate solutions. A verifier — sometimes a separate, cheaper model, sometimes a learned scoring head — checks or scores each candidate. The system selects or refines based on those scores, instead of committing to the generator's first output.
 

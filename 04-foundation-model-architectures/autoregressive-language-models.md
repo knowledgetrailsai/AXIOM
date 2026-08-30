@@ -1,6 +1,6 @@
 # Autoregressive Language Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An autoregressive model predicts the next unit of a sequence given everything before it, then feeds its own output back in as input to predict the next one. This turns the hard problem of modeling a joint probability over an entire sequence into a sequence of much simpler next-step predictions.
 

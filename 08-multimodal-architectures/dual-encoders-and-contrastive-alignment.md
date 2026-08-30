@@ -1,6 +1,6 @@
 # Dual Encoders and Contrastive Alignment
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Two separate encoders map different modalities (e.g. image and text) into the same embedding space. Training pulls matching pairs' embeddings together and pushes non-matching pairs apart, using a contrastive loss. Once trained, either encoder can run independently — encode all images once, encode a text query once, compare embeddings by a simple similarity score.
 

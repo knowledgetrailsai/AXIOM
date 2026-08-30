@@ -1,6 +1,6 @@
 # Quantization and Architecture
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Quantization stores weights (and sometimes activations) using fewer bits per value than the fp16/bf16 or fp32 formats a model is normally trained in. Fewer bits per value means less memory to store the model and less memory bandwidth to move it during inference — directly addressing the bandwidth bottleneck described in [kv-cache-and-memory-bandwidth.md](kv-cache-and-memory-bandwidth.md).
 

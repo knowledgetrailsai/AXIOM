@@ -1,6 +1,6 @@
 # Masked and Denoising Language Models
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Instead of predicting left-to-right, a masked or denoising model corrupts the input first — hiding some tokens or spans — then predicts the missing content using context from both directions at once. This forces the model to build representations that use the full sentence, not just a one-sided prefix.
 

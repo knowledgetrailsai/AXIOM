@@ -1,6 +1,6 @@
 # Diffusion Transformers (DiT)
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 DiT keeps the diffusion training and sampling procedure (see [diffusion-models.md](diffusion-models.md)) but replaces the denoiser network's backbone. Instead of a convolutional U-Net, DiT uses a Transformer operating over patchified latent tokens.
 

@@ -1,6 +1,6 @@
 # Load Balancing and Expert Specialization
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 MoE training has to solve two goals that pull in opposite directions. Experts should specialize, so different experts learn genuinely different functions. Load should stay balanced, so no expert is starved of training signal or overloaded at serving time. Pure specialization pressure alone tends to collapse onto a few experts; pure balance pressure alone can force artificial uniformity that erases useful specialization.
 

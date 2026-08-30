@@ -1,6 +1,6 @@
 # Recurrent and Iterative Reasoning
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Applying the same learned computation block to a hidden state several times in a row creates effective depth without adding new parameters for every additional step. A 4-layer block applied 6 times behaves, in terms of sequential transformations, like a 24-layer network — but with the parameter count of only 4 layers.
 

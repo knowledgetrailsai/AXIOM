@@ -1,6 +1,6 @@
 # I-JEPA and V-JEPA
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 I-JEPA applies joint-embedding prediction to still images. V-JEPA extends the same idea to video, so the predicted embedding must capture motion and temporal structure, not just spatial layout.
 

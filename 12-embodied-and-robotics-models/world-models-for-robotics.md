@@ -1,6 +1,6 @@
 # World Models for Robotics
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A robotic world model predicts future states under candidate actions, so a planner can compare outcomes and choose controls with better expected results instead of acting on a fixed policy alone.
 

@@ -1,6 +1,6 @@
 # xLSTM
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 xLSTM takes the classic LSTM cell and changes its gating and memory to be more expressive and more scalable. The main change is exponential gating in place of the LSTM's original sigmoid gates, paired with a normalization/stabilization mechanism needed to keep exponential values from overflowing, plus new memory variants (a scalar-memory cell, sLSTM, and a matrix-memory cell, mLSTM).
 

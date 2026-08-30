@@ -1,6 +1,6 @@
 # RNN, LSTM and GRU
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A recurrent network carries a hidden state forward through a sequence, combining it with each new input: `h_t = f(h_{t-1}, x_t)`. A vanilla RNN's simple version of `f` loses distant information quickly. LSTM and GRU add learned gates that decide what to keep, forget, and output, which lets useful information survive many more timesteps.
 

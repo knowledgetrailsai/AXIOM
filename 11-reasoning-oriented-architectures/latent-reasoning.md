@@ -1,6 +1,6 @@
 # Latent Reasoning
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Latent reasoning does intermediate computation in a continuous hidden-state loop instead of generating each reasoning step as a natural-language token. The model refines an internal vector representation, then decodes only the final answer.
 

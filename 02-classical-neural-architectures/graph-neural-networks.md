@@ -1,6 +1,6 @@
 # Graph Neural Networks
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A GNN updates each node's representation by aggregating information from its graph neighbors, then transforming the result. Stacking `k` such layers lets information from `k` hops away reach a node.
 

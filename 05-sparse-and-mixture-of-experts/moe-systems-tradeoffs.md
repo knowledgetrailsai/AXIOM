@@ -1,6 +1,6 @@
 # MoE Systems Trade-offs
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An MoE layer's FLOPs-per-token count looks cheap on paper, but real latency depends on how tokens physically move between devices. When experts live on different accelerators, every MoE layer requires an all-to-all exchange: dispatch tokens to their assigned expert's device, then gather results back. That exchange, not the matrix multiply itself, is often what determines wall-clock throughput.
 

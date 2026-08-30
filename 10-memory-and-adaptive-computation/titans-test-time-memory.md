@@ -1,6 +1,6 @@
 # Titans and Test-Time Neural Memory
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Titans adds a neural memory module that updates its own weights at inference time, driven by a "surprise" signal. This is different from a standard Transformer, whose weights are frozen after training and only the KV cache changes during inference.
 

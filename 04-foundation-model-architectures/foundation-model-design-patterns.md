@@ -1,6 +1,6 @@
 # Foundation Model Design Patterns
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A foundation model is a large model pretrained on broad data with a general objective, then adapted to many downstream tasks. "Foundation model" describes a training and deployment methodology, not one architecture — a Transformer, a diffusion model, or an SSM can all serve as the backbone.
 

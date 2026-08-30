@@ -1,6 +1,6 @@
 # Dense vs Sparse Computation
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A dense model activates every parameter for every token. A sparse model (MoE being the main example in this repo) activates only a subset per token, chosen by a router. The two families can hold the same total parameter count while spending very different FLOPs per token.
 

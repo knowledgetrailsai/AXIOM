@@ -1,6 +1,6 @@
 # Architectural Memory
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Architectural memory is any information a model deliberately carries across computation steps: context activations, a KV cache, recurrent hidden state, dedicated memory tokens, or an adaptive neural memory module. It is what lets a model use information from earlier than the current step.
 

@@ -1,6 +1,6 @@
 # Projection and Cross-Attention Fusion
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A pretrained vision or audio encoder and a pretrained language model live in different representation spaces — their hidden states aren't directly comparable. Projection maps one modality's features into the other's space with a small trained adapter. Cross-attention then lets one stream attend directly to the other's tokens, giving richer interaction than a dual encoder's single fixed-size embedding comparison.
 

@@ -1,6 +1,6 @@
 # Encoder, Decoder and Encoder-Decoder Transformers
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 The same Transformer block supports three access patterns, controlled entirely by the attention mask and whether cross-attention is present. Encoders let every position see every other position. Decoders restrict each position to positions at or before it (causal masking). Encoder-decoder models add a third attention type — cross-attention — that lets the decoder read the encoder's output directly.
 

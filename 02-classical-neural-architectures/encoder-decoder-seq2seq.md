@@ -1,6 +1,6 @@
 # Encoder-Decoder and Sequence-to-Sequence
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 An encoder reads a full source sequence and compresses it into representations. A decoder generates a target sequence conditioned on those representations, one unit at a time. Translation, summarization, and speech recognition are all instances of mapping one sequence to another.
 

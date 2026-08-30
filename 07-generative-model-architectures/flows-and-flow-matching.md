@@ -1,6 +1,6 @@
 # Normalizing Flows and Flow Matching
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 A normalizing flow learns an invertible mapping between a simple distribution (e.g. Gaussian noise) and the data distribution, so sampling is one forward pass and likelihood is computed exactly via the inverse. Flow matching learns something related but easier to train: a continuous vector field that transports the simple distribution to the data distribution over a continuous "time" variable, without requiring the mapping to be invertible layer-by-layer.
 

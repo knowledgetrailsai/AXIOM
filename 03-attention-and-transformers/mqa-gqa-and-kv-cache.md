@@ -1,6 +1,6 @@
 # MQA, GQA and KV Cache
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 During autoregressive decoding, a Transformer caches every past position's key and value vectors so it does not recompute them at each new step. That KV cache grows linearly with sequence length and is proportional to the number of KV heads. Multi-Query Attention (MQA) shares a single KV head across all query heads; Grouped-Query Attention (GQA) shares a small number of KV groups. Both cut cache memory directly, since fewer distinct K/V vectors need to be stored per token.
 

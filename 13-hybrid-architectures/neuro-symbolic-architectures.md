@@ -1,6 +1,6 @@
 # Neuro-Symbolic Architectures
 
-## One-Minute Explanation
+## Context and Plain-Language Explanation
 
 Neuro-symbolic systems pair a neural component (good at perception, approximation, and pattern matching over noisy input) with a symbolic component (good at exact rule application, constraint satisfaction, or search). Neither replaces the other; each handles the part of the problem it's structurally suited for.
 
