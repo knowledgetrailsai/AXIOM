@@ -97,9 +97,7 @@ Expanded release: full navigable structure with formula-level technical depth, w
 
 ## License
 
-Licensed under [CC BY-SA 4.0](LICENSE). Credit Shripadraj Mujumdar,
-KnowledgeTrails, and Axiom; indicate changes and release adaptations under
-the same license.
+Licensed under [CC BY-SA 4.0](https://github.com/knowledgetrailsai/OASIS/blob/main/LICENSE.md). Reuse and adaptation are welcome with credit to KnowledgeTrails-OASIS, a link to the license, an indication of changes, and release of adaptations under the same license.
 
 ## About Us
 
