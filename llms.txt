@@ -1,0 +1,35 @@
+# Axiom
+
+> Axiom is a background reference on AI model architectures — deep learning foundations, attention and transformers, mixture-of-experts, state-space models, and more. It is not a chapter companion in its own right; it underpins the model-selection guidance in the OASIS methodology's Chapter 14 and is cross-linked from Forge and Ageis wherever they use model-architecture terminology.
+
+See [Knowledge Map](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/00-navigation-and-methodology/knowledge-map.md), [Architecture Taxonomy](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/00-navigation-and-methodology/architecture-taxonomy.md), and [INDEX.md](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/INDEX.md) for full navigation.
+
+## Foundations and classical architectures
+
+- [Embeddings](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/01-deep-learning-foundations/embeddings.md)
+- [Backpropagation and Optimization](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/01-deep-learning-foundations/backpropagation-and-optimization.md)
+- [Convolutional Neural Networks](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/02-classical-neural-architectures/convolutional-neural-networks.md)
+
+## Attention, transformers and foundation models
+
+- [Attention and Self-Attention](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/03-attention-and-transformers/attention-and-self-attention.md)
+- [Transformer Block](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/03-attention-and-transformers/transformer-block.md)
+- [Long Context and Efficient Attention](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/03-attention-and-transformers/long-context-and-efficient-attention.md)
+- [Foundation Model Design Patterns](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/04-foundation-model-architectures/foundation-model-design-patterns.md)
+
+## Sparse, recurrent and emerging architectures
+
+- [Mixture of Experts](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/05-sparse-and-mixture-of-experts/mixture-of-experts.md)
+- [State Space Models and S4](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/06-state-space-and-recurrent-alternatives/state-space-models-and-s4.md)
+- [Mamba](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/06-state-space-and-recurrent-alternatives/mamba.md)
+
+## Reference
+
+- [Sources](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/SOURCES.md)
+- [Glossary](https://raw.githubusercontent.com/knowledgetrailsai/AXIOM/master/glossary)
+
+## Companion repositories
+
+- [OASIS](https://raw.githubusercontent.com/knowledgetrailsai/OASIS/main/llms.txt) — parent methodology; Axiom underpins Chapter 14's model-selection guidance.
+- [Forge](https://raw.githubusercontent.com/knowledgetrailsai/Forge/master/llms.txt) — links here for embedding and long-context mechanisms.
+- [Ageis](https://raw.githubusercontent.com/knowledgetrailsai/Agentic-Engineeering-SDLC/main/llms.txt) — links here to disambiguate "model" terminology.
