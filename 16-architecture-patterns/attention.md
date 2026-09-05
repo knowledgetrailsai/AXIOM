@@ -21,10 +21,10 @@ The `1/sqrt(d_k)` scaling keeps the pre-softmax scores from growing with head di
 
 ## Cost and trade-off
 
-The advantage is explicit, learned, content-dependent connectivity: any two positions can interact directly, in one step, regardless of distance. The cost is quadratic: with `n` positions, computing and storing all pairwise scores costs `O(n^2)`. At long sequence lengths this cost — not the attention concept itself — is what motivates efficient attention variants, sparse patterns, and state-space alternatives (see Long-Context and Efficient Attention, Recurrence and State Pattern).
+The advantage is explicit, learned, content-dependent connectivity: any two positions can interact directly, in one step, regardless of distance. The cost is quadratic: with `n` positions, computing and storing all pairwise scores costs `O(n^2)`. At long sequence lengths this cost. Not the attention concept itself, is what motivates efficient attention variants, sparse patterns, and state-space alternatives (see Long-Context and Efficient Attention, Recurrence and State Pattern).
 
 ## Related patterns
 
-Routing (Routing and Conditional Computation) answers a related but different question — *which parameters run* — while attention answers *which positions interact*. A Mixture-of-Experts router, for instance, is not attention: it produces a hard or soft selection over experts, not a weighted combination of content vectors.
+Routing (Routing and Conditional Computation) answers a related but different question: *which parameters run*; while attention answers *which positions interact*. A Mixture-of-Experts router, for instance, is not attention: it produces a hard or soft selection over experts, not a weighted combination of content vectors.
 
 [Back to index](../INDEX.md)

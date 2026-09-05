@@ -1,6 +1,6 @@
 # Compute and Memory Cost Model
 
-Architecture decisions should track more than parameter count. A lower theoretical FLOP count does not guarantee lower wall-clock latency — memory bandwidth, communication, and sequential depth all compete with raw arithmetic to determine actual serving cost.
+Architecture decisions should track more than parameter count. A lower theoretical FLOP count does not guarantee lower wall-clock latency. Memory bandwidth, communication, and sequential depth all compete with raw arithmetic to determine actual serving cost.
 
 ## The standard FLOPs approximation
 
@@ -43,12 +43,12 @@ This is the standard way training compute budgets are estimated before a run: pi
 - **Dense Transformer:** total ≈ active parameters, so the 2×N and 6×N approximations apply directly with N as the full parameter count; KV cache grows with context.
 - **MoE:** total can greatly exceed active parameters (e.g. Mixtral 8x7B's ~47B total vs. ~13B active), so FLOPs approximations should use active parameters, not total; routing communication adds a cost with no dense-model analogue.
 - **SSM/recurrent:** compact, fixed-size state avoids the growing-cache term entirely, but inference remains sequential step-by-step, imposing the sequential-depth latency floor above.
-- **Diffusion:** total cost multiplies by the number of denoising steps — a single "sample" actually requires many forward passes through the denoiser (see [07-generative-model-architectures/diffusion-models.md](../07-generative-model-architectures/diffusion-models.md)).
+- **Diffusion:** total cost multiplies by the number of denoising steps, a single "sample" actually requires many forward passes through the denoiser (see [07-generative-model-architectures/diffusion-models.md](../07-generative-model-architectures/diffusion-models.md)).
 - **World-model planning:** base per-step rollout cost is multiplied by however many candidate futures are simulated, before a plan is selected.
 
 ## The core caveat
 
-None of these approximations account for how well a given workload maps onto specific hardware — a theoretically cheaper FLOPs count can still lose to a theoretically more expensive one if the cheaper model is memory-bandwidth bound, communication-bound, or limited by sequential depth in a way the more expensive model isn't. Use this table as a checklist of quantities to evaluate together, not as a single number to optimize in isolation.
+None of these approximations account for how well a given workload maps onto specific hardware: a theoretically cheaper FLOPs count can still lose to a theoretically more expensive one if the cheaper model is memory-bandwidth bound, communication-bound, or limited by sequential depth in a way the more expensive model isn't. Use this table as a checklist of quantities to evaluate together, not as a single number to optimize in isolation.
 
 ## References
 

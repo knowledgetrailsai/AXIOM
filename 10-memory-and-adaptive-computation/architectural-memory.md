@@ -8,11 +8,11 @@ Architectural memory is any information a model deliberately carries across comp
 
 In practical terms, **Architectural Memory** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-A stateless feed-forward layer has no access to anything outside its current input. Without some form of carried state, a model cannot use information from five tokens ago, five minutes ago, or five sessions ago — every one of those requires memory to be represented explicitly somewhere in the architecture.
+A stateless feed-forward layer has no access to anything outside its current input. Without some form of carried state, a model cannot use information from five tokens ago, five minutes ago, or five sessions ago. Every one of those requires memory to be represented explicitly somewhere in the architecture.
 
 ## Core Architectural Idea
 
-Every memory scheme answers three design questions. Where does memory live — in the activations of a growing context (KV cache), in a fixed-size hidden state (recurrent), in explicit slots (external memory), or in the weights of a small trainable module (neural memory, as in [titans-test-time-memory.md](titans-test-time-memory.md))? How is it read — direct indexing, learned attention, or content-based addressing? How is it written or forgotten — appended forever, overwritten each step, gated, or decayed?
+Every memory scheme answers three design questions. Where does memory live, in the activations of a growing context (KV cache), in a fixed-size hidden state (recurrent), in explicit slots (external memory), or in the weights of a small trainable module (neural memory, as in [titans-test-time-memory.md](titans-test-time-memory.md))? How is it read: direct indexing, learned attention, or content-based addressing? How is it written or forgotten; appended forever, overwritten each step, gated, or decayed?
 
 ## Information Flow
 
@@ -54,7 +54,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Memory content can become stale or noisy if the write/forget policy is poorly designed.
-- A good write policy is at least as important as a good read policy — most memory failures come from writing the wrong things, not from failing to retrieve what was written.
+- A good write policy is at least as important as a good read policy. Most memory failures come from writing the wrong things, not from failing to retrieve what was written.
 - Every memory type trades off capacity, cost, and precision differently; there is no free-lunch memory scheme (see [external-and-recurrent-memory.md](external-and-recurrent-memory.md) for the concrete comparison).
 
 ## Architecture vs Training Objective
@@ -63,11 +63,11 @@ Whether memory exists at all, and where it lives, is architecture. How aggressiv
 
 ## When to Use It
 
-Add explicit architectural memory when a task genuinely requires information from far outside a single context window or forward pass — multi-session dialogue, long documents, or long-running agent tasks.
+Add explicit architectural memory when a task genuinely requires information from far outside a single context window or forward pass, multi-session dialogue, long documents, or long-running agent tasks.
 
 ## When Not to Use It
 
-Skip dedicated memory mechanisms when the task fits comfortably inside a normal context window — plain attention over the input is simpler and better understood.
+Skip dedicated memory mechanisms when the task fits comfortably inside a normal context window: plain attention over the input is simpler and better understood.
 
 ## Comparison with Alternatives
 

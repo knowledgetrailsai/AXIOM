@@ -6,8 +6,8 @@ A useful lineage: **structured SSM (S4) → selective state updates (Mamba) → 
 
 All members of this family use the recurrence form `h_t = A h_{t-1} + B x_t` (see Recurrence and State Pattern), giving `O(n)` training cost and `O(1)` inference state, in contrast to attention's `O(n^2)` training cost and `O(n)` growing KV cache.
 
-- **S4** (Gu et al., 2021) uses a fixed, structured `A` matrix (HiPPO initialization) chosen to preserve long-range history well, with `A` and `B` constant across the sequence — the state update dynamics do not depend on the input.
-- **Mamba** (Gu & Dao, 2023) makes `A` and `B` functions of the current input `x_t` — a *selective* SSM — so the model can dynamically decide, per token, what to retain or discard, closing much of the quality gap with attention while keeping linear-time training via a hardware-aware parallel scan.
+- **S4** (Gu et al., 2021) uses a fixed, structured `A` matrix (HiPPO initialization) chosen to preserve long-range history well, with `A` and `B` constant across the sequence. The state update dynamics do not depend on the input.
+- **Mamba** (Gu & Dao, 2023) makes `A` and `B` functions of the current input `x_t`, a *selective* SSM, so the model can dynamically decide, per token, what to retain or discard, closing much of the quality gap with attention while keeping linear-time training via a hardware-aware parallel scan.
 - **Mamba-2** (Dao & Gu, 2024) establishes a formal duality between selective SSMs and a restricted form of linear attention, unifying the two mechanisms theoretically and enabling further hardware efficiency gains.
 
 ## Representative models

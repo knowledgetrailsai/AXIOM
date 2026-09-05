@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-Applying the same learned computation block to a hidden state several times in a row creates effective depth without adding new parameters for every additional step. A 4-layer block applied 6 times behaves, in terms of sequential transformations, like a 24-layer network — but with the parameter count of only 4 layers.
+Applying the same learned computation block to a hidden state several times in a row creates effective depth without adding new parameters for every additional step. A 4-layer block applied 6 times behaves, in terms of sequential transformations, like a 24-layer network, but with the parameter count of only 4 layers.
 
 ## Why This Architecture Exists
 
@@ -56,9 +56,9 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Long recurrence chains are hard to train — gradients propagated through many iterations can vanish or explode, similar to classic RNN training difficulties.
+- Long recurrence chains are hard to train, gradients propagated through many iterations can vanish or explode, similar to classic RNN training difficulties.
 - Choosing when to halt is a hard sub-problem in its own right; a poorly trained halting signal can stop too early or run needlessly long.
-- Not every task benefits from the same transformation reapplied repeatedly — some tasks genuinely need different computation at different stages, which weight sharing works against.
+- Not every task benefits from the same transformation reapplied repeatedly: some tasks genuinely need different computation at different stages, which weight sharing works against.
 
 ## Architecture vs Training Objective
 
@@ -70,11 +70,11 @@ Use recurrent/iterative reasoning when a task requires variable, potentially lar
 
 ## When Not to Use It
 
-Avoid it when different reasoning stages genuinely need different, non-repeating computation — a standard deep network with distinct layers may fit that case better than one shared block reapplied many times.
+Avoid it when different reasoning stages genuinely need different, non-repeating computation; a standard deep network with distinct layers may fit that case better than one shared block reapplied many times.
 
 ## Comparison with Alternatives
 
-Chain-of-thought reasoning uses generated output tokens as its iterative workspace — every step is visible. Latent recurrence (see [latent-reasoning.md](latent-reasoning.md)) keeps the same iterative idea but performs it in hidden-state space, invisible to the user.
+Chain-of-thought reasoning uses generated output tokens as its iterative workspace. Every step is visible. Latent recurrence (see [latent-reasoning.md](latent-reasoning.md)) keeps the same iterative idea but performs it in hidden-state space, invisible to the user.
 
 ## Representative Models
 

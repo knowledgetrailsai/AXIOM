@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-A foundation model is a large model pretrained on broad data with a general objective, then adapted to many downstream tasks. "Foundation model" describes a training and deployment methodology, not one architecture — a Transformer, a diffusion model, or an SSM can all serve as the backbone.
+A foundation model is a large model pretrained on broad data with a general objective, then adapted to many downstream tasks. "Foundation model" describes a training and deployment methodology, not one architecture. A Transformer, a diffusion model, or an SSM can all serve as the backbone.
 
 ## Why This Architecture Exists
 
@@ -14,11 +14,11 @@ Training a separate model from scratch for every downstream task discards repres
 
 The pattern has three stages, decoupled from any specific architecture:
 
-1. **Broad pretraining** — a large model trained on a large, general dataset with a self-supervised or weakly supervised objective (autoregressive prediction, masked reconstruction, contrastive alignment).
-2. **General-purpose representation** — the pretrained weights encode transferable structure usable across many downstream tasks, not just the pretraining task itself.
-3. **Adaptation** — task-specific behavior is added via prompting (no weight change), lightweight fine-tuning (adapters, LoRA), full fine-tuning, or reinforcement learning from feedback, without retraining the backbone from scratch.
+1. **Broad pretraining**, a large model trained on a large, general dataset with a self-supervised or weakly supervised objective (autoregressive prediction, masked reconstruction, contrastive alignment).
+2. **General-purpose representation**: the pretrained weights encode transferable structure usable across many downstream tasks, not just the pretraining task itself.
+3. **Adaptation**; task-specific behavior is added via prompting (no weight change), lightweight fine-tuning (adapters, LoRA), full fine-tuning, or reinforcement learning from feedback, without retraining the backbone from scratch.
 
-The reusable "architecture lesson" is the separation between the general backbone and the adaptation mechanism — the backbone's parameters carry broad capability, and adaptation methods add targeted, much cheaper task-specific adjustment on top.
+The reusable "architecture lesson" is the separation between the general backbone and the adaptation mechanism. The backbone's parameters carry broad capability, and adaptation methods add targeted, much cheaper task-specific adjustment on top.
 
 ## Information Flow
 
@@ -60,7 +60,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Broad pretraining is expensive up front and can embed the biases, errors, and staleness of its training data into every downstream use.
-- "Foundation model" is a role a model plays, not a guaranteed architectural property — labeling something a foundation model says nothing specific about its backbone, only about how it is trained and deployed.
+- "Foundation model" is a role a model plays, not a guaranteed architectural property, labeling something a foundation model says nothing specific about its backbone, only about how it is trained and deployed.
 - Downstream adaptation quality is bounded by what the backbone actually learned during pretraining; adaptation cannot recover capability the pretraining objective and data never induced.
 
 ## Architecture vs Training Objective
@@ -73,7 +73,7 @@ Use the foundation-model pattern when many related downstream tasks share underl
 
 ## When Not to Use It
 
-Skip broad pretraining when a single, narrow, well-specified task has ample task-specific data and no meaningful transfer benefit is expected from a general-purpose backbone — a smaller, purpose-built model trained directly on the task may be cheaper and equally effective.
+Skip broad pretraining when a single, narrow, well-specified task has ample task-specific data and no meaningful transfer benefit is expected from a general-purpose backbone: a smaller, purpose-built model trained directly on the task may be cheaper and equally effective.
 
 ## Comparison with Alternatives
 
@@ -82,7 +82,7 @@ Skip broad pretraining when a single, narrow, well-specified task has ample task
 
 ## Representative Models
 
-Not applicable directly — see BERT and Encoders, GPT-Style Decoders, T5 and Encoder-Decoder Models, LLaMA-Style Dense Decoders, and Mixtral and MoE Families for concrete foundation-model backbones, and Vision Transformers for the same pattern applied to images.
+Not applicable directly; see BERT and Encoders, GPT-Style Decoders, T5 and Encoder-Decoder Models, LLaMA-Style Dense Decoders, and Mixtral and MoE Families for concrete foundation-model backbones, and Vision Transformers for the same pattern applied to images.
 
 ## References
 

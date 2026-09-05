@@ -4,7 +4,7 @@ Edge deployment inverts the usual assumption of near-unlimited data-center memor
 
 ## The constraints
 
-- **RAM/VRAM.** A typical phone has on the order of 6–12 GB total system RAM, of which only a fraction — often a few GB — is realistically available to a single on-device model alongside the OS and other apps. A laptop or edge accelerator budget is larger but still fixed and shared.
+- **RAM/VRAM.** A typical phone has on the order of 6–12 GB total system RAM, of which only a fraction. Often a few GB, is realistically available to a single on-device model alongside the OS and other apps. A laptop or edge accelerator budget is larger but still fixed and shared.
 - **Power and thermal envelope.** Mobile and embedded chips throttle under sustained load; sustained peak compute is rarely available for long, unlike a data-center accelerator with active cooling.
 - **Latency.** Interactive on-device use cases (voice assistants, camera-based features) usually need results in well under a second, with no option to queue or batch across users the way a server can.
 - **Intermittent connectivity.** On-device inference needs to work with no network at all, ruling out any architecture that depends on a server-side component.
@@ -13,7 +13,7 @@ Edge deployment inverts the usual assumption of near-unlimited data-center memor
 
 ## Worked memory example
 
-A 7B-parameter model at fp16 needs about 14 GB just for weights (see [quantization-and-architecture.md](quantization-and-architecture.md) for the full memory table), which alone exceeds a typical phone's entire usable RAM budget for a single app. Quantized to INT4, the same model needs about 3.5 GB — within reach of a device with several GB free, though still a large fraction of what's typically available. This is why edge deployment essentially never uses full-precision weights: the memory math simply does not work without quantization, distillation, or both applied together.
+A 7B-parameter model at fp16 needs about 14 GB just for weights (see [quantization-and-architecture.md](quantization-and-architecture.md) for the full memory table), which alone exceeds a typical phone's entire usable RAM budget for a single app. Quantized to INT4, the same model needs about 3.5 GB: within reach of a device with several GB free, though still a large fraction of what's typically available. This is why edge deployment essentially never uses full-precision weights: the memory math simply does not work without quantization, distillation, or both applied together.
 
 ## Common design responses
 
@@ -28,7 +28,7 @@ A 7B-parameter model at fp16 needs about 14 GB just for weights (see [quantizati
 
 ## The hardware-support caveat
 
-Irregular sparsity (e.g. MoE routing, see [05-sparse-and-mixture-of-experts/mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md)) is only useful if the target hardware can actually skip the unused computation. A mobile NPU built around fixed-shape dense matrix multiplies may not benefit at all from a theoretically sparse model, and the routing/dispatch overhead can make it slower in practice than an equivalently-sized dense model — the FLOPs savings only matter if the hardware and software stack can realize them.
+Irregular sparsity (e.g. MoE routing, see [05-sparse-and-mixture-of-experts/mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md)) is only useful if the target hardware can actually skip the unused computation. A mobile NPU built around fixed-shape dense matrix multiplies may not benefit at all from a theoretically sparse model, and the routing/dispatch overhead can make it slower in practice than an equivalently-sized dense model; the FLOPs savings only matter if the hardware and software stack can realize them.
 
 ## References
 

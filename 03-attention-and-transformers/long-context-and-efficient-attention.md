@@ -4,13 +4,13 @@
 
 Dense self-attention costs `O(n^2)` in sequence length `n`, both in compute and in the memory needed for the score matrix. Efficient attention methods restrict which pairs of positions actually compute a score (sparse or local patterns), approximate the softmax computation (kernel methods), or process the sequence in blocks that never materialize the full `n × n` matrix at once (blockwise/flash-style methods).
 
-For the applied consequence of long-context attention behavior on retrieval-system design — including the Lost-in-the-Middle positional effect and when to retrieve versus include everything in context — see [Forge's long-context-vs-RAG decision guide](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md).
+For the applied consequence of long-context attention behavior on retrieval-system design. Including the Lost-in-the-Middle positional effect and when to retrieve versus include everything in context, see [Forge's long-context-vs-RAG decision guide](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md).
 
 ## Why This Architecture Exists
 
 In practical terms, **Long-Context and Efficient Attention** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-At `n = 8192`, the score matrix already has 67 million entries per head; at `n = 128000`, it has 16.4 billion entries per head. Full dense attention becomes the dominant cost — in both FLOPs and memory — well before sequence lengths reach what many applications need (long documents, codebases, multi-turn conversations, video).
+At `n = 8192`, the score matrix already has 67 million entries per head; at `n = 128000`, it has 16.4 billion entries per head. Full dense attention becomes the dominant cost: in both FLOPs and memory; well before sequence lengths reach what many applications need (long documents, codebases, multi-turn conversations, video).
 
 ## Core Architectural Idea
 
@@ -18,7 +18,7 @@ Three broad strategies, often combined:
 
 **1. Sparse/local patterns.** Restrict each query to attend only to a subset of keys: a local window, strided positions, or a small set of global tokens plus a local window (e.g. Longformer's sliding window + global attention). Cost drops from `O(n^2)` to `O(n * w)` for window size `w`.
 
-**2. Kernel/linear approximations.** Rewrite `softmax(QK^T)V` using a kernel feature map `φ` such that `softmax(QK^T)V ≈ φ(Q)(φ(K)^T V)`, changing the computation order so the `K^T V` term is computed first as a `d × d` matrix, giving `O(n * d^2)` cost — linear in `n` — instead of `O(n^2 * d)`. The trade-off is that this is an approximation to true softmax attention, not an exact equivalent.
+**2. Kernel/linear approximations.** Rewrite `softmax(QK^T)V` using a kernel feature map `φ` such that `softmax(QK^T)V ≈ φ(Q)(φ(K)^T V)`, changing the computation order so the `K^T V` term is computed first as a `d × d` matrix, giving `O(n * d^2)` cost. Linear in `n`, instead of `O(n^2 * d)`. The trade-off is that this is an approximation to true softmax attention, not an exact equivalent.
 
 **3. Blockwise/IO-aware exact computation (FlashAttention).** Compute the same exact softmax attention as the dense formula, but process Q, K, V in blocks that fit in fast on-chip memory, recomputing normalization statistics incrementally instead of ever materializing the full `n × n` score matrix in slow memory. This does not reduce the `O(n^2)` FLOP count, but it removes the `O(n^2)` memory bottleneck and the memory-bandwidth cost that dominates wall-clock time on modern accelerators, which is why it produces large real-world speedups despite unchanged asymptotic compute complexity.
 
@@ -63,9 +63,9 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Sparse and kernel approximations can miss dependencies that fall outside the fixed pattern or feature-map approximation — a rare but critical long-range dependency outside a local window is simply invisible to the model.
+- Sparse and kernel approximations can miss dependencies that fall outside the fixed pattern or feature-map approximation: a rare but critical long-range dependency outside a local window is simply invisible to the model.
 - Kernel-based linear attention often measurably underperforms exact softmax attention in quality at the same parameter count, since the approximation changes what similarity function the model effectively learns.
-- Real-world efficiency depends heavily on hardware and kernel implementation details, not just asymptotic complexity — a theoretically linear method with a poor GPU kernel can be slower in practice than a well-implemented quadratic one at moderate sequence lengths.
+- Real-world efficiency depends heavily on hardware and kernel implementation details, not just asymptotic complexity; a theoretically linear method with a poor GPU kernel can be slower in practice than a well-implemented quadratic one at moderate sequence lengths.
 
 ## Architecture vs Training Objective
 
@@ -73,7 +73,7 @@ These methods change how the attention computation is performed, not what the mo
 
 ## When to Use It
 
-Use IO-aware exact attention (FlashAttention-style kernels) by default — there is essentially no downside once available, since it is a strict speed/memory win with no approximation. Use sparse or local patterns and kernel approximations specifically when target sequence lengths make even IO-aware dense attention's `O(n^2)` FLOP count itself the bottleneck, and the task can tolerate a restricted or approximate attention pattern.
+Use IO-aware exact attention (FlashAttention-style kernels) by default. There is essentially no downside once available, since it is a strict speed/memory win with no approximation. Use sparse or local patterns and kernel approximations specifically when target sequence lengths make even IO-aware dense attention's `O(n^2)` FLOP count itself the bottleneck, and the task can tolerate a restricted or approximate attention pattern.
 
 ## When Not to Use It
 
@@ -82,7 +82,7 @@ Avoid sparse or kernel approximations when the task genuinely needs exact, unres
 ## Comparison with Alternatives
 
 - **SSMs (Mamba)** sidestep the quadratic-cost problem entirely by using a linear-cost recurrence with constant inference state, rather than modifying attention's computation (see Mamba and SSM Families).
-- **Retrieval/RAG systems** solve long-context problems at the system level — selecting a smaller relevant subset of a large corpus — rather than the backbone level, and are complementary to, not a substitute for, efficient attention.
+- **Retrieval/RAG systems** solve long-context problems at the system level, selecting a smaller relevant subset of a large corpus: rather than the backbone level, and are complementary to, not a substitute for, efficient attention.
 
 ## Representative Models
 

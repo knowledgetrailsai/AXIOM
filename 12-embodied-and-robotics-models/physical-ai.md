@@ -26,7 +26,7 @@ The central open design question is how much of this stack should be one end-to-
 | Calibration | Camera-to-robot and sensor-to-actuator coordinate transforms must be accurate for any learned model's outputs to map correctly onto physical motion |
 | Safety | An out-of-distribution action can cause physical harm, not just a wrong answer |
 
-None of these constraints are architectural in the sense of "which mechanism computes an output" — but they directly determine which architectural choices (a large VLA backbone vs. a small dedicated policy, latent planning vs. generative rollout) are even feasible for a given robot and task.
+None of these constraints are architectural in the sense of "which mechanism computes an output", but they directly determine which architectural choices (a large VLA backbone vs. a small dedicated policy, latent planning vs. generative rollout) are even feasible for a given robot and task.
 
 ## References
 

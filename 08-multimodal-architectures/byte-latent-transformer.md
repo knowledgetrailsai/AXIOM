@@ -12,9 +12,9 @@ A fixed subword tokenizer (BPE or similar) makes vocabulary decisions once, at t
 
 ## Core Architectural Idea
 
-BLT has four stages. A local byte encoder builds contextual representations of the raw byte stream. An adaptive patcher groups consecutive bytes into a patch based on a signal of predictability — for example, using a small byte-level language model's next-byte entropy, and starting a new patch whenever the entropy of the next byte spikes (a hard-to-predict boundary, like the start of a new word or an unusual token), while low-entropy, predictable byte runs are grouped into fewer, larger patches. This means patch size is not fixed: predictable text (e.g. common words) forms long patches, and unpredictable text (e.g. rare strings, code) forms short patches, so the model spends proportionally more of its Transformer compute exactly where prediction is genuinely hard. A latent Transformer then processes these variable-sized patches as its sequence, the same way a normal Transformer processes tokens. Finally, a local byte decoder converts the latent Transformer's patch-level outputs back into predicted output bytes.
+BLT has four stages. A local byte encoder builds contextual representations of the raw byte stream. An adaptive patcher groups consecutive bytes into a patch based on a signal of predictability. For example, using a small byte-level language model's next-byte entropy, and starting a new patch whenever the entropy of the next byte spikes (a hard-to-predict boundary, like the start of a new word or an unusual token), while low-entropy, predictable byte runs are grouped into fewer, larger patches. This means patch size is not fixed: predictable text (e.g. common words) forms long patches, and unpredictable text (e.g. rare strings, code) forms short patches, so the model spends proportionally more of its Transformer compute exactly where prediction is genuinely hard. A latent Transformer then processes these variable-sized patches as its sequence, the same way a normal Transformer processes tokens. Finally, a local byte decoder converts the latent Transformer's patch-level outputs back into predicted output bytes.
 
-Because there is no fixed subword vocabulary anywhere in this pipeline, there is no tokenizer-vocabulary boundary at which rare strings, code, or unfamiliar scripts get fragmented in a fixed, non-adaptive way — the patcher's boundaries are learned and content-dependent rather than fixed at training time.
+Because there is no fixed subword vocabulary anywhere in this pipeline, there is no tokenizer-vocabulary boundary at which rare strings, code, or unfamiliar scripts get fragmented in a fixed, non-adaptive way, the patcher's boundaries are learned and content-dependent rather than fixed at training time.
 
 ## Information Flow
 
@@ -50,11 +50,11 @@ flowchart LR
 
 ## Strengths
 
-Tokenizer-free — no fixed vocabulary to fragment rare strings, code, or low-resource-language text in a non-adaptive way. Dynamic compute allocation: predictable stretches of input cost less, unpredictable stretches cost more, matched to actual difficulty rather than a fixed token granularity. Potential robustness benefit for exactly the inputs (rare tokens, code, unusual scripts) where fixed tokenizers are weakest.
+Tokenizer-free: no fixed vocabulary to fragment rare strings, code, or low-resource-language text in a non-adaptive way. Dynamic compute allocation: predictable stretches of input cost less, unpredictable stretches cost more, matched to actual difficulty rather than a fixed token granularity. Potential robustness benefit for exactly the inputs (rare tokens, code, unusual scripts) where fixed tokenizers are weakest.
 
 ## Limitations and Failure Modes
 
-Raw byte sequences are far longer than subword-tokenized sequences for the same text, which the patching mechanism must compensate for — if patches end up too fine-grained (e.g. on adversarial or unusual input), the effective sequence length the latent Transformer processes can still grow substantially. The overall pipeline (byte encoder, adaptive patcher, latent Transformer, byte decoder) is architecturally more complex than "tokenizer plus Transformer," with more components that must be trained and tuned to work well together.
+Raw byte sequences are far longer than subword-tokenized sequences for the same text, which the patching mechanism must compensate for; if patches end up too fine-grained (e.g. on adversarial or unusual input), the effective sequence length the latent Transformer processes can still grow substantially. The overall pipeline (byte encoder, adaptive patcher, latent Transformer, byte decoder) is architecturally more complex than "tokenizer plus Transformer," with more components that must be trained and tuned to work well together.
 
 ## Architecture vs Training Objective
 
@@ -62,11 +62,11 @@ The patching mechanism and multi-stage pipeline are architecture. What entropy t
 
 ## When to Use It
 
-Applications where fixed-tokenizer fragmentation is a real cost — heavy code content, many low-resource languages, or robustness to unusual/adversarial input strings — and where the added architectural complexity of the multi-stage byte pipeline is acceptable.
+Applications where fixed-tokenizer fragmentation is a real cost. Heavy code content, many low-resource languages, or robustness to unusual/adversarial input strings, and where the added architectural complexity of the multi-stage byte pipeline is acceptable.
 
 ## When Not to Use It
 
-Applications where a mature, fast, well-optimized subword tokenizer already performs well and simplicity of the training/serving pipeline is a priority — the tokenizer-plus-Transformer pattern has a much larger ecosystem of tooling and optimized kernels.
+Applications where a mature, fast, well-optimized subword tokenizer already performs well and simplicity of the training/serving pipeline is a priority: the tokenizer-plus-Transformer pattern has a much larger ecosystem of tooling and optimized kernels.
 
 ## Comparison with Alternatives
 

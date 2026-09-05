@@ -17,7 +17,7 @@ An autoregressive model generates output one unit at a time, each conditioned on
 
 ## The Real Trade-off
 
-Generating a 1,024-token document autoregressively takes on the order of 1,024 sequential forward passes (absent parallel-decoding tricks), each one dependent on the previous token actually being generated. Generating an image with a diffusion model at any resolution typically takes a fixed, resolution-independent number of denoising steps — commonly 20-50 for a standard sampler — regardless of whether the image is small or large, because every step processes the whole image at once. The cost axes are different by construction: autoregressive cost scales with *output length*; diffusion cost scales with *number of denoising steps*, a hyperparameter largely decoupled from output size.
+Generating a 1,024-token document autoregressively takes on the order of 1,024 sequential forward passes (absent parallel-decoding tricks), each one dependent on the previous token actually being generated. Generating an image with a diffusion model at any resolution typically takes a fixed, resolution-independent number of denoising steps. Commonly 20-50 for a standard sampler, regardless of whether the image is small or large, because every step processes the whole image at once. The cost axes are different by construction: autoregressive cost scales with *output length*; diffusion cost scales with *number of denoising steps*, a hyperparameter largely decoupled from output size.
 
 This is also why diffusion suits continuous media well: there is no natural "causal order" over pixels the way there is a natural left-to-right order over text, so an objective that denoises the whole sample jointly avoids inventing an arbitrary generation order.
 

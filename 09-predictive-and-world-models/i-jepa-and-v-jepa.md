@@ -64,7 +64,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Latent outputs are not directly inspectable the way generated pixels are; checking what the model "believes" requires a probe or decoder.
-- Predicting embeddings for future/masked frames does not by itself define an action-conditioned dynamics model — that is a separate step, taken up in [v-jepa-2.md](v-jepa-2.md).
+- Predicting embeddings for future/masked frames does not by itself define an action-conditioned dynamics model. That is a separate step, taken up in [v-jepa-2.md](v-jepa-2.md).
 - Masking design (block size, temporal span) directly controls task difficulty and must be tuned; too easy a mask lets the model shortcut via local interpolation.
 
 ## Architecture vs Training Objective
@@ -77,7 +77,7 @@ Use I-JEPA/V-JEPA-style pretraining when you need a strong, label-free visual or
 
 ## When Not to Use It
 
-Do not use these architectures when you need per-pixel outputs (segmentation masks aside, which typically use the frozen encoder plus a separate decoder head) or literal video generation — that calls for a generative model instead.
+Do not use these architectures when you need per-pixel outputs (segmentation masks aside, which typically use the frozen encoder plus a separate decoder head) or literal video generation, that calls for a generative model instead.
 
 ## Comparison with Alternatives
 

@@ -12,7 +12,7 @@ A purely reactive model maps the current observation to an action, with no expli
 
 ## Core Architectural Idea
 
-Three parts recur across almost every world model. An encoder maps an observation into a state representation. A predictor (dynamics function) maps a state and a candidate action to a predicted next state. A consumer — a planner, policy, or value function — uses the predicted next state to choose what to do. The three architectural choices that vary across implementations are: (1) whether the state is latent or the raw observation itself, (2) whether the dynamics function is action-conditioned or purely passive, and (3) whether the model predicts one step ahead or a full multi-step rollout.
+Three parts recur across almost every world model. An encoder maps an observation into a state representation. A predictor (dynamics function) maps a state and a candidate action to a predicted next state. A consumer. A planner, policy, or value function, uses the predicted next state to choose what to do. The three architectural choices that vary across implementations are: (1) whether the state is latent or the raw observation itself, (2) whether the dynamics function is action-conditioned or purely passive, and (3) whether the model predicts one step ahead or a full multi-step rollout.
 
 ## Information Flow
 
@@ -57,7 +57,7 @@ flowchart LR
 
 - Errors compound across a multi-step rollout, since each predicted state feeds into the next prediction.
 - A world model trained on one distribution of dynamics can produce confidently wrong predictions outside that distribution.
-- A prediction that looks realistic is not guaranteed to be causally correct — see the generative case in [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md).
+- A prediction that looks realistic is not guaranteed to be causally correct: see the generative case in [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md).
 
 ## Architecture vs Training Objective
 
@@ -65,7 +65,7 @@ The encoder/predictor/consumer structure is architecture. Whether the predictor 
 
 ## When to Use It
 
-Use a world model whenever an agent needs to evaluate the consequences of candidate actions before committing to one — planning, model-predictive control, or offline policy evaluation.
+Use a world model whenever an agent needs to evaluate the consequences of candidate actions before committing to one; planning, model-predictive control, or offline policy evaluation.
 
 ## When Not to Use It
 

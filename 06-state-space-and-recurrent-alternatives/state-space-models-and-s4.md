@@ -70,11 +70,11 @@ Linear-time sequence processing. Fixed-size inference state that does not grow w
 
 ## Limitations and Failure Modes
 
-The state is a compressed summary of history, not an explicit lookup table — details that don't fit through the fixed-size state bottleneck are lost, and there's no equivalent of attending directly back to a specific earlier token. S4's parameterization and the associated stable convolution-kernel computation are substantially more involved to implement correctly than a standard attention layer.
+The state is a compressed summary of history, not an explicit lookup table. Details that don't fit through the fixed-size state bottleneck are lost, and there's no equivalent of attending directly back to a specific earlier token. S4's parameterization and the associated stable convolution-kernel computation are substantially more involved to implement correctly than a standard attention layer.
 
 ## Architecture vs Training Objective
 
-The state recurrence and its convolutional training form are architecture. What the model learns to store in that compressed state — and how well it does so — depends on the training objective and data, exactly as with any other architecture family.
+The state recurrence and its convolutional training form are architecture. What the model learns to store in that compressed state, and how well it does so: depends on the training objective and data, exactly as with any other architecture family.
 
 ## When to Use It
 

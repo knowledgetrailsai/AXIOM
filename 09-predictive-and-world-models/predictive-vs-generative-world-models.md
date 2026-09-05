@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-A latent predictive (JEPA-style) world model predicts a compact state vector for the future. A generative world model predicts the future observation itself — pixels or video. The latent approach is cheaper per rollout step and less directly checkable. The generative approach is more expensive per step and directly inspectable, because you can look at the predicted frame.
+A latent predictive (JEPA-style) world model predicts a compact state vector for the future. A generative world model predicts the future observation itself. Pixels or video. The latent approach is cheaper per rollout step and less directly checkable. The generative approach is more expensive per step and directly inspectable, because you can look at the predicted frame.
 
 ## Comparison
 
@@ -19,7 +19,7 @@ A latent predictive (JEPA-style) world model predicts a compact state vector for
 
 ## The Real Trade-off
 
-Concretely: a generative model rolling out 10 candidate action sequences over a 20-step horizon must produce 200 full frames if it evaluates each candidate by rendering. A latent predictive model performing the same search only propagates 200 state vectors of a few hundred to a couple thousand dimensions each — several orders of magnitude less data per rollout. That is why latent planning (as in V-JEPA 2, see [v-jepa-2.md](v-jepa-2.md)) is the cheaper choice for search-heavy planning, while generative world models (as in Genie, see [generative-world-models-and-genie.md](generative-world-models-and-genie.md)) are the right choice when the output itself — a viewable, playable environment — is the deliverable.
+Concretely: a generative model rolling out 10 candidate action sequences over a 20-step horizon must produce 200 full frames if it evaluates each candidate by rendering. A latent predictive model performing the same search only propagates 200 state vectors of a few hundred to a couple thousand dimensions each, several orders of magnitude less data per rollout. That is why latent planning (as in V-JEPA 2, see [v-jepa-2.md](v-jepa-2.md)) is the cheaper choice for search-heavy planning, while generative world models (as in Genie, see [generative-world-models-and-genie.md](generative-world-models-and-genie.md)) are the right choice when the output itself: a viewable, playable environment; is the deliverable.
 
 ## Hybrid Possibilities
 

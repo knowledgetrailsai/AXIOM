@@ -8,7 +8,7 @@ An autoregressive Transformer caches the key and value projections it computed f
 
 In practical terms, **KV Cache and Memory Bandwidth** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Without a cache, generating token n+1 would require rerunning attention over all n previous tokens from scratch, and generating token n+2 would rerun over n+1 tokens, and so on — the total work to generate a sequence of length n would scale roughly with n², even though each individual attention computation only needs each past token's key/value once. Caching those key/value tensors after they're computed avoids recomputing them.
+Without a cache, generating token n+1 would require rerunning attention over all n previous tokens from scratch, and generating token n+2 would rerun over n+1 tokens, and so on. The total work to generate a sequence of length n would scale roughly with n², even though each individual attention computation only needs each past token's key/value once. Caching those key/value tensors after they're computed avoids recomputing them.
 
 ## Core Architectural Idea
 
@@ -24,9 +24,9 @@ The factor of 2 accounts for storing both keys and values. GQA/MQA (see [03-atte
 
 **Why decode is memory-bandwidth bound.** Arithmetic intensity is the ratio of FLOPs performed to bytes moved from memory. During decode, each step processes exactly one new token, so the matrix multiplies involved are matrix-vector products (the "batch dimension" for compute purposes is 1 token), not the much more FLOPs-dense matrix-matrix products used during prefill or training. But every decode step must still read the *entire* set of model weights, plus the *entire* KV cache accumulated so far, from memory. Reading a large amount of data to do a comparatively small amount of arithmetic per byte read is exactly the signature of a memory-bandwidth-bound (rather than compute-bound) workload.
 
-**Worked arithmetic-intensity example.** Take a 7B-parameter dense model in fp16 (2 bytes/parameter): weight memory to read per decode step ≈ 7×10⁹ × 2 bytes = 14 GB. FLOPs per decode step (using the ≈2×N approximation for one token, see [compute-and-memory-cost-model.md](compute-and-memory-cost-model.md)) ≈ 2 × 7×10⁹ = 1.4×10¹⁰ FLOPs. Arithmetic intensity ≈ 1.4×10¹⁰ / 14×10⁹ ≈ **1 FLOP per byte**. Modern accelerators typically need on the order of 100+ FLOPs per byte moved to be compute-bound rather than bandwidth-bound (the exact crossover depends on the specific hardware's FLOPs-to-bandwidth ratio) — at roughly 1 FLOP/byte, single-token decode sits far on the bandwidth-bound side, meaning the achievable decode throughput is set by how fast weights (and the KV cache) can be streamed from memory, not by how fast the accelerator can multiply.
+**Worked arithmetic-intensity example.** Take a 7B-parameter dense model in fp16 (2 bytes/parameter): weight memory to read per decode step ≈ 7×10⁹ × 2 bytes = 14 GB. FLOPs per decode step (using the ≈2×N approximation for one token, see [compute-and-memory-cost-model.md](compute-and-memory-cost-model.md)) ≈ 2 × 7×10⁹ = 1.4×10¹⁰ FLOPs. Arithmetic intensity ≈ 1.4×10¹⁰ / 14×10⁹ ≈ **1 FLOP per byte**. Modern accelerators typically need on the order of 100+ FLOPs per byte moved to be compute-bound rather than bandwidth-bound (the exact crossover depends on the specific hardware's FLOPs-to-bandwidth ratio), at roughly 1 FLOP/byte, single-token decode sits far on the bandwidth-bound side, meaning the achievable decode throughput is set by how fast weights (and the KV cache) can be streamed from memory, not by how fast the accelerator can multiply.
 
-This is also why batching multiple decode requests together helps: with B concurrent sequences decoded together, the same weight-read cost is amortized across B tokens' worth of arithmetic, raising the effective FLOPs-per-byte ratio toward the compute-bound regime — though each sequence still needs its own KV cache read, so batching helps compute intensity but does not reduce total KV-cache memory traffic.
+This is also why batching multiple decode requests together helps: with B concurrent sequences decoded together, the same weight-read cost is amortized across B tokens' worth of arithmetic, raising the effective FLOPs-per-byte ratio toward the compute-bound regime: though each sequence still needs its own KV cache read, so batching helps compute intensity but does not reduce total KV-cache memory traffic.
 
 ## Information Flow
 
@@ -62,7 +62,7 @@ flowchart LR
 
 ## Strengths
 
-Practical, tractable autoregressive decoding — without caching, generation cost would grow quadratically with output length instead of linearly. Well-understood, mature serving pattern with broad tooling and kernel support.
+Practical, tractable autoregressive decoding; without caching, generation cost would grow quadratically with output length instead of linearly. Well-understood, mature serving pattern with broad tooling and kernel support.
 
 ## Limitations and Failure Modes
 
@@ -70,11 +70,11 @@ Cache size grows with context length, number of layers, batch size, and KV-head 
 
 ## Architecture vs Training Objective
 
-The KV cache is a consequence of the attention architecture and the autoregressive decoding procedure, not of the training objective — a model trained differently but sharing the same attention structure would need the same cache at inference. GQA/MQA are architectural choices made at training time that determine the cache's size at inference time.
+The KV cache is a consequence of the attention architecture and the autoregressive decoding procedure, not of the training objective. A model trained differently but sharing the same attention structure would need the same cache at inference. GQA/MQA are architectural choices made at training time that determine the cache's size at inference time.
 
 ## When to Use It
 
-Any autoregressive Transformer serving multiple tokens per request needs KV caching — it is close to a mandatory serving optimization rather than an optional one, given the quadratic-cost alternative.
+Any autoregressive Transformer serving multiple tokens per request needs KV caching, it is close to a mandatory serving optimization rather than an optional one, given the quadratic-cost alternative.
 
 ## When Not to Use It
 

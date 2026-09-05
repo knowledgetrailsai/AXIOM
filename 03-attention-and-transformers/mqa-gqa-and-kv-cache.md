@@ -85,21 +85,21 @@ flowchart LR
 
 - Directly reduces the dominant serving memory bottleneck at long context and high concurrency, as shown numerically above.
 - GQA recovers most of full MHA's quality by keeping several independent KV groups rather than collapsing to one (MQA), giving a tunable quality/memory trade-off.
-- Requires no architectural change beyond the attention layer — drop-in for existing Transformer stacks, including via "uptraining" an existing MHA checkpoint into GQA.
+- Requires no architectural change beyond the attention layer. Drop-in for existing Transformer stacks, including via "uptraining" an existing MHA checkpoint into GQA.
 
 ## Limitations and Failure Modes
 
 - Sharing KV heads reduces representational diversity: fewer independent projections of "what does this position offer" across heads, which can lose some of MHA's fine-grained head specialization.
 - MQA's single shared KV head is the most memory-efficient but also the most quality-constrained; most modern models use GQA with a handful of KV groups as the practical middle ground rather than pure MQA.
-- Cache size still grows linearly with context length — GQA/MQA changes the constant factor, not the asymptotic scaling, so extremely long contexts still require additional mitigation (paging, eviction, or efficient attention).
+- Cache size still grows linearly with context length, GQA/MQA changes the constant factor, not the asymptotic scaling, so extremely long contexts still require additional mitigation (paging, eviction, or efficient attention).
 
 ## Architecture vs Training Objective
 
-The number of KV heads is an architectural hyperparameter fixed before or converted after pretraining (Ainslie et al. show existing MHA checkpoints can be "uptrained" into GQA with a small amount of additional training). It does not change the training objective — the model still predicts the same targets — but it does change training and serving compute/memory trade-offs.
+The number of KV heads is an architectural hyperparameter fixed before or converted after pretraining (Ainslie et al. show existing MHA checkpoints can be "uptrained" into GQA with a small amount of additional training). It does not change the training objective: the model still predicts the same targets; but it does change training and serving compute/memory trade-offs.
 
 ## When to Use It
 
-Use GQA by default for any Transformer decoder intended for high-concurrency or long-context serving — nearly every modern production LLM uses GQA rather than full MHA specifically for this reason. Use pure MQA when memory is the binding constraint and a larger quality trade-off is acceptable.
+Use GQA by default for any Transformer decoder intended for high-concurrency or long-context serving. Nearly every modern production LLM uses GQA rather than full MHA specifically for this reason. Use pure MQA when memory is the binding constraint and a larger quality trade-off is acceptable.
 
 ## When Not to Use It
 
@@ -107,9 +107,9 @@ Full MHA remains reasonable for smaller models or research settings where KV cac
 
 ## Comparison with Alternatives
 
-- **MHA**: `num_kv_heads = num_query_heads` — highest quality ceiling, highest cache memory.
-- **GQA**: `1 < num_kv_heads < num_query_heads` — the standard modern compromise.
-- **MQA**: `num_kv_heads = 1` — maximum cache reduction, largest quality risk.
+- **MHA**: `num_kv_heads = num_query_heads`, highest quality ceiling, highest cache memory.
+- **GQA**: `1 < num_kv_heads < num_query_heads`: the standard modern compromise.
+- **MQA**: `num_kv_heads = 1`; maximum cache reduction, largest quality risk.
 - **Efficient/sparse attention and SSMs** address the same serving-memory problem from a different angle: reducing what needs to be cached or replacing the cache with fixed-size recurrent state entirely (see Long-Context and Efficient Attention, Mamba and SSM Families).
 
 ## Representative Models

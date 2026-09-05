@@ -55,7 +55,7 @@ flowchart LR
 
 - Links large-scale passive video pretraining to action-conditioned planning, so most of the representation learning does not require robot data.
 - Predicting in latent space avoids rendering a full future frame at every rollout step.
-- The same predictor supports different goals at test time — only the goal embedding and scoring change, not the model.
+- The same predictor supports different goals at test time. Only the goal embedding and scoring change, not the model.
 
 ## Limitations and Failure Modes
 
@@ -73,11 +73,11 @@ Use V-JEPA 2-style action-conditioned prediction when you have (or can collect) 
 
 ## When Not to Use It
 
-Do not use it when you need a human-inspectable prediction of what the world will look like — the output is an embedding, not an image. Use a generative world model (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)) if visual inspection of predicted futures matters.
+Do not use it when you need a human-inspectable prediction of what the world will look like, the output is an embedding, not an image. Use a generative world model (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)) if visual inspection of predicted futures matters.
 
 ## Comparison with Alternatives
 
-Unlike a generative world simulator such as Genie ([generative-world-models-and-genie.md](generative-world-models-and-genie.md)), V-JEPA 2 never decodes a predicted frame during planning — it compares embeddings directly. This makes each rollout step cheaper but makes debugging predictor errors harder, since there is no rendered image to inspect.
+Unlike a generative world simulator such as Genie ([generative-world-models-and-genie.md](generative-world-models-and-genie.md)), V-JEPA 2 never decodes a predicted frame during planning: it compares embeddings directly. This makes each rollout step cheaper but makes debugging predictor errors harder, since there is no rendered image to inspect.
 
 ## Representative Models
 

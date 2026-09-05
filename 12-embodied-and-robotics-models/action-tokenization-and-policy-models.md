@@ -2,13 +2,13 @@
 
 ## Context and Plain-Language Explanation
 
-Robot actions are naturally continuous vectors — joint angles, end-effector position deltas. Action tokenization discretizes each continuous dimension into a fixed number of bins, so a sequence model built for discrete tokens (like a language model) can generate actions the same way it generates words.
+Robot actions are naturally continuous vectors. Joint angles, end-effector position deltas. Action tokenization discretizes each continuous dimension into a fixed number of bins, so a sequence model built for discrete tokens (like a language model) can generate actions the same way it generates words.
 
 ## Why This Architecture Exists
 
 In practical terms, **Action Tokenization and Policy Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Foundation model backbones — Transformers trained as language models — are built to predict discrete tokens from a fixed vocabulary. Motor control is continuous and high-frequency. Without a bridge between the two, a language-model backbone cannot directly output the continuous values a robot controller needs.
+Foundation model backbones, Transformers trained as language models: are built to predict discrete tokens from a fixed vocabulary. Motor control is continuous and high-frequency. Without a bridge between the two, a language-model backbone cannot directly output the continuous values a robot controller needs.
 
 ## Core Architectural Idea
 
@@ -22,7 +22,7 @@ For each continuous action dimension, choose a range `[min, max]` and a number o
 
 So the continuous value 0.3 is represented as token index 166 out of 256. Decoding reverses the mapping: bin 166 maps back to the bin's center value, `min + (166 + 0.5)/256 × (max − min) ≈ 0.3008`, an approximation of the original value bounded by bin width (`2/256 ≈ 0.0078` here).
 
-Actions with multiple dimensions (e.g. a 7-DoF arm pose) tokenize each dimension independently into its own token, and multiple consecutive timesteps can be grouped into an "action chunk" — a fixed-length block of future actions predicted together in one forward pass, reducing how often the model needs to be queried.
+Actions with multiple dimensions (e.g. a 7-DoF arm pose) tokenize each dimension independently into its own token, and multiple consecutive timesteps can be grouped into an "action chunk"; a fixed-length block of future actions predicted together in one forward pass, reducing how often the model needs to be queried.
 
 ## Information Flow
 
@@ -59,7 +59,7 @@ flowchart LR
 
 - Reuses proven sequence-modeling machinery (autoregressive token prediction) for continuous control.
 - Action chunking lowers decision frequency, reducing how often the (often large) policy backbone must be queried.
-- Discretization is simple to implement and interpret — each bin has a known, fixed range.
+- Discretization is simple to implement and interpret. Each bin has a known, fixed range.
 
 ## Limitations and Failure Modes
 
@@ -77,7 +77,7 @@ Use action tokenization when reusing a discrete-token sequence backbone (like a 
 
 ## When Not to Use It
 
-Avoid discretization when a task needs continuous-precision control beyond what practical bin counts can represent — a diffusion policy or a directly regressed continuous-action head may be more appropriate there.
+Avoid discretization when a task needs continuous-precision control beyond what practical bin counts can represent, a diffusion policy or a directly regressed continuous-action head may be more appropriate there.
 
 ## Comparison with Alternatives
 

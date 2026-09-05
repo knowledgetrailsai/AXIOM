@@ -12,7 +12,7 @@ Only the top-`k` scoring experts actually run (commonly `k=1` or `k=2`), and the
 
 `y = Σ_{i in top-k(g(x))} g_i(x) · Expert_i(x)`
 
-Every other expert costs zero FLOPs for this token — this is what makes MoE a *sparse* scaling mechanism: total parameters (`E` experts' worth) can be far larger than active parameters (`k` experts' worth) per token. See `05-sparse-and-mixture-of-experts/mixture-of-experts.md` for the full worked treatment of MoE architecture.
+Every other expert costs zero FLOPs for this token. This is what makes MoE a *sparse* scaling mechanism: total parameters (`E` experts' worth) can be far larger than active parameters (`k` experts' worth) per token. See `05-sparse-and-mixture-of-experts/mixture-of-experts.md` for the full worked treatment of MoE architecture.
 
 ## Other forms of routing
 
@@ -22,9 +22,9 @@ Every other expert costs zero FLOPs for this token — this is what makes MoE a 
 
 ## Design questions
 
-- **Load balance**: if the router concentrates traffic on a few experts, those experts become compute bottlenecks and the rest are undertrained — auxiliary load-balancing losses are typically added to the training objective to counteract this.
+- **Load balance**: if the router concentrates traffic on a few experts, those experts become compute bottlenecks and the rest are undertrained, auxiliary load-balancing losses are typically added to the training objective to counteract this.
 - **Differentiability**: hard top-k selection is not differentiable through the selection itself; gradients flow through the gate scores of the selected experts, not through the discrete choice of which experts were selected.
-- **Batching and overflow**: real hardware batches tokens together, and if more tokens route to one expert than its capacity allows, excess tokens are dropped or overflow to a fallback — a systems-level consequence of a router-level decision.
+- **Batching and overflow**: real hardware batches tokens together, and if more tokens route to one expert than its capacity allows, excess tokens are dropped or overflow to a fallback: a systems-level consequence of a router-level decision.
 - **Specialization stability**: whether experts converge to a stable, meaningfully different division of labor over training, versus route assignments that drift or degenerate (expert collapse, where most tokens route to a shrinking subset of experts).
 
 [Back to index](../INDEX.md)

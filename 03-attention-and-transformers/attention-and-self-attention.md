@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-Attention lets a query vector retrieve a weighted combination of value vectors, where the weights come from how well the query matches each key. Self-attention derives all three — query, key, and value — from the same input sequence, so every position can directly gather information from every other position in one step.
+Attention lets a query vector retrieve a weighted combination of value vectors, where the weights come from how well the query matches each key. Self-attention derives all three. Query, key, and value, from the same input sequence, so every position can directly gather information from every other position in one step.
 
 ## Why This Architecture Exists
 
@@ -17,9 +17,9 @@ A recurrent model compresses everything before position `t` into one hidden stat
 Each term:
 
 - **Q (queries), K (keys), V (values)** are learned linear projections of the input: `Q = XW_Q`, `K = XW_K`, `V = XW_V`. Q represents "what this position is looking for," K represents "what this position offers," V represents "what content this position provides once selected."
-- **`QK^T`** computes a pairwise dot-product score between every query and every key — how well each position's request matches every other position's offering.
+- **`QK^T`** computes a pairwise dot-product score between every query and every key: how well each position's request matches every other position's offering.
 - **`/ sqrt(d_k)`** rescales the scores. Dot products of two random `d_k`-dimensional vectors grow in magnitude with `d_k` (variance scales with `d_k` if components are unit-variance). Without this rescaling, scores would grow with dimension and push softmax into a regime where one input dominates and the gradient of the others vanishes toward zero. Dividing by `sqrt(d_k)` keeps the pre-softmax score variance roughly constant regardless of `d_k`.
-- **`softmax(...)`** turns each row of scores into a probability distribution over positions — the attention weights.
+- **`softmax(...)`** turns each row of scores into a probability distribution over positions; the attention weights.
 - **`... V`** takes the weighted combination of value vectors using those weights, producing the output for that query position.
 
 ### Worked example
@@ -89,27 +89,27 @@ flowchart LR
 
 ## Strengths
 
-- Direct, single-step access between any two positions regardless of distance — no compression bottleneck.
+- Direct, single-step access between any two positions regardless of distance. No compression bottleneck.
 - Fully parallel across sequence positions during training, unlike recurrence.
 - Content-dependent connectivity: which positions attend to which is learned and varies per input, not fixed like a convolution kernel.
 
 ## Limitations and Failure Modes
 
 - Quadratic cost in sequence length makes very long contexts expensive in both compute and the `O(n^2)` score matrix memory.
-- Attention alone has no notion of position — two permuted inputs produce the same set of pairwise scores unless a position mechanism is added (see Position Encoding and RoPE).
+- Attention alone has no notion of position, two permuted inputs produce the same set of pairwise scores unless a position mechanism is added (see Position Encoding and RoPE).
 - Autoregressive decoding must retain a growing KV cache, which becomes the dominant memory cost at long context and high concurrency.
 
 ## Architecture vs Training Objective
 
-The attention computation graph is fixed by the equation above. What patterns the learned `W_Q`, `W_K`, `W_V` projections actually pick out — syntactic dependencies, coreference, positional locality — is entirely a product of what the model is trained to predict, not a property guaranteed by the attention mechanism itself.
+The attention computation graph is fixed by the equation above. What patterns the learned `W_Q`, `W_K`, `W_V` projections actually pick out: syntactic dependencies, coreference, positional locality; is entirely a product of what the model is trained to predict, not a property guaranteed by the attention mechanism itself.
 
 ## When to Use It
 
-Use self-attention when the task benefits from direct, content-dependent access between arbitrary positions and training-time parallelism matters — this is the default choice for text, and increasingly for vision and other modalities, at moderate to large sequence lengths.
+Use self-attention when the task benefits from direct, content-dependent access between arbitrary positions and training-time parallelism matters. This is the default choice for text, and increasingly for vision and other modalities, at moderate to large sequence lengths.
 
 ## When Not to Use It
 
-Avoid full dense attention when sequence lengths are extremely long and the quadratic cost dominates the budget, and when the task tolerates a compressed or approximate history instead of exact addressable access — that is the regime efficient attention variants and SSMs target (see Long-Context and Efficient Attention, Mamba and SSM Families).
+Avoid full dense attention when sequence lengths are extremely long and the quadratic cost dominates the budget, and when the task tolerates a compressed or approximate history instead of exact addressable access, that is the regime efficient attention variants and SSMs target (see Long-Context and Efficient Attention, Mamba and SSM Families).
 
 ## Comparison with Alternatives
 
@@ -119,7 +119,7 @@ Avoid full dense attention when sequence lengths are extremely long and the quad
 
 ## Representative Models
 
-Not applicable directly — attention is the primitive underlying nearly every architecture in sections 03, 04, and 17 of this repository.
+Not applicable directly: attention is the primitive underlying nearly every architecture in sections 03, 04, and 17 of this repository.
 
 ## References
 

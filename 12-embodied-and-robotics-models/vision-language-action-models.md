@@ -12,7 +12,7 @@ A robot needs to connect a semantic task description ("pick up the red block") t
 
 ## Core Architectural Idea
 
-Take a pretrained vision-language model (image + text in, text out). Discretize the robot's continuous action space into bins, and represent each bin as an extra token in the model's existing vocabulary (see [action-tokenization-and-policy-models.md](action-tokenization-and-policy-models.md) for the discretization mechanism). Fine-tune the model so that, given an image observation and a language instruction, it generates a sequence of action tokens instead of (or in addition to) natural-language text — the model architecture itself does not change; only the output vocabulary's interpretation does.
+Take a pretrained vision-language model (image + text in, text out). Discretize the robot's continuous action space into bins, and represent each bin as an extra token in the model's existing vocabulary (see [action-tokenization-and-policy-models.md](action-tokenization-and-policy-models.md) for the discretization mechanism). Fine-tune the model so that, given an image observation and a language instruction, it generates a sequence of action tokens instead of (or in addition to) natural-language text. The model architecture itself does not change; only the output vocabulary's interpretation does.
 
 Because action tokens reuse the model's existing token-generation machinery, all of the model's pretrained visual and language understanding (object recognition, spatial relations, instruction following) transfers into the action-prediction task with only a comparatively small amount of robot-specific fine-tuning data.
 
@@ -53,13 +53,13 @@ flowchart LR
 ## Strengths
 
 - Transfers general visual and semantic knowledge from web-scale pretraining into robot control, reducing the amount of robot-specific data required.
-- Reuses existing sequence-generation infrastructure — no new decoder architecture needed for actions.
+- Reuses existing sequence-generation infrastructure, no new decoder architecture needed for actions.
 - Naturally supports multi-task and instruction-following behavior, since the language interface for tasks is already built into the base model.
 
 ## Limitations and Failure Modes
 
 - Action precision and control frequency are constrained by autoregressive token generation, which is far slower than a dedicated low-latency control loop.
-- Requires embodiment-specific calibration — action tokens trained for one robot's action space and camera setup do not transfer directly to a different robot.
+- Requires embodiment-specific calibration: action tokens trained for one robot's action space and camera setup do not transfer directly to a different robot.
 - Safety is central: a language model generating action tokens has no built-in guarantee that a decoded action is physically safe or feasible.
 
 ## Architecture vs Training Objective

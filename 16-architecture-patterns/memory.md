@@ -11,10 +11,10 @@
 
 ## The size vs. addressability trade-off
 
-Moving down this table roughly trades size for addressability. A KV cache keeps every past token individually addressable but grows without bound. A recurrent state is bounded and cheap but compresses history irreversibly — anything not retained in `h_t` is gone. An external store (RAG) has no size limit but requires a separate retrieval step and is not part of the model's own differentiable memory at all.
+Moving down this table roughly trades size for addressability. A KV cache keeps every past token individually addressable but grows without bound. A recurrent state is bounded and cheap but compresses history irreversibly. Anything not retained in `h_t` is gone. An external store (RAG) has no size limit but requires a separate retrieval step and is not part of the model's own differentiable memory at all.
 
 ## System vs. model architecture
 
-The external-store row is primarily **system architecture**, not backbone architecture — a vector database and retrieval pipeline sit outside the model's own forward computation graph, unlike the other five rows, which are properties of the model itself (see the Model Architecture vs System Architecture distinction in `00-navigation-and-methodology/knowledge-map.md`).
+The external-store row is primarily **system architecture**, not backbone architecture, a vector database and retrieval pipeline sit outside the model's own forward computation graph, unlike the other five rows, which are properties of the model itself (see the Model Architecture vs System Architecture distinction in `00-navigation-and-methodology/knowledge-map.md`).
 
 [Back to index](../INDEX.md)

@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-A native multimodal model treats several modalities as first-class training inputs and outputs from the start, rather than attaching a projector to a language model pretrained on text alone (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)). The backbone — or a substantial part of it — is shared across modalities and trained jointly on all of them together.
+A native multimodal model treats several modalities as first-class training inputs and outputs from the start, rather than attaching a projector to a language model pretrained on text alone (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)). The backbone, or a substantial part of it, is shared across modalities and trained jointly on all of them together.
 
 ## Why This Architecture Exists
 
@@ -12,9 +12,9 @@ Bridging two separately pretrained models (a vision encoder, a language model) w
 
 ## Core Architectural Idea
 
-Each modality has a front end that converts its raw form into tokens or embeddings in a common representational format — patches for images, short time-windows for audio, subword tokens for text. Rather than that front end feeding into a separately-pretrained backbone through an adapter, the backbone itself is trained from the start on a mixture of all modalities. This backbone may be a single shared Transformer processing all modality tokens through the same weights, or a partially shared architecture with some modality-specific layers and some shared layers, but the defining property is that no piece of the pipeline was pretrained in isolation on a single modality before being frozen and bridged.
+Each modality has a front end that converts its raw form into tokens or embeddings in a common representational format: patches for images, short time-windows for audio, subword tokens for text. Rather than that front end feeding into a separately-pretrained backbone through an adapter, the backbone itself is trained from the start on a mixture of all modalities. This backbone may be a single shared Transformer processing all modality tokens through the same weights, or a partially shared architecture with some modality-specific layers and some shared layers, but the defining property is that no piece of the pipeline was pretrained in isolation on a single modality before being frozen and bridged.
 
-Any-to-any capability (e.g. taking image and text in, and producing audio and text out) is a plausible outcome of native multimodal training but is not automatic — it depends on which modalities the front ends and output heads actually support and which combinations appeared during training.
+Any-to-any capability (e.g. taking image and text in, and producing audio and text out) is a plausible outcome of native multimodal training but is not automatic; it depends on which modalities the front ends and output heads actually support and which combinations appeared during training.
 
 ## Information Flow
 
@@ -55,11 +55,11 @@ Deeper cross-modal representations than a bridged (projector-based) approach, si
 
 ## Limitations and Failure Modes
 
-Requires far larger, well-balanced multimodal training data and far more compute than adapting an existing pretrained language model. Balancing the training mixture across modalities is difficult — over-representing one modality can starve the others of the gradient signal needed to develop comparable competence in the shared backbone.
+Requires far larger, well-balanced multimodal training data and far more compute than adapting an existing pretrained language model. Balancing the training mixture across modalities is difficult. Over-representing one modality can starve the others of the gradient signal needed to develop comparable competence in the shared backbone.
 
 ## Architecture vs Training Objective
 
-"Native multimodal" describes a training and architecture strategy — joint training of a substantially shared backbone — not a single fixed architecture. A model's name or marketing description as "natively multimodal" is not, by itself, enough to infer its exact internal structure (how much is shared, which layers are modality-specific); that requires the model's own technical documentation.
+"Native multimodal" describes a training and architecture strategy, joint training of a substantially shared backbone: not a single fixed architecture. A model's name or marketing description as "natively multimodal" is not, by itself, enough to infer its exact internal structure (how much is shared, which layers are modality-specific); that requires the model's own technical documentation.
 
 ## When to Use It
 
@@ -67,7 +67,7 @@ When compute and multimodal training data are available at sufficient scale, and
 
 ## When Not to Use It
 
-When an existing pretrained language model is strong and the goal is to add one additional modality cheaply — projection and cross-attention fusion (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)) reaches useful capability at a small fraction of the compute and data cost.
+When an existing pretrained language model is strong and the goal is to add one additional modality cheaply; projection and cross-attention fusion (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)) reaches useful capability at a small fraction of the compute and data cost.
 
 ## Comparison with Alternatives
 

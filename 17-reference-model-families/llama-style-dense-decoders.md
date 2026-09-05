@@ -7,7 +7,7 @@ LLaMA is a useful public reference for a modern **dense causal decoder** design:
 - SwiGLU-gated FFN instead of a plain two-layer FFN (see Transformer Block).
 - Grouped-Query Attention in later versions, reducing KV-cache memory (see MQA, GQA and KV Cache).
 
-Treat "LLaMA-style" as a reference family for these specific, documented architectural choices — not as the definition of what a modern LLM must be. Other dense decoder families (Mistral, Qwen, Gemma) make similar but not identical choices.
+Treat "LLaMA-style" as a reference family for these specific, documented architectural choices. Not as the definition of what a modern LLM must be. Other dense decoder families (Mistral, Qwen, Gemma) make similar but not identical choices.
 
 ## Representative models
 

@@ -2,13 +2,13 @@
 
 ## Context and Plain-Language Explanation
 
-An embodied agent repeats a loop: observe, update internal state, choose an action, act, and observe the new consequence. Every step in the loop changes the world the next observation comes from — the agent is not predicting a fixed, external sequence, it is shaping the sequence it will see next.
+An embodied agent repeats a loop: observe, update internal state, choose an action, act, and observe the new consequence. Every step in the loop changes the world the next observation comes from. The agent is not predicting a fixed, external sequence, it is shaping the sequence it will see next.
 
 ## Why This Architecture Exists
 
 In practical terms, **Perception-Action Loop** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Offline prediction (predict the next frame of a fixed video, translate a fixed sentence) treats the input stream as something the model has no effect on. An embodied agent's actions change the environment, which changes future observations. Any architecture that treats the observation stream as independent of its own outputs will fail to model this properly — it needs an explicit closed loop.
+Offline prediction (predict the next frame of a fixed video, translate a fixed sentence) treats the input stream as something the model has no effect on. An embodied agent's actions change the environment, which changes future observations. Any architecture that treats the observation stream as independent of its own outputs will fail to model this properly, it needs an explicit closed loop.
 
 ## Core Architectural Idea
 
@@ -18,7 +18,7 @@ The concrete data flow at each control step: sensors produce raw readings (camer
 sensors → encoder → representation → policy/planner → action → actuators → environment → new sensor reading → (repeat)
 ```
 
-The loop closes at "new sensor reading" feeding back into "encoder" — this feedback is what lets the agent correct for prediction error, disturbances, or an imperfect first action, rather than executing a fixed pre-planned sequence blind.
+The loop closes at "new sensor reading" feeding back into "encoder": this feedback is what lets the agent correct for prediction error, disturbances, or an imperfect first action, rather than executing a fixed pre-planned sequence blind.
 
 ## Information Flow
 
@@ -56,13 +56,13 @@ flowchart LR
 
 ## Strengths
 
-- Explicitly captures feedback and intervention — the agent can correct course based on what its own previous action actually caused.
+- Explicitly captures feedback and intervention; the agent can correct course based on what its own previous action actually caused.
 - Supports replanning at every step rather than committing to one fixed plan.
 - Generalizes across very different embodiments as long as the loop's four stages are each implemented appropriately.
 
 ## Limitations and Failure Modes
 
-- Physical errors can be irreversible — dropping an object, colliding with something — unlike a language model's mistake, which can simply be re-generated.
+- Physical errors can be irreversible. Dropping an object, colliding with something, unlike a language model's mistake, which can simply be re-generated.
 - Latency and safety requirements are strict: a control loop running too slowly can be unsafe or unstable regardless of how accurate its predictions are.
 - Distribution shift is constant by construction: every action changes the state distribution the next observation is drawn from, which is different from the fixed-distribution assumption behind most offline training.
 
@@ -72,11 +72,11 @@ The loop structure itself (sense, encode, decide, act, re-sense) is architecture
 
 ## When to Use It
 
-This structure is close to mandatory for any physical agent — it is the minimal architecture for a system whose actions affect its own future inputs.
+This structure is close to mandatory for any physical agent: it is the minimal architecture for a system whose actions affect its own future inputs.
 
 ## When Not to Use It
 
-Not applicable — even simple reactive agents implement this loop, if only in a degenerate one-step form. The design choice is how much internal modeling (a world model, memory) sits inside the loop, not whether the loop exists.
+Not applicable; even simple reactive agents implement this loop, if only in a degenerate one-step form. The design choice is how much internal modeling (a world model, memory) sits inside the loop, not whether the loop exists.
 
 ## Comparison with Alternatives
 

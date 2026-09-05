@@ -25,11 +25,11 @@ Transformers keep every past token explicitly addressable through attention, at 
 | 32,000 | 1,024,000,000 | 32,000 | 32,000× |
 | 128,000 | 16,384,000,000 | 128,000 | 128,000× |
 
-The ratio grows linearly with n itself — doubling context length doubles how many times more compute attention needs relative to a linear-time model. This is why the quadratic-vs-linear gap matters most exactly where long-context use cases live, and matters least at the short sequence lengths where most Transformer serving still operates today.
+The ratio grows linearly with n itself. Doubling context length doubles how many times more compute attention needs relative to a linear-time model. This is why the quadratic-vs-linear gap matters most exactly where long-context use cases live, and matters least at the short sequence lengths where most Transformer serving still operates today.
 
 ## The Real Trade-off
 
-Complexity numbers explain *why* linear-time models get cheaper as context grows, but they don't explain what's lost. A Transformer's KV cache is, in effect, a complete transcript: any earlier token can be looked up exactly through attention. An SSM's or RNN's state is a *learned summary* of everything seen so far, sized once and never allowed to grow — new information can only enter by overwriting or blending with what's already there. For tasks that need to recall one specific, arbitrary fact from far back in the input, an explicit transcript is a structural advantage no amount of clever compression fully replaces. For tasks that need to track a compact evolving summary (e.g. a running state, a style, a topic) rather than exact facts, compression is not a disadvantage at all — it's the right shape for the problem.
+Complexity numbers explain *why* linear-time models get cheaper as context grows, but they don't explain what's lost. A Transformer's KV cache is, in effect, a complete transcript: any earlier token can be looked up exactly through attention. An SSM's or RNN's state is a *learned summary* of everything seen so far, sized once and never allowed to grow, new information can only enter by overwriting or blending with what's already there. For tasks that need to recall one specific, arbitrary fact from far back in the input, an explicit transcript is a structural advantage no amount of clever compression fully replaces. For tasks that need to track a compact evolving summary (e.g. a running state, a style, a topic) rather than exact facts, compression is not a disadvantage at all: it's the right shape for the problem.
 
 ## Hybrid Possibilities
 

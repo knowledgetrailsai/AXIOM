@@ -18,7 +18,7 @@ An RNN compresses all history into one fixed-size hidden state, updated one step
 
 ## The Real Trade-off
 
-For a token 1,000 positions back, an RNN's hidden state has been overwritten by 1,000 subsequent updates by the time it reaches the current step — whether that specific piece of information survives depends entirely on what the recurrence chose to keep, with no guarantee. A Transformer's attention can retrieve that same token's activation directly, in one step, regardless of distance, as long as it is still inside the KV cache. This is the core trade-off: RNNs pay O(1) memory for potentially lossy long-range recall; Transformers pay growing O(n) memory for exact addressable recall.
+For a token 1,000 positions back, an RNN's hidden state has been overwritten by 1,000 subsequent updates by the time it reaches the current step. Whether that specific piece of information survives depends entirely on what the recurrence chose to keep, with no guarantee. A Transformer's attention can retrieve that same token's activation directly, in one step, regardless of distance, as long as it is still inside the KV cache. This is the core trade-off: RNNs pay O(1) memory for potentially lossy long-range recall; Transformers pay growing O(n) memory for exact addressable recall.
 
 ## Hybrid Possibilities
 

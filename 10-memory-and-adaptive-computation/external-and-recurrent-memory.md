@@ -74,11 +74,11 @@ Use a KV cache (plain attention) when context fits the window and exact recall m
 
 ## When Not to Use It
 
-Avoid external memory when a simple KV cache already covers the needed context — it adds engineering complexity without benefit. Avoid pure recurrent memory when a task needs exact retrieval of specific facts from arbitrarily far back, since compression will eventually lose them.
+Avoid external memory when a simple KV cache already covers the needed context. It adds engineering complexity without benefit. Avoid pure recurrent memory when a task needs exact retrieval of specific facts from arbitrarily far back, since compression will eventually lose them.
 
 ## Comparison with Alternatives
 
-Attention itself is a form of content-addressable memory read over context activations — it is architecturally continuous with external memory, just scoped to the current context window rather than an external store. Titans (see [titans-test-time-memory.md](titans-test-time-memory.md)) adds a fourth category: a neural memory whose own weights update at test time, distinct from all three shapes above.
+Attention itself is a form of content-addressable memory read over context activations, it is architecturally continuous with external memory, just scoped to the current context window rather than an external store. Titans (see [titans-test-time-memory.md](titans-test-time-memory.md)) adds a fourth category: a neural memory whose own weights update at test time, distinct from all three shapes above.
 
 ## Representative Models
 

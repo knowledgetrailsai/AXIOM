@@ -2,13 +2,13 @@
 
 ## Context and Plain-Language Explanation
 
-Instead of predicting left-to-right, a masked or denoising model corrupts the input first — hiding some tokens or spans — then predicts the missing content using context from both directions at once. This forces the model to build representations that use the full sentence, not just a one-sided prefix.
+Instead of predicting left-to-right, a masked or denoising model corrupts the input first. Hiding some tokens or spans, then predicts the missing content using context from both directions at once. This forces the model to build representations that use the full sentence, not just a one-sided prefix.
 
 ## Why This Architecture Exists
 
 In practical terms, **Masked and Denoising Language Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Autoregressive training only ever conditions on a prefix. Many representation-learning tasks (classification, tagging, retrieval) benefit from representations built with knowledge of the entire input, both before and after each position — information an autoregressive causal mask explicitly withholds.
+Autoregressive training only ever conditions on a prefix. Many representation-learning tasks (classification, tagging, retrieval) benefit from representations built with knowledge of the entire input, both before and after each position: information an autoregressive causal mask explicitly withholds.
 
 ## Core Architectural Idea
 
@@ -22,13 +22,13 @@ BERT (Devlin et al., 2019) randomly selects 15% of input tokens for the masking 
 
 The model, using bidirectional self-attention over the entire corrupted sequence, must predict the *original* token at every one of the selected 15% of positions.
 
-**Worked numeric example.** In a 200-token input, 15% selection gives 30 positions selected for the objective. Of those 30: `0.80 * 30 = 24` become `[MASK]`, `0.10 * 30 = 3` become a random token, and `0.10 * 30 = 3` stay unchanged — but the loss is still computed against the true original token at all 30 positions, regardless of which of the three corruption types was applied.
+**Worked numeric example.** In a 200-token input, 15% selection gives 30 positions selected for the objective. Of those 30: `0.80 * 30 = 24` become `[MASK]`, `0.10 * 30 = 3` become a random token, and `0.10 * 30 = 3` stay unchanged; but the loss is still computed against the true original token at all 30 positions, regardless of which of the three corruption types was applied.
 
-The 10%/10% split exists specifically so the model cannot simply learn "only bother predicting at `[MASK]` positions" — since 20% of the selected positions show a real (if sometimes wrong) token, the model must build a genuinely contextual representation at every position, because it never knows at inference time (when no masking exists at all) which positions would have been selected.
+The 10%/10% split exists specifically so the model cannot simply learn "only bother predicting at `[MASK]` positions". Since 20% of the selected positions show a real (if sometimes wrong) token, the model must build a genuinely contextual representation at every position, because it never knows at inference time (when no masking exists at all) which positions would have been selected.
 
 ### T5's span-corruption objective
 
-T5 (Raffel et al., 2020) corrupts contiguous *spans* rather than individual tokens, replacing each corrupted span with a single sentinel token, and trains an encoder-decoder to reconstruct the removed spans as a target sequence — rather than predicting each masked position independently as BERT does. For example, input `"The <X> sat on the <Y> mat"` with target `"<X> cat <Y> quietly"` — sentinel `<X>` was originally "cat", `<Y>` was "quietly". This shifts the task from BERT's per-position classification into a genuine sequence-to-sequence generation task, matching T5's encoder-decoder architecture (see T5 and Encoder-Decoder Models).
+T5 (Raffel et al., 2020) corrupts contiguous *spans* rather than individual tokens, replacing each corrupted span with a single sentinel token, and trains an encoder-decoder to reconstruct the removed spans as a target sequence, rather than predicting each masked position independently as BERT does. For example, input `"The <X> sat on the <Y> mat"` with target `"<X> cat <Y> quietly"`: sentinel `<X>` was originally "cat", `<Y>` was "quietly". This shifts the task from BERT's per-position classification into a genuine sequence-to-sequence generation task, matching T5's encoder-decoder architecture (see T5 and Encoder-Decoder Models).
 
 ## Information Flow
 
@@ -63,13 +63,13 @@ flowchart LR
 
 - Produces strong bidirectional contextual representations, since every position's training signal depends on genuinely seeing both left and right context.
 - Flexible corruption schemes (single tokens, spans, varying corruption rates) let the same underlying mechanism be tuned for different downstream needs.
-- Not tied to any particular generation order, unlike autoregressive training — well suited to tasks that are not inherently sequential generation (classification, tagging, retrieval-oriented embeddings).
+- Not tied to any particular generation order, unlike autoregressive training; well suited to tasks that are not inherently sequential generation (classification, tagging, retrieval-oriented embeddings).
 
 ## Limitations and Failure Modes
 
-- Not directly usable for open-ended free-form generation the way autoregressive decoding is — BERT-style masked models produce representations, not a valid left-to-right sampling procedure.
+- Not directly usable for open-ended free-form generation the way autoregressive decoding is. BERT-style masked models produce representations, not a valid left-to-right sampling procedure.
 - The corruption policy is a hyperparameter that materially changes what is learned: too high a masking rate destroys too much context to predict from; too low a rate gives a weak training signal.
-- A mismatch exists between training (input always contains masked/corrupted tokens) and inference (input is clean) — this is exactly why the 80/10/10 rule exists, to reduce that mismatch's practical impact.
+- A mismatch exists between training (input always contains masked/corrupted tokens) and inference (input is clean), this is exactly why the 80/10/10 rule exists, to reduce that mismatch's practical impact.
 
 ## Architecture vs Training Objective
 
@@ -77,11 +77,11 @@ Masking and span-corruption are training-objective choices layered on top of an 
 
 ## When to Use It
 
-Use masked/denoising pretraining when the downstream goal is representation quality for understanding tasks — classification, retrieval, tagging, embeddings — where bidirectional context at every position is valuable and open-ended generation is not the target use case.
+Use masked/denoising pretraining when the downstream goal is representation quality for understanding tasks: classification, retrieval, tagging, embeddings; where bidirectional context at every position is valuable and open-ended generation is not the target use case.
 
 ## When Not to Use It
 
-Avoid masked-language-model pretraining as the sole objective when the downstream task is open-ended free-form generation — it does not produce a valid autoregressive sampling procedure. Very low-resource settings may also not have enough data to benefit from the higher corruption rates some denoising schemes use.
+Avoid masked-language-model pretraining as the sole objective when the downstream task is open-ended free-form generation. It does not produce a valid autoregressive sampling procedure. Very low-resource settings may also not have enough data to benefit from the higher corruption rates some denoising schemes use.
 
 ## Comparison with Alternatives
 

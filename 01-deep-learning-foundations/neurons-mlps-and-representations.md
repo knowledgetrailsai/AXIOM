@@ -89,15 +89,15 @@ flowchart LR
 
 ## Architecture vs Training Objective
 
-The MLP's forward computation graph is fixed once `W`, `b`, and the activation are chosen. What those weights encode — edge detectors, syntax features, semantic clusters — depends entirely on the training data and objective, not on the MLP structure itself.
+The MLP's forward computation graph is fixed once `W`, `b`, and the activation are chosen. What those weights encode. Edge detectors, syntax features, semantic clusters, depends entirely on the training data and objective, not on the MLP structure itself.
 
 ## When to Use It
 
-Use a plain MLP as the default per-position or per-example transformation whenever inputs are already in a fixed-size vector form and there is no sequential, spatial, or relational structure to exploit — classifier heads, feature projections, and the position-wise feed-forward layer inside a Transformer block.
+Use a plain MLP as the default per-position or per-example transformation whenever inputs are already in a fixed-size vector form and there is no sequential, spatial, or relational structure to exploit: classifier heads, feature projections, and the position-wise feed-forward layer inside a Transformer block.
 
 ## When Not to Use It
 
-Avoid raw MLPs directly on raw grids (images), raw sequences, or graphs — they ignore locality and relational structure. Use CNNs, attention, or GNNs instead, often with an MLP still nested inside as the per-position transform.
+Avoid raw MLPs directly on raw grids (images), raw sequences, or graphs; they ignore locality and relational structure. Use CNNs, attention, or GNNs instead, often with an MLP still nested inside as the per-position transform.
 
 ## Comparison with Alternatives
 
@@ -107,7 +107,7 @@ Avoid raw MLPs directly on raw grids (images), raw sequences, or graphs — they
 
 ## Representative Models
 
-Not applicable — the MLP is a primitive used inside nearly all architectures in this repository, not a model family of its own.
+Not applicable. The MLP is a primitive used inside nearly all architectures in this repository, not a model family of its own.
 
 ## References
 

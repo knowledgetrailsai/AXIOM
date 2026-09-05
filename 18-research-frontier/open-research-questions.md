@@ -4,15 +4,15 @@ Each question below is stated at the level of a specific, checkable claim, not a
 
 ## Sequence Modeling
 
-Whether decoder-only autoregressive scaling laws — the compute/data/parameter trade-off curves established for dense Transformers — hold in the same form for sparse MoE architectures and SSM-hybrid architectures at matched total-compute budgets is not yet settled by public research as of this writing. Related and more specific: can a fixed-size compressed state (SSM-style) match attention's exact-retrieval accuracy on tasks requiring precise recall of a specific earlier token, while keeping the same streaming, constant-memory efficiency?
+Whether decoder-only autoregressive scaling laws. The compute/data/parameter trade-off curves established for dense Transformers, hold in the same form for sparse MoE architectures and SSM-hybrid architectures at matched total-compute budgets is not yet settled by public research as of this writing. Related and more specific: can a fixed-size compressed state (SSM-style) match attention's exact-retrieval accuracy on tasks requiring precise recall of a specific earlier token, while keeping the same streaming, constant-memory efficiency?
 
 ## Memory
 
-Can a neural memory module that updates its own weights at test time (Titans-style, see [titans-test-time-memory.md](../10-memory-and-adaptive-computation/titans-test-time-memory.md)) run over arbitrarily long sessions without drift, cross-user information leakage, or catastrophic overwriting of earlier important content — and if so, under what bound on session length or update frequency?
+Can a neural memory module that updates its own weights at test time (Titans-style, see [titans-test-time-memory.md](../10-memory-and-adaptive-computation/titans-test-time-memory.md)) run over arbitrarily long sessions without drift, cross-user information leakage, or catastrophic overwriting of earlier important content, and if so, under what bound on session length or update frequency?
 
 ## Sparsity
 
-At what combination of batch size, expert count, and interconnect bandwidth does routed MoE compute (see [dense-vs-moe.md](../15-architecture-comparisons/dense-vs-moe.md)) reliably beat dense compute of matched active-parameter cost, once all-to-all communication overhead is included — and does that crossover point hold consistently across hardware generations?
+At what combination of batch size, expert count, and interconnect bandwidth does routed MoE compute (see [dense-vs-moe.md](../15-architecture-comparisons/dense-vs-moe.md)) reliably beat dense compute of matched active-parameter cost, once all-to-all communication overhead is included; and does that crossover point hold consistently across hardware generations?
 
 ## Tokenization
 
@@ -32,6 +32,6 @@ How much robot-specific interaction data is required for a vision-language-actio
 
 ## Evaluation
 
-Given a benchmark score improvement, is there a reliable methodology to attribute how much of that improvement came from architecture change versus data scale, training objective, post-training, or added test-time compute — and in the absence of that methodology, how much can any single architecture comparison in this repository actually be trusted to isolate architecture as the causal factor?
+Given a benchmark score improvement, is there a reliable methodology to attribute how much of that improvement came from architecture change versus data scale, training objective, post-training, or added test-time compute, and in the absence of that methodology, how much can any single architecture comparison in this repository actually be trusted to isolate architecture as the causal factor?
 
 [Back to index](../INDEX.md)

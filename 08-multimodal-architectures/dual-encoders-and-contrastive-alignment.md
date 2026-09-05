@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-Two separate encoders map different modalities (e.g. image and text) into the same embedding space. Training pulls matching pairs' embeddings together and pushes non-matching pairs apart, using a contrastive loss. Once trained, either encoder can run independently — encode all images once, encode a text query once, compare embeddings by a simple similarity score.
+Two separate encoders map different modalities (e.g. image and text) into the same embedding space. Training pulls matching pairs' embeddings together and pushes non-matching pairs apart, using a contrastive loss. Once trained, either encoder can run independently. Encode all images once, encode a text query once, compare embeddings by a simple similarity score.
 
 ## Why This Architecture Exists
 
@@ -18,7 +18,7 @@ An image encoder f and a text encoder g map inputs to vectors of the same dimens
 L_i = -log [ exp(sim(i, t_i) / τ) / Σ_j exp(sim(i, j) / τ) ]
 ```
 
-sim(i, j) is the cosine similarity between image i's embedding and text j's embedding, t_i is the index of the text that actually matches image i, and the sum in the denominator runs over every text in the batch (including the correct one). The full loss is usually symmetrized — averaging this "image-to-text" loss with the equivalent "text-to-image" loss computed over columns instead of rows.
+sim(i, j) is the cosine similarity between image i's embedding and text j's embedding, t_i is the index of the text that actually matches image i, and the sum in the denominator runs over every text in the batch (including the correct one). The full loss is usually symmetrized, averaging this "image-to-text" loss with the equivalent "text-to-image" loss computed over columns instead of rows.
 
 **Worked example.** Take a batch of 4 image-text pairs with the following cosine similarity matrix (rows = images, columns = texts, diagonal = correct pairs) and τ = 0.1:
 
@@ -42,7 +42,7 @@ exp(0.10/0.1) = exp(1.0)  ≈ 2.72
 L_1 = -log(20.09 / 25.68) = -log(0.782) ≈ 0.246
 ```
 
-A low loss here reflects that image 1's similarity to its correct text (0.30) is much higher than to any incorrect text — the model is already close to right for this row. Averaging L_i over all rows (and the symmetric text-to-image version over columns) gives the batch loss used for the gradient step.
+A low loss here reflects that image 1's similarity to its correct text (0.30) is much higher than to any incorrect text: the model is already close to right for this row. Averaging L_i over all rows (and the symmetric text-to-image version over columns) gives the batch loss used for the gradient step.
 
 ## Information Flow
 
@@ -80,15 +80,15 @@ flowchart LR
 
 ## Strengths
 
-Efficient retrieval: embeddings can be precomputed and indexed once, then compared with a cheap similarity search rather than a full joint forward pass per query-candidate pair. Independent embedding also enables large-scale nearest-neighbor indexing. Zero-shot classification falls out naturally — score an image against a set of candidate text labels and take the highest similarity.
+Efficient retrieval: embeddings can be precomputed and indexed once, then compared with a cheap similarity search rather than a full joint forward pass per query-candidate pair. Independent embedding also enables large-scale nearest-neighbor indexing. Zero-shot classification falls out naturally; score an image against a set of candidate text labels and take the highest similarity.
 
 ## Limitations and Failure Modes
 
-Because each modality is encoded independently before any comparison, there's no fine-grained token-level cross-modal interaction — the model can't attend from a specific word to a specific image region before producing the final embeddings. Compressing an entire image or entire sentence into one fixed-size vector can lose detail that a richer, per-token comparison would preserve.
+Because each modality is encoded independently before any comparison, there's no fine-grained token-level cross-modal interaction. The model can't attend from a specific word to a specific image region before producing the final embeddings. Compressing an entire image or entire sentence into one fixed-size vector can lose detail that a richer, per-token comparison would preserve.
 
 ## Architecture vs Training Objective
 
-The two independent encoders are architecture. The contrastive InfoNCE objective, the batch size, and the temperature schedule are training-time choices that determine how well-aligned and how discriminative the learned embedding space ends up being — the same encoder architectures trained with a different objective (e.g. a captioning loss) would produce a very different embedding space.
+The two independent encoders are architecture. The contrastive InfoNCE objective, the batch size, and the temperature schedule are training-time choices that determine how well-aligned and how discriminative the learned embedding space ends up being, the same encoder architectures trained with a different objective (e.g. a captioning loss) would produce a very different embedding space.
 
 ## When to Use It
 
@@ -96,7 +96,7 @@ Large-scale retrieval, zero-shot classification, or any application needing to p
 
 ## When Not to Use It
 
-Tasks needing fine-grained cross-modal reasoning about specific regions or tokens — e.g. visual question answering about a small detail in an image — where projection and cross-attention fusion (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)) gives richer interaction at higher compute cost.
+Tasks needing fine-grained cross-modal reasoning about specific regions or tokens: e.g. visual question answering about a small detail in an image; where projection and cross-attention fusion (see [projection-and-cross-attention-fusion.md](projection-and-cross-attention-fusion.md)) gives richer interaction at higher compute cost.
 
 ## Comparison with Alternatives
 

@@ -2,23 +2,23 @@
 
 ## Context and Plain-Language Explanation
 
-A pretrained vision or audio encoder and a pretrained language model live in different representation spaces — their hidden states aren't directly comparable. Projection maps one modality's features into the other's space with a small trained adapter. Cross-attention then lets one stream attend directly to the other's tokens, giving richer interaction than a dual encoder's single fixed-size embedding comparison.
+A pretrained vision or audio encoder and a pretrained language model live in different representation spaces. Their hidden states aren't directly comparable. Projection maps one modality's features into the other's space with a small trained adapter. Cross-attention then lets one stream attend directly to the other's tokens, giving richer interaction than a dual encoder's single fixed-size embedding comparison.
 
 ## Why This Architecture Exists
 
 In practical terms, **Projection and Cross-Attention Fusion** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Retraining a vision encoder and a language model from scratch, jointly, is expensive. Reusing strong pretrained components (a vision encoder, a language model) is far cheaper, but their internal representations don't line up — a vision Transformer's hidden states and a language model's hidden states are not directly compatible dimensions or semantics. Something has to bridge them.
+Retraining a vision encoder and a language model from scratch, jointly, is expensive. Reusing strong pretrained components (a vision encoder, a language model) is far cheaper, but their internal representations don't line up, a vision Transformer's hidden states and a language model's hidden states are not directly compatible dimensions or semantics. Something has to bridge them.
 
 ## Core Architectural Idea
 
 A projector (commonly a small MLP, or a resampler like a fixed set of learned query tokens that cross-attend into the modality's raw feature grid to produce a smaller, fixed number of tokens) maps modality-specific features into the language model's hidden dimension. Two integration patterns follow from there:
 
-**Token injection.** The projected modality tokens are simply concatenated into the language model's input sequence alongside text tokens, and the model's existing self-attention handles all interaction — no architectural change to the language model itself beyond accepting these extra input tokens.
+**Token injection.** The projected modality tokens are simply concatenated into the language model's input sequence alongside text tokens, and the model's existing self-attention handles all interaction: no architectural change to the language model itself beyond accepting these extra input tokens.
 
 **Cross-attention fusion.** New cross-attention layers are inserted into the language model, where text tokens (as queries) attend into the modality's projected tokens (as keys/values) at chosen layers, keeping the modality tokens out of the model's own self-attention and residual stream directly.
 
-Token injection is architecturally simpler (reuses the existing self-attention, no new layer type) but scales the effective sequence length by however many modality tokens are injected — an image resampled to 256 tokens adds 256 tokens to every self-attention computation in every layer. Cross-attention fusion avoids inflating the main self-attention's sequence length as much, at the cost of adding a new kind of layer that must be trained (or the whole stack fine-tuned) to use it well.
+Token injection is architecturally simpler (reuses the existing self-attention, no new layer type) but scales the effective sequence length by however many modality tokens are injected; an image resampled to 256 tokens adds 256 tokens to every self-attention computation in every layer. Cross-attention fusion avoids inflating the main self-attention's sequence length as much, at the cost of adding a new kind of layer that must be trained (or the whole stack fine-tuned) to use it well.
 
 ## Information Flow
 
@@ -56,11 +56,11 @@ flowchart LR
 
 ## Strengths
 
-Reuses strong pretrained components instead of training a joint model from scratch — much cheaper in compute and data. Modular: a new modality (e.g. audio) can be added by training a new projector into the same language model backbone, without retraining the whole stack.
+Reuses strong pretrained components instead of training a joint model from scratch. Much cheaper in compute and data. Modular: a new modality (e.g. audio) can be added by training a new projector into the same language model backbone, without retraining the whole stack.
 
 ## Limitations and Failure Modes
 
-The projector is a bottleneck: however much information the modality encoder captures, only what survives the projection into the LM's hidden space is available downstream. High-resolution images or long audio produce many raw modality tokens, and even after projection/resampling, a large token count is expensive — this is the token-explosion problem noted in [vision-language-video-audio.md](vision-language-video-audio.md).
+The projector is a bottleneck: however much information the modality encoder captures, only what survives the projection into the LM's hidden space is available downstream. High-resolution images or long audio produce many raw modality tokens, and even after projection/resampling, a large token count is expensive, this is the token-explosion problem noted in [vision-language-video-audio.md](vision-language-video-audio.md).
 
 ## Architecture vs Training Objective
 
@@ -68,7 +68,7 @@ The projector and the choice between token injection and cross-attention fusion 
 
 ## When to Use It
 
-Extending an existing, strong pretrained language model to a new modality when full joint pretraining isn't affordable — the dominant practical pattern for adding vision or audio capability to an existing LM.
+Extending an existing, strong pretrained language model to a new modality when full joint pretraining isn't affordable: the dominant practical pattern for adding vision or audio capability to an existing LM.
 
 ## When Not to Use It
 
@@ -76,7 +76,7 @@ When a use case is well served by simple retrieval or classification rather than
 
 ## Comparison with Alternatives
 
-Dual encoders keep modalities fully separate until a single similarity score at the end — cheaper, but far less expressive per-token interaction. Native multimodal training learns the cross-modal representation jointly from the start rather than bridging two separately-pretrained spaces after the fact, generally at a much higher compute and data cost.
+Dual encoders keep modalities fully separate until a single similarity score at the end; cheaper, but far less expressive per-token interaction. Native multimodal training learns the cross-modal representation jointly from the start rather than bridging two separately-pretrained spaces after the fact, generally at a much higher compute and data cost.
 
 ## Representative Models
 

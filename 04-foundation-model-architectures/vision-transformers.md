@@ -8,7 +8,7 @@ A Vision Transformer (ViT) cuts an image into fixed-size patches, flattens and l
 
 In practical terms, **Vision Transformers** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-CNNs bake in a locality prior — a pixel only directly interacts with nearby pixels within each layer's receptive field, and global relationships require depth to accumulate. Attention can model relationships between any two positions in one layer, so applying it to images lets the model learn which spatial relationships matter, rather than assuming only local ones do a priori.
+CNNs bake in a locality prior. A pixel only directly interacts with nearby pixels within each layer's receptive field, and global relationships require depth to accumulate. Attention can model relationships between any two positions in one layer, so applying it to images lets the model learn which spatial relationships matter, rather than assuming only local ones do a priori.
 
 ## Core Architectural Idea
 
@@ -68,14 +68,14 @@ flowchart LR
 
 ## Strengths
 
-- Global receptive field from the very first layer — any two patches can interact directly, unlike a CNN's depth-dependent receptive field growth.
+- Global receptive field from the very first layer, any two patches can interact directly, unlike a CNN's depth-dependent receptive field growth.
 - Unifies vision architecture with the Transformer tooling, scaling recipes, and pretraining methodology developed for language.
-- Scales well with data and compute — larger ViTs trained on larger datasets have continued to improve without hitting the architectural ceiling CNNs eventually showed.
+- Scales well with data and compute: larger ViTs trained on larger datasets have continued to improve without hitting the architectural ceiling CNNs eventually showed.
 
 ## Limitations and Failure Modes
 
 - High-resolution images produce large patch counts, and attention's quadratic cost in patch count makes very high resolutions expensive (halving patch size quadruples token count and multiplies attention cost roughly 16x).
-- Without a CNN's built-in locality prior, ViT needs more training data (or explicit data augmentation / distillation) to reach comparable performance at moderate dataset sizes — the original ViT paper found it underperformed ResNets when trained on ImageNet-scale data alone, only pulling ahead with much larger pretraining datasets (JFT-300M).
+- Without a CNN's built-in locality prior, ViT needs more training data (or explicit data augmentation / distillation) to reach comparable performance at moderate dataset sizes; the original ViT paper found it underperformed ResNets when trained on ImageNet-scale data alone, only pulling ahead with much larger pretraining datasets (JFT-300M).
 - Fixed patch size discretizes the image; very small or texture-heavy details smaller than one patch are not directly visible to the position where they occur.
 
 ## Architecture vs Training Objective

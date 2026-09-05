@@ -10,7 +10,7 @@ Each Transformer block's dense FFN is replaced by `E` expert FFNs plus a learned
 
 `y = Σ_{i in top-k(g(x))} g_i(x) · Expert_i(x)`
 
-Mixtral 8x7B: `E = 8` experts per MoE layer, `k = 2` — every token activates 2 of 8 experts, so total parameters (roughly 47B) substantially exceed active parameters per token (roughly 13B), since the attention layers and router are always active but only 2/8 of the expert FFN parameters run per token.
+Mixtral 8x7B: `E = 8` experts per MoE layer, `k = 2`. Every token activates 2 of 8 experts, so total parameters (roughly 47B) substantially exceed active parameters per token (roughly 13B), since the attention layers and router are always active but only 2/8 of the expert FFN parameters run per token.
 
 Study Mixture of Experts (section 05) for the general architecture; treat MoE as a scaling pattern applied inside a Transformer, not as a property unique to any one model family.
 

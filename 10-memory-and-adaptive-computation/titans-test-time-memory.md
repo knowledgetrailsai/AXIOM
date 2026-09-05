@@ -8,7 +8,7 @@ Titans adds a neural memory module that updates its own weights at inference tim
 
 In practical terms, **Titans and Test-Time Neural Memory** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Attention over a KV cache is precise but its cost grows with context length, and it forgets nothing selectively — every token stays in the cache until it falls out of the window. A fixed-size recurrent state avoids that cost but overwrites old information indiscriminately. Neither gives the model a way to decide, at test time, which information is worth keeping for the long term.
+Attention over a KV cache is precise but its cost grows with context length, and it forgets nothing selectively. Every token stays in the cache until it falls out of the window. A fixed-size recurrent state avoids that cost but overwrites old information indiscriminately. Neither gives the model a way to decide, at test time, which information is worth keeping for the long term.
 
 ## Core Architectural Idea
 
@@ -18,7 +18,7 @@ The update is driven by a surprise signal: at each step, the memory module measu
 
 `M_t = (1 − α) · M_{t-1} + η · ∇_M ℓ(M_{t-1}; x_t)`
 
-where `α` is a decay rate, `η` is the momentary learning rate, and `ℓ` is the memory's own associative-retrieval loss on the current input `x_t`. This update happens at inference, not only during training — the memory literally keeps learning as it processes a stream of new inputs.
+where `α` is a decay rate, `η` is the momentary learning rate, and `ℓ` is the memory's own associative-retrieval loss on the current input `x_t`. This update happens at inference, not only during training, the memory literally keeps learning as it processes a stream of new inputs.
 
 ## Information Flow
 
@@ -62,7 +62,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Updating weights at test time raises stability and reproducibility questions: the same prompt processed twice will not behave identically if memory state differs going in.
-- Serving concurrency becomes harder — the memory module's state is now per-session mutable state, not a stateless computation, so reset and isolation semantics between concurrent requests must be handled explicitly.
+- Serving concurrency becomes harder: the memory module's state is now per-session mutable state, not a stateless computation, so reset and isolation semantics between concurrent requests must be handled explicitly.
 - This is a comparatively new research direction; long-run behavior over very long deployments is less established than for standard attention.
 
 ## Architecture vs Training Objective
@@ -75,7 +75,7 @@ Consider Titans-style test-time memory when a task needs effectively unbounded h
 
 ## When Not to Use It
 
-Avoid it when reproducibility and stateless request handling are hard requirements, or when the context needed genuinely fits inside a normal attention window — a KV cache is simpler and better understood operationally.
+Avoid it when reproducibility and stateless request handling are hard requirements, or when the context needed genuinely fits inside a normal attention window; a KV cache is simpler and better understood operationally.
 
 ## Comparison with Alternatives
 

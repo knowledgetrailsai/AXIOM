@@ -8,7 +8,7 @@ A Transformer block combines two sublayers wrapped in residual connections: atte
 
 In practical terms, **Transformer Block** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-A sequence model needs two distinct kinds of computation: communication (letting positions exchange information) and computation (transforming each position's representation once it has that information). A single mechanism does not do both well — attention mixes but does not add much nonlinear transformation capacity per position, and a dense layer transforms but has no way to look at other positions.
+A sequence model needs two distinct kinds of computation: communication (letting positions exchange information) and computation (transforming each position's representation once it has that information). A single mechanism does not do both well. Attention mixes but does not add much nonlinear transformation capacity per position, and a dense layer transforms but has no way to look at other positions.
 
 ## Core Architectural Idea
 
@@ -25,7 +25,7 @@ Attention mixes across the sequence dimension; the FFN applies the same two-laye
 
 ### FFN expansion ratio
 
-The FFN's hidden dimension is conventionally `4 * d_model` — the "4x expansion" is a design convention from the original Transformer, not a mathematical necessity, but it remains standard practice.
+The FFN's hidden dimension is conventionally `4 * d_model`, the "4x expansion" is a design convention from the original Transformer, not a mathematical necessity, but it remains standard practice.
 
 **Worked example.** For `d_model = 4096` (roughly LLaMA-2-7B scale) and FFN hidden dimension `4 * 4096 = 16384`:
 
@@ -40,7 +40,7 @@ Attention params per block (Q, K, V, output projections, each d_model x d_model)
 Total per block ≈ 134.2M + 67.1M = 201.3M parameters
 ```
 
-The FFN alone accounts for roughly two-thirds of a block's parameters at this ratio — this is why MoE, which replaces the FFN with several routed FFNs, targets the FFN specifically: it is the largest single component to scale sparsely.
+The FFN alone accounts for roughly two-thirds of a block's parameters at this ratio: this is why MoE, which replaces the FFN with several routed FFNs, targets the FFN specifically: it is the largest single component to scale sparsely.
 
 ## Information Flow
 
@@ -79,23 +79,23 @@ flowchart LR
 
 ## Strengths
 
-- Simple, uniform, repeatable unit — the same block definition scales from a few layers to over a hundred.
+- Simple, uniform, repeatable unit; the same block definition scales from a few layers to over a hundred.
 - Clean separation of concerns (mixing vs transforming) makes it easy to modify one sublayer independently, e.g. swapping in MoE FFNs or efficient attention.
 - Residual + normalization design (see Normalization and Residual Connections) makes very deep stacks trainable.
 
 ## Limitations and Failure Modes
 
 - Attention and FFN create different compute bottlenecks depending on sequence length and model width, complicating hardware utilization planning.
-- The block itself has no persistent recurrent state beyond whatever the KV cache provides — every bit of "memory" is either in the cache or in the weights.
+- The block itself has no persistent recurrent state beyond whatever the KV cache provides. Every bit of "memory" is either in the cache or in the weights.
 - The fixed 4x FFN ratio is a convention, not a derived optimum; different ratios trade parameter count for representational capacity per block in ways that are still empirically tuned per model family.
 
 ## Architecture vs Training Objective
 
-The block's forward computation graph is entirely fixed by its equations. Autoregressive, masked, and denoising objectives (see Autoregressive Language Models, Masked and Denoising Language Models) all reuse the exact same block — what differs is the attention mask (causal vs bidirectional) and the training targets, not the block's internal structure.
+The block's forward computation graph is entirely fixed by its equations. Autoregressive, masked, and denoising objectives (see Autoregressive Language Models, Masked and Denoising Language Models) all reuse the exact same block, what differs is the attention mask (causal vs bidirectional) and the training targets, not the block's internal structure.
 
 ## When to Use It
 
-Use the standard pre-norm Transformer block as the default sequence-modeling unit for text, and increasingly for other modalities via patch or token embeddings (see Vision Transformers) — it is the most battle-tested, tooling-supported building block available.
+Use the standard pre-norm Transformer block as the default sequence-modeling unit for text, and increasingly for other modalities via patch or token embeddings (see Vision Transformers): it is the most battle-tested, tooling-supported building block available.
 
 ## When Not to Use It
 

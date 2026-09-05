@@ -34,7 +34,7 @@ Some MoE variants keep one expert always active (a shared/dense component provid
 
 ## The design constraint
 
-Composition should be justified by a specific, named bottleneck — compute, memory, exact retrieval, capacity, persistence, or latency. Adding a mechanism without a clear ownership boundary (which component is responsible for which part of the computation) usually increases implementation and tuning complexity faster than it increases capability; see [why-hybrid-architectures.md](why-hybrid-architectures.md) for the underlying design question this constraint follows from.
+Composition should be justified by a specific, named bottleneck. Compute, memory, exact retrieval, capacity, persistence, or latency. Adding a mechanism without a clear ownership boundary (which component is responsible for which part of the computation) usually increases implementation and tuning complexity faster than it increases capability; see [why-hybrid-architectures.md](why-hybrid-architectures.md) for the underlying design question this constraint follows from.
 
 ## References
 

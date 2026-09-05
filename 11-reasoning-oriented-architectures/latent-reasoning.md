@@ -12,7 +12,7 @@ Chain-of-thought reasoning expressed as generated text is bottlenecked by token-
 
 ## Core Architectural Idea
 
-Encode the problem into a hidden state. Instead of decoding that state into text at each reasoning step, apply a learned update function to the hidden state itself for several iterations — refining it in place. Only after the iteration loop finishes does a decoder turn the final hidden state into the output answer or action.
+Encode the problem into a hidden state. Instead of decoding that state into text at each reasoning step, apply a learned update function to the hidden state itself for several iterations. Refining it in place. Only after the iteration loop finishes does a decoder turn the final hidden state into the output answer or action.
 
 ## Information Flow
 
@@ -52,14 +52,14 @@ flowchart LR
 
 ## Strengths
 
-- Not bottlenecked by token-by-token decoding — many reasoning steps can happen per output token eventually produced.
+- Not bottlenecked by token-by-token decoding, many reasoning steps can happen per output token eventually produced.
 - Not restricted to a natural-language intermediate representation, which may not be the most efficient way to represent every kind of reasoning step.
 - Parameter-efficient: a shared update block can represent many effective reasoning steps.
 
 ## Limitations and Failure Modes
 
 - The reasoning process is opaque: there is no human-readable trace of intermediate steps to inspect or audit, unlike generated chain-of-thought text.
-- Harder to supervise — training signal for "the hidden state at step 3 represents something useful" is much less direct than a token-level loss on generated text.
+- Harder to supervise: training signal for "the hidden state at step 3 represents something useful" is much less direct than a token-level loss on generated text.
 - Adding more latent iteration steps does not automatically produce more useful reasoning; the update function has to actually learn something at each step.
 
 ## Architecture vs Training Objective
@@ -72,11 +72,11 @@ Use latent reasoning when raw throughput or latency matters more than human audi
 
 ## When Not to Use It
 
-Avoid it when auditability, debuggability, or regulatory requirements demand a human-readable reasoning trace — generated chain-of-thought text, despite being slower, is directly inspectable in a way latent reasoning is not.
+Avoid it when auditability, debuggability, or regulatory requirements demand a human-readable reasoning trace; generated chain-of-thought text, despite being slower, is directly inspectable in a way latent reasoning is not.
 
 ## Comparison with Alternatives
 
-Chain-of-thought reasoning uses generated output tokens as the workspace for intermediate computation — every step is visible text. Latent reasoning keeps that workspace hidden. See [recurrent-and-iterative-reasoning.md](recurrent-and-iterative-reasoning.md) for the general mechanism of repeatedly applying a shared computation block, of which latent reasoning is one instance.
+Chain-of-thought reasoning uses generated output tokens as the workspace for intermediate computation. Every step is visible text. Latent reasoning keeps that workspace hidden. See [recurrent-and-iterative-reasoning.md](recurrent-and-iterative-reasoning.md) for the general mechanism of repeatedly applying a shared computation block, of which latent reasoning is one instance.
 
 ## Representative Models
 

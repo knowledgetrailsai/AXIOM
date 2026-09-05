@@ -8,11 +8,11 @@ A latent world model encodes an observation into a compact state vector `z`, the
 
 In practical terms, **Latent World Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Raw observations carry unpredictable or task-irrelevant detail — lighting, texture, sensor noise. Predicting all of it wastes model capacity on things that do not affect the outcome the agent cares about.
+Raw observations carry unpredictable or task-irrelevant detail. Lighting, texture, sensor noise. Predicting all of it wastes model capacity on things that do not affect the outcome the agent cares about.
 
 ## Core Architectural Idea
 
-An encoder maps observation `o_t` to a latent state `z_t = E(o_t)`. A dynamics function predicts the next latent state under a candidate action: `z_{t+1} = D(z_t, a_t)`. A decoder, used only when raw output is needed, maps `z_t` back to an observation: `ô_t = Dec(z_t)`. Because planning and value estimation both operate on `z` directly, the decoder can be skipped entirely during search — the same cost saving described in [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md).
+An encoder maps observation `o_t` to a latent state `z_t = E(o_t)`. A dynamics function predicts the next latent state under a candidate action: `z_{t+1} = D(z_t, a_t)`. A decoder, used only when raw output is needed, maps `z_t` back to an observation: `ô_t = Dec(z_t)`. Because planning and value estimation both operate on `z` directly, the decoder can be skipped entirely during search, the same cost saving described in [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md).
 
 ## Information Flow
 
@@ -69,7 +69,7 @@ Use a latent world model when you need cheap repeated rollouts for planning or r
 
 ## When Not to Use It
 
-Do not use it as the sole output when a human needs to directly inspect predicted futures — pair it with a decoder, or use a generative world model instead (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)).
+Do not use it as the sole output when a human needs to directly inspect predicted futures: pair it with a decoder, or use a generative world model instead (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)).
 
 ## Comparison with Alternatives
 

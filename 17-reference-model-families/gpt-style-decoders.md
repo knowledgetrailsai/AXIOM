@@ -10,7 +10,7 @@ trained with the autoregressive next-token objective (see Autoregressive Languag
 
 Named model families differ in specific choices layered on top of this shared pattern: position encoding (learned absolute vs. RoPE vs. ALiBi), attention grouping (MHA vs. GQA vs. MQA), normalization variant and placement (LayerNorm vs. RMSNorm, pre-norm vs. post-norm), activation function (GELU vs. SwiGLU), context length, and post-training method. None of these choices change the core decoder-only causal pattern itself.
 
-Do not infer proprietary architecture details (exact layer counts, attention configuration, training data) for closed models beyond what is officially documented — treat undocumented specifics as unknown, not as inferable from behavior or benchmark scores.
+Do not infer proprietary architecture details (exact layer counts, attention configuration, training data) for closed models beyond what is officially documented. Treat undocumented specifics as unknown, not as inferable from behavior or benchmark scores.
 
 ## Representative models (publicly documented architecture details only)
 

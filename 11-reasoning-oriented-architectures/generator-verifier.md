@@ -2,19 +2,19 @@
 
 ## Context and Plain-Language Explanation
 
-A generator proposes candidate solutions. A verifier — sometimes a separate, cheaper model, sometimes a learned scoring head — checks or scores each candidate. The system selects or refines based on those scores, instead of committing to the generator's first output.
+A generator proposes candidate solutions. A verifier. Sometimes a separate, cheaper model, sometimes a learned scoring head, checks or scores each candidate. The system selects or refines based on those scores, instead of committing to the generator's first output.
 
 ## Why This Architecture Exists
 
 In practical terms, **Generator-Verifier Architectures** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-One-shot generation commits to an answer without explicitly comparing it to alternatives. For many problems, checking a proposed solution is much cheaper or much more reliable than generating a correct one directly — verifying a math proof step, or checking whether generated code passes a test, is often easier than producing the proof or code from scratch. A pure generator has no way to exploit that asymmetry.
+One-shot generation commits to an answer without explicitly comparing it to alternatives. For many problems, checking a proposed solution is much cheaper or much more reliable than generating a correct one directly: verifying a math proof step, or checking whether generated code passes a test, is often easier than producing the proof or code from scratch. A pure generator has no way to exploit that asymmetry.
 
 ## Core Architectural Idea
 
-The generator produces N candidate solutions (by sampling, beam search, or explicit alternative strategies). The verifier assigns each candidate a score — this can be a learned reward model, a symbolic checker (e.g. unit tests, a proof checker), or a separate LLM prompted to critique. The system then selects the highest-scoring candidate, or uses the score to guide further refinement (e.g. only refine the top-scoring candidates further, discard the rest).
+The generator produces N candidate solutions (by sampling, beam search, or explicit alternative strategies). The verifier assigns each candidate a score; this can be a learned reward model, a symbolic checker (e.g. unit tests, a proof checker), or a separate LLM prompted to critique. The system then selects the highest-scoring candidate, or uses the score to guide further refinement (e.g. only refine the top-scoring candidates further, discard the rest).
 
-Why verification is often easier than generation: generation must search an enormous space of possible outputs for one that is correct. Verification only has to check one specific candidate against a criterion, which is a much narrower task — this asymmetry (NP-style: hard to find a solution, easy to check one) is the structural reason generator-verifier setups can outperform pure generation at the same compute budget.
+Why verification is often easier than generation: generation must search an enormous space of possible outputs for one that is correct. Verification only has to check one specific candidate against a criterion, which is a much narrower task. This asymmetry (NP-style: hard to find a solution, easy to check one) is the structural reason generator-verifier setups can outperform pure generation at the same compute budget.
 
 ## Information Flow
 
@@ -60,7 +60,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Inference cost grows directly with the number of candidates generated and scored.
-- A biased or unreliable verifier systematically misleads the search — it will confidently prefer wrong candidates that happen to match its biases.
+- A biased or unreliable verifier systematically misleads the search, it will confidently prefer wrong candidates that happen to match its biases.
 - Not every problem class has an asymmetry between generation and verification difficulty; for some tasks, checking a candidate is just as hard as producing one.
 
 ## Architecture vs Training Objective
@@ -69,11 +69,11 @@ Whether a system uses a separate generator and verifier at all is an architectur
 
 ## When to Use It
 
-Use a generator-verifier setup when checking a candidate solution is meaningfully cheaper or more reliable than generating a correct one directly — code with unit tests, math with a proof checker, or any task with an automatic or cheap correctness signal.
+Use a generator-verifier setup when checking a candidate solution is meaningfully cheaper or more reliable than generating a correct one directly: code with unit tests, math with a proof checker, or any task with an automatic or cheap correctness signal.
 
 ## When Not to Use It
 
-Avoid it when no cheap or reliable verification signal exists — an unreliable verifier can make search worse than no search at all, since the system will confidently select a candidate the verifier likes for the wrong reasons.
+Avoid it when no cheap or reliable verification signal exists; an unreliable verifier can make search worse than no search at all, since the system will confidently select a candidate the verifier likes for the wrong reasons.
 
 ## Comparison with Alternatives
 

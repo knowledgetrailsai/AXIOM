@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-The same Transformer block supports three access patterns, controlled entirely by the attention mask and whether cross-attention is present. Encoders let every position see every other position. Decoders restrict each position to positions at or before it (causal masking). Encoder-decoder models add a third attention type — cross-attention — that lets the decoder read the encoder's output directly.
+The same Transformer block supports three access patterns, controlled entirely by the attention mask and whether cross-attention is present. Encoders let every position see every other position. Decoders restrict each position to positions at or before it (causal masking). Encoder-decoder models add a third attention type. Cross-attention, that lets the decoder read the encoder's output directly.
 
 ## Why This Architecture Exists
 
@@ -12,9 +12,9 @@ Different tasks need different information-flow guarantees. Understanding a sent
 
 ## Core Architectural Idea
 
-**Encoder-only**: attention with no mask — every position attends to every other position, including future ones. Produces one contextual representation per input position. Cannot generate open-ended text causally, since there is no restriction preventing it from using "future" tokens it would not have at generation time.
+**Encoder-only**: attention with no mask: every position attends to every other position, including future ones. Produces one contextual representation per input position. Cannot generate open-ended text causally, since there is no restriction preventing it from using "future" tokens it would not have at generation time.
 
-**Decoder-only**: attention with a causal mask — position `i` can only attend to positions `≤ i`. The mask is implemented by setting `score[i,j] = -∞` for `j > i` before softmax, which drives the corresponding attention weight to zero. This is what makes autoregressive generation well-defined and matches training (next-token prediction) to inference (generate one token, append, repeat).
+**Decoder-only**: attention with a causal mask; position `i` can only attend to positions `≤ i`. The mask is implemented by setting `score[i,j] = -∞` for `j > i` before softmax, which drives the corresponding attention weight to zero. This is what makes autoregressive generation well-defined and matches training (next-token prediction) to inference (generate one token, append, repeat).
 
 **Encoder-decoder**: an encoder stack (no mask) processes the source; a decoder stack (causal mask on its own self-attention) generates the target, with an added cross-attention sublayer per decoder block where queries come from the decoder and keys/values come from the encoder's final output.
 
@@ -66,7 +66,7 @@ flowchart LR
 ## Limitations and Failure Modes
 
 - Decoder-only models must causally reprocess the entire conditioning context at each generation step (mitigated by the KV cache, but the cache itself grows with context length).
-- Encoder-only models cannot generate free-form text — they produce representations, not sequences, so they need a task-specific head or a decoder attached for generation tasks.
+- Encoder-only models cannot generate free-form text. They produce representations, not sequences, so they need a task-specific head or a decoder attached for generation tasks.
 - Encoder-decoder models carry the parameter and compute cost of two full stacks, which decoder-only designs avoid by folding everything into one causal stream.
 
 ## Architecture vs Training Objective
@@ -79,7 +79,7 @@ Use encoder-only when the task is understanding/classification and no generation
 
 ## When Not to Use It
 
-Do not use encoder-only architectures where open-ended generation is required — they have no causal generation mechanism. Do not default to encoder-decoder for general-purpose text generation where source and target share the same space — the extra parameter and compute cost of two stacks is usually not justified there.
+Do not use encoder-only architectures where open-ended generation is required, they have no causal generation mechanism. Do not default to encoder-decoder for general-purpose text generation where source and target share the same space: the extra parameter and compute cost of two stacks is usually not justified there.
 
 ## Comparison with Alternatives
 

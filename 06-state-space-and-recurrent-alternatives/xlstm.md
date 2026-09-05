@@ -8,7 +8,7 @@ xLSTM takes the classic LSTM cell and changes its gating and memory to be more e
 
 In practical terms, **xLSTM** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-The classical LSTM has real strengths — an explicit, gated recurrent memory cell — but its sigmoid gates saturate, which limits how strongly the model can revise a stored memory once training pushes a gate toward its extreme. That, combined with strictly sequential processing, left LSTMs behind Transformers at large scale.
+The classical LSTM has real strengths. An explicit, gated recurrent memory cell, but its sigmoid gates saturate, which limits how strongly the model can revise a stored memory once training pushes a gate toward its extreme. That, combined with strictly sequential processing, left LSTMs behind Transformers at large scale.
 
 ## Core Architectural Idea
 
@@ -27,7 +27,7 @@ f_t = exp(W_f [h_{t-1}, x_t] + b_f)
 i_t = exp(W_i [h_{t-1}, x_t] + b_i)
 ```
 
-Exponential gates are unbounded above, so the cell can express a much larger dynamic range of "how strongly to forget or admit" than a saturating sigmoid allows. The direct cost is numerical: exponentials of large inputs overflow, so xLSTM adds a stabilizer — tracking a running log-scale normalizer (analogous to the max-subtraction trick used to stabilize softmax) — to keep the exponential gate values in a safe numerical range without changing what they represent.
+Exponential gates are unbounded above, so the cell can express a much larger dynamic range of "how strongly to forget or admit" than a saturating sigmoid allows. The direct cost is numerical: exponentials of large inputs overflow, so xLSTM adds a stabilizer: tracking a running log-scale normalizer (analogous to the max-subtraction trick used to stabilize softmax); to keep the exponential gate values in a safe numerical range without changing what they represent.
 
 xLSTM's mLSTM variant additionally replaces the LSTM's scalar memory cell with a matrix-valued memory, updated with a Hebbian-style (outer-product) rule and read out via an associative lookup with a query vector, giving substantially higher memory capacity per cell than a single scalar.
 
@@ -77,7 +77,7 @@ The exponential gating, stabilizer, and memory cell design are architecture. Wha
 
 ## When to Use It
 
-Settings where an explicit, well-understood gated-memory recurrence is preferred and where the sequential-training cost is acceptable — e.g. moderate sequence lengths where the parallel-training disadvantage matters less.
+Settings where an explicit, well-understood gated-memory recurrence is preferred and where the sequential-training cost is acceptable. E.g. moderate sequence lengths where the parallel-training disadvantage matters less.
 
 ## When Not to Use It
 
@@ -85,7 +85,7 @@ Very long sequences or training setups where parallel-scan or convolutional trai
 
 ## Comparison with Alternatives
 
-Compare with Mamba's input-selective state-space recurrence and RWKV's decaying weighted-sum time-mixing (see [mamba.md](mamba.md), [rwkv.md](rwkv.md)) — all three are modern routes back toward recurrent, compact-state architectures, differing in how they parameterize the recurrence and how much of the classical RNN/LSTM structure they keep.
+Compare with Mamba's input-selective state-space recurrence and RWKV's decaying weighted-sum time-mixing (see [mamba.md](mamba.md), [rwkv.md](rwkv.md)), all three are modern routes back toward recurrent, compact-state architectures, differing in how they parameterize the recurrence and how much of the classical RNN/LSTM structure they keep.
 
 ## Representative Models
 

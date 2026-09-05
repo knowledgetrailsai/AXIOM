@@ -12,9 +12,9 @@ U-Nets were the default diffusion backbone, but their inductive biases and scali
 
 ## Core Architectural Idea
 
-DiT operates in a compressed latent space (typically produced by a pretrained VAE encoder, see [autoencoders-vae-vqvae.md](autoencoders-vae-vqvae.md)), not raw pixels — this keeps the token count manageable. The noisy latent is split into fixed-size patches, each patch is linearly projected into a token embedding (the same patchify step used in Vision Transformers), and the timestep t plus any conditioning signal (e.g. a class label or text embedding) are injected via adaptive layer normalization: instead of learning fixed scale/shift parameters for each normalization layer, DiT predicts them from the conditioning signal, so the same Transformer block behaves differently at different noise levels and different conditioning inputs. A stack of standard Transformer blocks (self-attention plus feed-forward, with the adaptive normalization) then processes the patch tokens, and a final linear layer maps each output token back to a patch of the predicted noise ε_θ, matching the shape the diffusion training objective (from [diffusion-models.md](diffusion-models.md)) expects.
+DiT operates in a compressed latent space (typically produced by a pretrained VAE encoder, see [autoencoders-vae-vqvae.md](autoencoders-vae-vqvae.md)), not raw pixels. This keeps the token count manageable. The noisy latent is split into fixed-size patches, each patch is linearly projected into a token embedding (the same patchify step used in Vision Transformers), and the timestep t plus any conditioning signal (e.g. a class label or text embedding) are injected via adaptive layer normalization: instead of learning fixed scale/shift parameters for each normalization layer, DiT predicts them from the conditioning signal, so the same Transformer block behaves differently at different noise levels and different conditioning inputs. A stack of standard Transformer blocks (self-attention plus feed-forward, with the adaptive normalization) then processes the patch tokens, and a final linear layer maps each output token back to a patch of the predicted noise ε_θ, matching the shape the diffusion training objective (from [diffusion-models.md](diffusion-models.md)) expects.
 
-The diffusion objective itself — predict the noise added at a randomly sampled timestep — is unchanged from a U-Net-based diffusion model. What changes is entirely the function class computing ε_θ(x_t, t): self-attention over patch tokens instead of convolutions with skip connections.
+The diffusion objective itself, predict the noise added at a randomly sampled timestep: is unchanged from a U-Net-based diffusion model. What changes is entirely the function class computing ε_θ(x_t, t): self-attention over patch tokens instead of convolutions with skip connections.
 
 ## Information Flow
 
@@ -52,11 +52,11 @@ flowchart LR
 
 ## Strengths
 
-Inherits Transformer scaling behavior — larger DiT models tend to follow predictable quality improvements with more parameters and compute, similar to language-model scaling trends. Flexible conditioning through the same attention/adaLN mechanism that already supports many kinds of conditioning signals (text, class labels, other modalities). Patchified latent tokens are a natural fit for a Transformer, avoiding the need for U-Net-specific architectural choices (skip connections, resolution-specific blocks).
+Inherits Transformer scaling behavior; larger DiT models tend to follow predictable quality improvements with more parameters and compute, similar to language-model scaling trends. Flexible conditioning through the same attention/adaLN mechanism that already supports many kinds of conditioning signals (text, class labels, other modalities). Patchified latent tokens are a natural fit for a Transformer, avoiding the need for U-Net-specific architectural choices (skip connections, resolution-specific blocks).
 
 ## Limitations and Failure Modes
 
-Attention cost grows quadratically with token count, which becomes significant for high spatial resolution or, especially, video (spatial × temporal tokens can be very large). Diffusion sampling remains iterative regardless of the backbone — DiT does not by itself reduce the number of denoising steps needed.
+Attention cost grows quadratically with token count, which becomes significant for high spatial resolution or, especially, video (spatial × temporal tokens can be very large). Diffusion sampling remains iterative regardless of the backbone. DiT does not by itself reduce the number of denoising steps needed.
 
 ## Architecture vs Training Objective
 
@@ -72,7 +72,7 @@ Very high resolution or long video where the resulting patch-token count makes q
 
 ## Comparison with Alternatives
 
-A convolutional U-Net denoiser has strong locality inductive bias and no quadratic attention cost, but doesn't inherit Transformer scaling trends or attention-based conditioning flexibility as directly. DiT is best understood as "the diffusion objective, with a Transformer backbone" — the objective/backbone separation described in [diffusion-models.md](diffusion-models.md#architecture-vs-training-objective).
+A convolutional U-Net denoiser has strong locality inductive bias and no quadratic attention cost, but doesn't inherit Transformer scaling trends or attention-based conditioning flexibility as directly. DiT is best understood as "the diffusion objective, with a Transformer backbone", the objective/backbone separation described in [diffusion-models.md](diffusion-models.md#architecture-vs-training-objective).
 
 ## Representative Models
 

@@ -6,7 +6,7 @@ An embedding maps a discrete or complex object (a token, a category, an image pa
 
 Embeddings are not one architecture. They are the interface layer that turns anything into something a differentiable network can process, and they are what similarity search, retrieval, and multimodal alignment operate on.
 
-For how to pick a specific embedding model for a production retrieval system — benchmarking against MTEB, dimension/cost/latency tradeoffs, domain fine-tuning — see [Forge's embedding model selection guide](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md).
+For how to pick a specific embedding model for a production retrieval system. Benchmarking against MTEB, dimension/cost/latency tradeoffs, domain fine-tuning, see [Forge's embedding model selection guide](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md).
 
 ## Why This Architecture Exists
 
@@ -18,7 +18,7 @@ Neural networks compute with continuous, differentiable operations. A word, a ca
 
 The simplest embedding is a lookup table: an `N × D` matrix where row `i` is the vector for object `i`. `N` is vocabulary size, `D` is embedding dimension. Lookup is `O(1)`: index into the table.
 
-More generally, an encoder produces an embedding by processing raw content (a sentence, an image) into a fixed-size vector — this is what makes an embedding "contextual" instead of static.
+More generally, an encoder produces an embedding by processing raw content (a sentence, an image) into a fixed-size vector: this is what makes an embedding "contextual" instead of static.
 
 ### Cosine similarity
 
@@ -41,7 +41,7 @@ A cosine similarity of 0.730 (out of a max of 1.0) indicates the vectors point i
 
 ### Dimensionality trade-off
 
-A larger `D` gives more capacity to encode distinct relationships (more near-orthogonal directions are available — roughly `D` mutually orthogonal directions exist exactly, but exponentially many nearly-orthogonal directions exist as `D` grows). This comes at a direct memory and compute cost: an embedding table of vocabulary size 50,000 and `D = 4096` holds 205 million parameters, versus 12.8 million at `D = 256`. Larger `D` also means every downstream dot product (e.g. attention scores, similarity search) costs proportionally more.
+A larger `D` gives more capacity to encode distinct relationships (more near-orthogonal directions are available; roughly `D` mutually orthogonal directions exist exactly, but exponentially many nearly-orthogonal directions exist as `D` grows). This comes at a direct memory and compute cost: an embedding table of vocabulary size 50,000 and `D = 4096` holds 205 million parameters, versus 12.8 million at `D = 256`. Larger `D` also means every downstream dot product (e.g. attention scores, similarity search) costs proportionally more.
 
 ## Information Flow
 
@@ -80,13 +80,13 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- A static (non-contextual) embedding assigns one vector per token regardless of surrounding context — it cannot distinguish "bank" (river) from "bank" (finance).
+- A static (non-contextual) embedding assigns one vector per token regardless of surrounding context. It cannot distinguish "bank" (river) from "bank" (finance).
 - Embedding geometry reflects the biases and frequency statistics of training data; rare objects get poorly trained vectors.
-- Similarity in embedding space is only as meaningful as the training objective that shaped it — a space trained for one task may not transfer its notion of similarity to another.
+- Similarity in embedding space is only as meaningful as the training objective that shaped it, a space trained for one task may not transfer its notion of similarity to another.
 
 ## Architecture vs Training Objective
 
-The lookup table or encoder architecture only defines how a vector is produced. What the geometry of that vector space actually means — whether "close" means "synonymous," "co-occurring," or "visually similar" — is entirely a product of the training objective (e.g. next-token prediction, contrastive loss, masked reconstruction).
+The lookup table or encoder architecture only defines how a vector is produced. What the geometry of that vector space actually means: whether "close" means "synonymous," "co-occurring," or "visually similar"; is entirely a product of the training objective (e.g. next-token prediction, contrastive loss, masked reconstruction).
 
 ## When to Use It
 
@@ -94,17 +94,17 @@ Use embeddings whenever discrete or heterogeneous input needs to enter a differe
 
 ## When Not to Use It
 
-Skip contextual encoding when input truly has no useful context (e.g. a fixed small category set with no relational structure) — a small lookup table is sufficient and cheaper. Do not rely on a similarity space trained for one objective as a proxy for a different, unrelated notion of relevance.
+Skip contextual encoding when input truly has no useful context (e.g. a fixed small category set with no relational structure). A small lookup table is sufficient and cheaper. Do not rely on a similarity space trained for one objective as a proxy for a different, unrelated notion of relevance.
 
 ## Comparison with Alternatives
 
-- **One-hot encoding** is the degenerate embedding with `D = N` and orthogonal, meaningless geometry — embeddings replace this with a dense, learned, lower-dimensional space.
+- **One-hot encoding** is the degenerate embedding with `D = N` and orthogonal, meaningless geometry, embeddings replace this with a dense, learned, lower-dimensional space.
 - **JEPA-style latent prediction** trains embeddings to predict other embeddings directly, rather than to reconstruct raw input (see Latent Prediction).
 - **Dual encoders (e.g. CLIP)** train two separate embedding functions and align their output spaces with a contrastive objective, rather than sharing one lookup table.
 
 ## Representative Models
 
-Not applicable directly — see BERT and Encoders, GPT-Style Decoders, and JEPA Family for architectures built around specific embedding and representation objectives.
+Not applicable directly: see BERT and Encoders, GPT-Style Decoders, and JEPA Family for architectures built around specific embedding and representation objectives.
 
 ## References
 

@@ -8,7 +8,7 @@ An autoregressive model predicts the next unit of a sequence given everything be
 
 In practical terms, **Autoregressive Language Models** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Modeling the joint probability `P(x_1, ..., x_n)` directly over an entire sequence is intractable for any realistic vocabulary and length — the number of possible sequences grows exponentially. Autoregressive factorization turns this into `n` tractable conditional predictions instead.
+Modeling the joint probability `P(x_1, ..., x_n)` directly over an entire sequence is intractable for any realistic vocabulary and length. The number of possible sequences grows exponentially. Autoregressive factorization turns this into `n` tractable conditional predictions instead.
 
 ## Core Architectural Idea
 
@@ -20,7 +20,7 @@ A causal Transformer decoder (see Encoder, Decoder and Encoder-Decoder Transform
 
 ### Cross-entropy training loss
 
-Training minimizes the negative log-likelihood the factorization assigns to the true sequence — the cross-entropy between the predicted distribution and the true next token:
+Training minimizes the negative log-likelihood the factorization assigns to the true sequence, the cross-entropy between the predicted distribution and the true next token:
 
 `L = - Σ_i log P(x_i | x_<i))`
 
@@ -48,7 +48,7 @@ And if it had been confidently wrong, `P(C) = 0.02`:
 L = -log(0.02) = 3.912 nats
 ```
 
-Cross-entropy penalizes confident wrong predictions far more heavily than uncertain ones — the loss grows without bound as the assigned probability to the true token approaches zero, which is what drives the model to avoid overconfident mistakes during training.
+Cross-entropy penalizes confident wrong predictions far more heavily than uncertain ones: the loss grows without bound as the assigned probability to the true token approaches zero, which is what drives the model to avoid overconfident mistakes during training.
 
 ## Information Flow
 
@@ -82,27 +82,27 @@ flowchart LR
 
 ## Strengths
 
-- Exact, lossless factorization of the joint sequence probability — no approximation is introduced by the chain rule itself.
+- Exact, lossless factorization of the joint sequence probability; no approximation is introduced by the chain rule itself.
 - Training is fully parallel despite the model being sequential at inference, since teacher forcing supplies the true prefix at every position simultaneously.
 - Naturally supports open-ended generation of arbitrary length, unlike architectures that require a fixed output size.
 
 ## Limitations and Failure Modes
 
-- Inference is inherently sequential — generating `n` tokens requires `n` forward passes (amortized by the KV cache, but still `n` sequential steps).
-- Maximizing likelihood does not directly optimize for truthfulness, helpfulness, or successful multi-step planning — a well-calibrated next-token predictor can still generate confidently incorrect continuations if the training distribution supports them.
+- Inference is inherently sequential. Generating `n` tokens requires `n` forward passes (amortized by the KV cache, but still `n` sequential steps).
+- Maximizing likelihood does not directly optimize for truthfulness, helpfulness, or successful multi-step planning, a well-calibrated next-token predictor can still generate confidently incorrect continuations if the training distribution supports them.
 - Errors can compound during generation: an early wrong token becomes part of the "true" prefix used for the next prediction, a mismatch between train-time teacher forcing and inference-time self-conditioning known as exposure bias.
 
 ## Architecture vs Training Objective
 
-Autoregressive factorization is a training-objective and generation-protocol choice, not itself a specific network architecture — it can be applied with an RNN, a causal Transformer, or in principle any causal sequence model. The causal Transformer decoder is simply the dominant current architecture used to parameterize it (see Encoder, Decoder and Encoder-Decoder Transformers).
+Autoregressive factorization is a training-objective and generation-protocol choice, not itself a specific network architecture: it can be applied with an RNN, a causal Transformer, or in principle any causal sequence model. The causal Transformer decoder is simply the dominant current architecture used to parameterize it (see Encoder, Decoder and Encoder-Decoder Transformers).
 
 ## When to Use It
 
-Use autoregressive modeling for open-ended sequence generation of arbitrary length where left-to-right (or otherwise fixed-order) causal factorization matches the task — general text generation, code generation, and any setting where output length is not known in advance.
+Use autoregressive modeling for open-ended sequence generation of arbitrary length where left-to-right (or otherwise fixed-order) causal factorization matches the task; general text generation, code generation, and any setting where output length is not known in advance.
 
 ## When Not to Use It
 
-Avoid pure autoregressive factorization when bidirectional context is essential for the actual task and no left-to-right generation is required (representation learning, classification) — masked/denoising objectives (see Masked and Denoising Language Models) fit those cases better. Consider non-autoregressive or parallel-decoding methods when generation latency, not quality, is the binding constraint.
+Avoid pure autoregressive factorization when bidirectional context is essential for the actual task and no left-to-right generation is required (representation learning, classification). Masked/denoising objectives (see Masked and Denoising Language Models) fit those cases better. Consider non-autoregressive or parallel-decoding methods when generation latency, not quality, is the binding constraint.
 
 ## Comparison with Alternatives
 

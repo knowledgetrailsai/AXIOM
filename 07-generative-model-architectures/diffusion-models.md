@@ -37,7 +37,7 @@ Sampling reverses this: starting from x_T ~ N(0, I) (pure noise), repeatedly pre
 | 500 | ≈0.08 | ≈0.28 | ≈0.96 |
 | 1000 (pure noise) | ≈0.00004 | ≈0.006 | ≈1.00 |
 
-Even at t=100, one tenth of the way through the schedule, noise already accounts for about a third of the sample's variance. By the halfway point (t=500) the sample is almost entirely noise (noise fraction ≈0.96). This is why sampling has to walk back through many steps concentrated near the noisy end of the schedule — most of the schedule is spent in a regime where the signal is a small fraction of the total.
+Even at t=100, one tenth of the way through the schedule, noise already accounts for about a third of the sample's variance. By the halfway point (t=500) the sample is almost entirely noise (noise fraction ≈0.96). This is why sampling has to walk back through many steps concentrated near the noisy end of the schedule. Most of the schedule is spent in a regime where the signal is a small fraction of the total.
 
 ## Information Flow
 
@@ -74,7 +74,7 @@ flowchart LR
 
 ## Strengths
 
-Stable training relative to adversarial approaches — the objective is a simple regression loss (predict the noise), not a two-player game. Excellent media generation quality, especially for images, audio, and video. Flexible conditioning: text, class labels, or other signals can be injected into the denoiser at every step.
+Stable training relative to adversarial approaches, the objective is a simple regression loss (predict the noise), not a two-player game. Excellent media generation quality, especially for images, audio, and video. Flexible conditioning: text, class labels, or other signals can be injected into the denoiser at every step.
 
 ## Limitations and Failure Modes
 
@@ -90,7 +90,7 @@ High-fidelity media generation (image, audio, video) where sampling cost is acce
 
 ## When Not to Use It
 
-Latency-critical single-pass generation, where the multi-step sampling cost is prohibitive — a GAN or a distilled/few-step diffusion variant may be a better fit.
+Latency-critical single-pass generation, where the multi-step sampling cost is prohibitive: a GAN or a distilled/few-step diffusion variant may be a better fit.
 
 ## Comparison with Alternatives
 

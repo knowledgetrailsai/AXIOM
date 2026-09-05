@@ -91,7 +91,7 @@ Load imbalance wastes hardware: an overloaded expert becomes a throughput bottle
 
 ## Architecture vs Training Objective
 
-The router, the top-k selection, and the expert FFN structure are architecture. The auxiliary load-balancing loss is a training-time addition, not a structural change to the forward pass graph — remove it and the model still runs, just with worse balance. Observed capability also depends on data, optimization schedule, capacity factor choice, and post-training, not on the MoE structure alone.
+The router, the top-k selection, and the expert FFN structure are architecture. The auxiliary load-balancing loss is a training-time addition, not a structural change to the forward pass graph. Remove it and the model still runs, just with worse balance. Observed capability also depends on data, optimization schedule, capacity factor choice, and post-training, not on the MoE structure alone.
 
 ## When to Use It
 
@@ -109,7 +109,7 @@ Mixtral 8x7B is a public example. Google’s Switch Transformer and several late
 
 ## Comparison with Alternatives
 
-A dense model with the same active-parameter count is operationally simpler (no routing, no dispatch, no imbalance) but cannot match the total capacity of the MoE model without also matching its FLOPs per token. Sparse attention addresses a different axis — it reduces the cost of token-to-token interaction, not feed-forward capacity. Retrieval augmentation adds external, non-parametric capacity instead of internal routed capacity.
+A dense model with the same active-parameter count is operationally simpler (no routing, no dispatch, no imbalance) but cannot match the total capacity of the MoE model without also matching its FLOPs per token. Sparse attention addresses a different axis, it reduces the cost of token-to-token interaction, not feed-forward capacity. Retrieval augmentation adds external, non-parametric capacity instead of internal routed capacity.
 
 ## Representative Models
 

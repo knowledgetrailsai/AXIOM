@@ -20,7 +20,7 @@ dx/dτ = v_θ(x, τ),     τ ∈ [0, 1]
 
 where x(0) is drawn from the simple prior (noise) and x(1) is the generated sample, and v_θ is a learned vector field (a neural network taking the current point x and "time" τ). Directly training v_θ requires simulating this ODE during training, which is expensive.
 
-Flow matching sidesteps that by defining, for each training pair (x_0 from noise, x_1 from data), a simple deterministic interpolation path — most commonly a straight line:
+Flow matching sidesteps that by defining, for each training pair (x_0 from noise, x_1 from data), a simple deterministic interpolation path. Most commonly a straight line:
 
 ```
 x_τ = (1 - τ) x_0 + τ x_1
@@ -38,7 +38,7 @@ Training then just regresses the network's predicted velocity against this known
 L_FM = E_{τ, x_0, x_1} [ || v_θ(x_τ, τ) - (x_1 - x_0) ||² ]
 ```
 
-This is a plain regression loss — no simulated trajectory, no adversarial game, no explicit likelihood computation — and it provably trains v_θ to approximate the same marginal probability-flow ODE that would transport the noise distribution to the data distribution, without ever simulating that ODE during training. Sampling still requires integrating the learned v_θ from τ=0 to τ=1 (an ODE solve), but because the training-time paths were simple and direct (e.g. straight lines), the learned field tends to admit fast, low-step-count solvers at sampling time.
+This is a plain regression loss, no simulated trajectory, no adversarial game, no explicit likelihood computation, and it provably trains v_θ to approximate the same marginal probability-flow ODE that would transport the noise distribution to the data distribution, without ever simulating that ODE during training. Sampling still requires integrating the learned v_θ from τ=0 to τ=1 (an ODE solve), but because the training-time paths were simple and direct (e.g. straight lines), the learned field tends to admit fast, low-step-count solvers at sampling time.
 
 ## Information Flow
 
@@ -86,15 +86,15 @@ Flow matching is a training objective (the regression loss above) that can pair 
 
 ## When to Use It
 
-Continuous generative modeling where fast sampling (few solver steps) and stable, simulation-free training are both wanted — flow matching's regression-based training is often simpler to tune than either diffusion's schedule choices or a GAN's adversarial balance.
+Continuous generative modeling where fast sampling (few solver steps) and stable, simulation-free training are both wanted; flow matching's regression-based training is often simpler to tune than either diffusion's schedule choices or a GAN's adversarial balance.
 
 ## When Not to Use It
 
-Settings that specifically require exact tractable likelihood computation for arbitrary points (a strength particular to classical invertible normalizing flows) — flow matching's ODE-based sampling does not, in general, give as convenient an exact-likelihood computation as a fully invertible flow does.
+Settings that specifically require exact tractable likelihood computation for arbitrary points (a strength particular to classical invertible normalizing flows). Flow matching's ODE-based sampling does not, in general, give as convenient an exact-likelihood computation as a fully invertible flow does.
 
 ## Comparison with Alternatives
 
-Diffusion models and flow matching both transport a simple distribution to the data distribution, but diffusion trains via a stochastic noising/denoising process while flow matching trains via direct regression onto known interpolation-path velocities — flow matching's simpler training target is often why it needs fewer sampling steps to reach comparable quality.
+Diffusion models and flow matching both transport a simple distribution to the data distribution, but diffusion trains via a stochastic noising/denoising process while flow matching trains via direct regression onto known interpolation-path velocities, flow matching's simpler training target is often why it needs fewer sampling steps to reach comparable quality.
 
 ## Representative Models
 

@@ -8,11 +8,11 @@ A robotic world model predicts future states under candidate actions, so a plann
 
 In practical terms, **World Models for Robotics** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-A policy trained purely by imitation copies demonstrated behavior. In states far from any demonstration, it has little guidance for what to do — imitation gives no mechanism for the policy to reason about consequences it has never seen demonstrated. A world model gives the agent a way to evaluate "what happens if" even in states outside the demonstration distribution, as long as the model's dynamics generalize there.
+A policy trained purely by imitation copies demonstrated behavior. In states far from any demonstration, it has little guidance for what to do. Imitation gives no mechanism for the policy to reason about consequences it has never seen demonstrated. A world model gives the agent a way to evaluate "what happens if" even in states outside the demonstration distribution, as long as the model's dynamics generalize there.
 
 ## Core Architectural Idea
 
-The concrete flow: encode the current observation into a state representation. Roll out candidate action-conditioned futures through the learned dynamics model (see [what-is-a-world-model.md](../09-predictive-and-world-models/what-is-a-world-model.md) and [planning-with-world-models.md](../09-predictive-and-world-models/planning-with-world-models.md) for the general mechanism). Score each predicted future against a goal. Execute the first action of the best-scoring sequence, then re-observe and replan — the model-predictive control loop.
+The concrete flow: encode the current observation into a state representation. Roll out candidate action-conditioned futures through the learned dynamics model (see [what-is-a-world-model.md](../09-predictive-and-world-models/what-is-a-world-model.md) and [planning-with-world-models.md](../09-predictive-and-world-models/planning-with-world-models.md) for the general mechanism). Score each predicted future against a goal. Execute the first action of the best-scoring sequence, then re-observe and replan, the model-predictive control loop.
 
 For robotics specifically, the dynamics model has to represent physical contact and manipulation dynamics, which are harder to model than, say, passive video prediction of a static scene: contact introduces sharp, discontinuous changes in state (an object was free, now it is grasped) that a smooth learned dynamics function can struggle to capture precisely.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Contact and manipulation dynamics — grasping, collisions, deformable objects — are hard to model accurately, since they involve sharp discontinuities a smooth learned function struggles to fit.
+- Contact and manipulation dynamics: grasping, collisions, deformable objects; are hard to model accurately, since they involve sharp discontinuities a smooth learned function struggles to fit.
 - Planning must fit inside the robot's control-loop latency budget; a dynamics model too slow to query enough candidates within that budget cannot be used for real-time control.
 - Long-horizon rollouts compound prediction error, same as any world-model planning setup.
 

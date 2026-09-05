@@ -4,9 +4,9 @@ BERT is the reference for **encoder-only Transformer** architecture combined wit
 
 ## Architectural lesson
 
-- Bidirectional self-attention with no causal mask — every position sees every other position, including "future" ones.
+- Bidirectional self-attention with no causal mask. Every position sees every other position, including "future" ones.
 - Contextual token representations: the same word gets a different vector depending on surrounding context, unlike a static embedding lookup.
-- No causal generation requirement — BERT produces representations for classification, tagging, and retrieval, not open-ended text.
+- No causal generation requirement, BERT produces representations for classification, tagging, and retrieval, not open-ended text.
 - Trained with the 80/10/10 masked-language-model rule: of the 15% of tokens selected for the objective, 80% become `[MASK]`, 10% become a random token, 10% stay unchanged, with the loss always computed against the true original token (see Masked and Denoising Language Models for the worked numeric example).
 
 ## Representative models

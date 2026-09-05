@@ -27,7 +27,7 @@ A common mechanism is early-exit: at each layer, a small classifier head estimat
 | 7 | 5 |
 | 8 | 4 |
 
-Average layers used = (4+12+6+4+8+12+5+4) / 8 = 55 / 8 = 6.875 layers, against a fixed cost of 12 layers per input for a non-adaptive network — a 43% reduction in this batch.
+Average layers used = (4+12+6+4+8+12+5+4) / 8 = 55 / 8 = 6.875 layers, against a fixed cost of 12 layers per input for a non-adaptive network. A 43% reduction in this batch.
 
 ## Information Flow
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Variable per-example depth complicates GPU batching — a batch where inputs finish at different layers cannot simply proceed as one dense block.
+- Variable per-example depth complicates GPU batching, a batch where inputs finish at different layers cannot simply proceed as one dense block.
 - The halting/confidence signal is hard to train reliably: a poorly calibrated halting head can exit too early on hard inputs or never exit on easy ones.
 - Savings are theoretical unless the serving system actually exploits variable depth; naively, all inputs in a batch may still have to wait for the slowest one to finish.
 

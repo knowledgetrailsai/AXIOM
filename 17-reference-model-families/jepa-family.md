@@ -12,7 +12,7 @@ The central idea is target prediction in representation space rather than raw re
 - **V-JEPA** (Bardes et al., 2024) extends the idea to video, predicting masked spatio-temporal regions' representations rather than pixel-level future frames.
 - **V-JEPA 2** further scales this video-prediction approach and connects it toward physical-world and planning applications.
 
-This progression treats JEPA as an objective/architecture pattern that can wrap different backbone encoders (typically Vision Transformers), not a single fixed network — see the taxonomy distinction in `00-navigation-and-methodology/architecture-taxonomy.md`.
+This progression treats JEPA as an objective/architecture pattern that can wrap different backbone encoders (typically Vision Transformers), not a single fixed network. See the taxonomy distinction in `00-navigation-and-methodology/architecture-taxonomy.md`.
 
 ## Representative models
 

@@ -2,13 +2,13 @@
 
 ## Context and Plain-Language Explanation
 
-Self-attention's score `QK^T` is the same regardless of token order — swapping two tokens' positions gives the same set of pairwise scores. A position mechanism has to inject order. RoPE injects it by rotating each query and key vector by an angle proportional to its position, so the dot product between a query and key naturally depends on their relative offset.
+Self-attention's score `QK^T` is the same regardless of token order. Swapping two tokens' positions gives the same set of pairwise scores. A position mechanism has to inject order. RoPE injects it by rotating each query and key vector by an angle proportional to its position, so the dot product between a query and key naturally depends on their relative offset.
 
 ## Why This Architecture Exists
 
 In practical terms, **Position Encoding and RoPE** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Attention treats its input as a set, not a sequence, unless something tells it where each token sits. Language and most sequential data are order-dependent — "dog bites man" and "man bites dog" have the same tokens, different meaning — so the model needs positional information injected somewhere.
+Attention treats its input as a set, not a sequence, unless something tells it where each token sits. Language and most sequential data are order-dependent, "dog bites man" and "man bites dog" have the same tokens, different meaning, so the model needs positional information injected somewhere.
 
 ## Core Architectural Idea
 
@@ -48,7 +48,7 @@ x_rot(pos=5) = [0.2837*1.0 - (-0.9589)*0.0, -0.9589*1.0 + 0.2837*0.0]
              = [0.2837, -0.9589]
 ```
 
-The same vector lands in a different orientation depending purely on position. If this vector were a key being compared against a query at some other position, the resulting dot product would depend on the angle *between* the query's rotation and the key's rotation — that is, on their relative position offset (5 - 1 = 4 rotation-steps), not on either position individually.
+The same vector lands in a different orientation depending purely on position. If this vector were a key being compared against a query at some other position, the resulting dot product would depend on the angle *between* the query's rotation and the key's rotation; that is, on their relative position offset (5 - 1 = 4 rotation-steps), not on either position individually.
 
 ## Information Flow
 
@@ -88,13 +88,13 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Extrapolating to sequence lengths well beyond the training length is not automatically reliable — rotation angles at very large `p` were never seen during training, and attention patterns can degrade.
+- Extrapolating to sequence lengths well beyond the training length is not automatically reliable. Rotation angles at very large `p` were never seen during training, and attention patterns can degrade.
 - Scaling techniques used to extend RoPE's effective range (e.g. interpolation, adjusting the base frequency) trade off some resolution at the original training lengths for extended reach.
 - Position information here is baked into Q/K only, not V, so it affects *what* gets attended to but not the content retrieved directly.
 
 ## Architecture vs Training Objective
 
-RoPE's rotation is a fixed geometric transform, not learned. Everything a model does with the resulting position-aware dot products — what relative offsets matter for which task — is a product of training data and objective, not of the position mechanism itself.
+RoPE's rotation is a fixed geometric transform, not learned. Everything a model does with the resulting position-aware dot products, what relative offsets matter for which task: is a product of training data and objective, not of the position mechanism itself.
 
 ## When to Use It
 

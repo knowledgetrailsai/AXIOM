@@ -16,7 +16,7 @@ A vanilla RNN computes:
 
 `h_t = tanh(W_h h_{t-1} + W_x x_t + b)`
 
-Backpropagating through many timesteps multiplies the same Jacobian repeatedly, so gradients tend to vanish (if the Jacobian's dominant eigenvalue is less than 1) or explode (if greater than 1). This is the vanishing/exploding gradient problem for recurrent nets — it is the direct sequential analogue of the deep-network gradient problem that residual connections address for feedforward stacks.
+Backpropagating through many timesteps multiplies the same Jacobian repeatedly, so gradients tend to vanish (if the Jacobian's dominant eigenvalue is less than 1) or explode (if greater than 1). This is the vanishing/exploding gradient problem for recurrent nets. It is the direct sequential analogue of the deep-network gradient problem that residual connections address for feedforward stacks.
 
 ### LSTM gate equations
 
@@ -103,7 +103,7 @@ flowchart LR
 
 ## Architecture vs Training Objective
 
-Gating equations are fixed at design time. What information the gates learn to retain or discard is entirely a product of the training data and loss — the same LSTM architecture trained on language versus time-series forecasting develops completely different gating behavior.
+Gating equations are fixed at design time. What information the gates learn to retain or discard is entirely a product of the training data and loss, the same LSTM architecture trained on language versus time-series forecasting develops completely different gating behavior.
 
 ## When to Use It
 

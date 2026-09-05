@@ -22,9 +22,9 @@ E[accepted] = p + p² + p³ + p⁴
             = 1.7731
 ```
 
-(This is the expected length of a run of successes before the first failure, capped at k=4; each term p^i is the probability that at least i tokens in a row are accepted.) Adding the target model's own bonus token when all k are accepted contributes a small additional term (p⁴ × 1 = 0.2401), giving an expected total of about **2.01 tokens produced per target-model verification pass**, compared to exactly 1 token per pass under plain autoregressive decoding — roughly a 2× reduction in the number of expensive target-model passes needed, before accounting for the (much cheaper) cost of running the draft model k times per round.
+(This is the expected length of a run of successes before the first failure, capped at k=4; each term p^i is the probability that at least i tokens in a row are accepted.) Adding the target model's own bonus token when all k are accepted contributes a small additional term (p⁴ × 1 = 0.2401), giving an expected total of about **2.01 tokens produced per target-model verification pass**, compared to exactly 1 token per pass under plain autoregressive decoding. Roughly a 2× reduction in the number of expensive target-model passes needed, before accounting for the (much cheaper) cost of running the draft model k times per round.
 
-Raising the acceptance probability increases the payoff substantially: at p = 0.9 with k = 4, E[accepted] = 0.9+0.81+0.729+0.6561 = 3.10, plus a bonus term of 0.6561, for roughly 3.75 tokens per verification pass — speculative decoding's benefit scales with how well the draft model approximates the target, not just with how many tokens it drafts.
+Raising the acceptance probability increases the payoff substantially: at p = 0.9 with k = 4, E[accepted] = 0.9+0.81+0.729+0.6561 = 3.10, plus a bonus term of 0.6561, for roughly 3.75 tokens per verification pass, speculative decoding's benefit scales with how well the draft model approximates the target, not just with how many tokens it drafts.
 
 ## Information Flow
 
@@ -62,15 +62,15 @@ flowchart LR
 
 ## Strengths
 
-Can substantially reduce the number of expensive target-model decode steps, as shown in the worked example above. In the exact (not just heuristic) formulation, output samples come from precisely the same distribution as plain target-model decoding — speed without a quality trade-off, when implemented per the exact acceptance rule.
+Can substantially reduce the number of expensive target-model decode steps, as shown in the worked example above. In the exact (not just heuristic) formulation, output samples come from precisely the same distribution as plain target-model decoding: speed without a quality trade-off, when implemented per the exact acceptance rule.
 
 ## Limitations and Failure Modes
 
-Speedup is entirely dependent on the acceptance rate: a draft model that rarely agrees with the target produces little or no benefit, since every rejection falls back to the cost of the target model's own single-token step for that position, plus the wasted draft compute. Adds real system complexity — two models, a verification and acceptance procedure, and cache management for partially-accepted draft sequences.
+Speedup is entirely dependent on the acceptance rate: a draft model that rarely agrees with the target produces little or no benefit, since every rejection falls back to the cost of the target model's own single-token step for that position, plus the wasted draft compute. Adds real system complexity; two models, a verification and acceptance procedure, and cache management for partially-accepted draft sequences.
 
 ## Architecture vs Training Objective
 
-Speculative decoding is an inference-time procedure, not a change to either model's architecture — the target model's forward pass and trained weights are unchanged from ordinary decoding. Draft-model quality (and thus achieved speedup) depends on how the draft model was trained and how closely it approximates the target model's distribution, which is a training-time concern separate from the decoding procedure itself.
+Speculative decoding is an inference-time procedure, not a change to either model's architecture. The target model's forward pass and trained weights are unchanged from ordinary decoding. Draft-model quality (and thus achieved speedup) depends on how the draft model was trained and how closely it approximates the target model's distribution, which is a training-time concern separate from the decoding procedure itself.
 
 ## When to Use It
 
@@ -78,11 +78,11 @@ Any latency-sensitive autoregressive serving setup where a cheap, reasonably-ali
 
 ## When Not to Use It
 
-When no reasonably well-aligned draft model exists — a poorly-matched draft produces low acceptance rates and can make throughput worse, not better, once its own compute cost is included. Also less beneficial in already-compute-bound settings (e.g. very large batch sizes), where the workload is no longer predominantly bandwidth-bound and there is less slack for verification to exploit.
+When no reasonably well-aligned draft model exists, a poorly-matched draft produces low acceptance rates and can make throughput worse, not better, once its own compute cost is included. Also less beneficial in already-compute-bound settings (e.g. very large batch sizes), where the workload is no longer predominantly bandwidth-bound and there is less slack for verification to exploit.
 
 ## Comparison with Alternatives
 
-Speculative decoding is an inference-time scheduling technique, not an alternative backbone architecture — it composes with any of the architectures described elsewhere in this repository (dense Transformer, MoE, SSM) as long as a suitable draft model exists for the target.
+Speculative decoding is an inference-time scheduling technique, not an alternative backbone architecture: it composes with any of the architectures described elsewhere in this repository (dense Transformer, MoE, SSM) as long as a suitable draft model exists for the target.
 
 ## Representative Models
 

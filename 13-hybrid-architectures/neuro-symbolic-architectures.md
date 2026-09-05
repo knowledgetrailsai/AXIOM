@@ -8,13 +8,13 @@ Neuro-symbolic systems pair a neural component (good at perception, approximatio
 
 In practical terms, **Neuro-Symbolic Architectures** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Neural networks approximate functions well from data but don't guarantee that hard constraints are satisfied — a neural planner can produce an output that violates a rule it was never forced to respect. Symbolic systems (logic solvers, constraint solvers, formal grammars) enforce exact constraints but can't directly process raw, noisy perceptual input like images or natural language. Combining them lets perception feed a symbolic module that then guarantees the constraints the neural part alone couldn't.
+Neural networks approximate functions well from data but don't guarantee that hard constraints are satisfied. A neural planner can produce an output that violates a rule it was never forced to respect. Symbolic systems (logic solvers, constraint solvers, formal grammars) enforce exact constraints but can't directly process raw, noisy perceptual input like images or natural language. Combining them lets perception feed a symbolic module that then guarantees the constraints the neural part alone couldn't.
 
 ## Core Architectural Idea
 
-A neural component maps raw or noisy input into a structured representation — a set of facts, a program, or parameters for a symbolic query. A symbolic module (a theorem prover, constraint solver, search procedure, or fixed rule set) then operates on that structured representation to produce an output, enforcing whatever exactness the symbolic formalism guarantees. Some designs run this once (neural perception, then symbolic reasoning); others loop, using the symbolic module's output (e.g. a detected constraint violation) as feedback that reshapes the neural component's next attempt.
+A neural component maps raw or noisy input into a structured representation, a set of facts, a program, or parameters for a symbolic query. A symbolic module (a theorem prover, constraint solver, search procedure, or fixed rule set) then operates on that structured representation to produce an output, enforcing whatever exactness the symbolic formalism guarantees. Some designs run this once (neural perception, then symbolic reasoning); others loop, using the symbolic module's output (e.g. a detected constraint violation) as feedback that reshapes the neural component's next attempt.
 
-The interface between the two components — how a continuous neural output becomes a discrete symbolic input, and vice versa — is the central design problem. A discrete decision (e.g. "is this fact true") made from a continuous neural score requires a thresholding or sampling step that is not naturally differentiable, complicating end-to-end training across the boundary.
+The interface between the two components: how a continuous neural output becomes a discrete symbolic input, and vice versa; is the central design problem. A discrete decision (e.g. "is this fact true") made from a continuous neural score requires a thresholding or sampling step that is not naturally differentiable, complicating end-to-end training across the boundary.
 
 ## Information Flow
 
@@ -53,7 +53,7 @@ Exact constraint handling that a purely neural approach cannot guarantee by cons
 
 ## Limitations and Failure Modes
 
-The continuous-to-discrete interface is brittle — small perceptual errors in the neural component can produce a structured representation the symbolic module handles in a discontinuous, hard-to-predict way. End-to-end training across the neural-symbolic boundary is difficult precisely because the symbolic module is usually not differentiable, forcing approximate training strategies.
+The continuous-to-discrete interface is brittle. Small perceptual errors in the neural component can produce a structured representation the symbolic module handles in a discontinuous, hard-to-predict way. End-to-end training across the neural-symbolic boundary is difficult precisely because the symbolic module is usually not differentiable, forcing approximate training strategies.
 
 ## Architecture vs Training Objective
 
@@ -61,11 +61,11 @@ The split into a neural component and a symbolic module, and the interface betwe
 
 ## When to Use It
 
-Tasks that combine noisy perceptual input with a genuine need for exact rule satisfaction or formal search — e.g. parsing natural language into a query against a rule-governed knowledge base, or converting perception into constraints for a planner that must respect hard physical or logical limits.
+Tasks that combine noisy perceptual input with a genuine need for exact rule satisfaction or formal search, e.g. parsing natural language into a query against a rule-governed knowledge base, or converting perception into constraints for a planner that must respect hard physical or logical limits.
 
 ## When Not to Use It
 
-Tasks where approximate, learned behavior is acceptable throughout and no hard exactness guarantee is actually required — the added interface complexity buys nothing there. Tool-using LLM systems that call external calculators, code interpreters, or solvers are a related pattern at the system level, but calling an external tool does not make the tool part of the model's own architecture in the way a genuinely integrated symbolic module is.
+Tasks where approximate, learned behavior is acceptable throughout and no hard exactness guarantee is actually required: the added interface complexity buys nothing there. Tool-using LLM systems that call external calculators, code interpreters, or solvers are a related pattern at the system level, but calling an external tool does not make the tool part of the model's own architecture in the way a genuinely integrated symbolic module is.
 
 ## Comparison with Alternatives
 

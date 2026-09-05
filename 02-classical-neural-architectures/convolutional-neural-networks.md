@@ -16,7 +16,7 @@ A 2D convolution slides a `k × k` kernel over the input, computing a weighted s
 
 `y[i,j] = sum over (di, dj) of W[di,dj] * x[i+di, j+dj] + b`
 
-Weights are shared across all `(i,j)` positions — the same kernel detects the same pattern wherever it appears in the input.
+Weights are shared across all `(i,j)` positions. The same kernel detects the same pattern wherever it appears in the input.
 
 ### Output size formula
 
@@ -42,7 +42,7 @@ The receptive field is the region of the original input that affects one output 
 
 `RF = 1 + L * (k - 1)`
 
-Ten stacked 3×3 convolutions give `RF = 1 + 10*(3-1) = 21`. Reaching a receptive field covering a 224×224 image with only 3×3 kernels needs on the order of 100+ layers, or a combination of pooling/stride to grow the receptive field faster — deep CNNs like ResNet use strided downsampling specifically to grow receptive field without a linear explosion in layer count.
+Ten stacked 3×3 convolutions give `RF = 1 + 10*(3-1) = 21`. Reaching a receptive field covering a 224×224 image with only 3×3 kernels needs on the order of 100+ layers, or a combination of pooling/stride to grow the receptive field faster, deep CNNs like ResNet use strided downsampling specifically to grow receptive field without a linear explosion in layer count.
 
 ## Information Flow
 
@@ -85,13 +85,13 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Global relationships require either many stacked layers (to grow receptive field) or explicit global operations (global pooling, attention) — a single convolution only sees a local window.
+- Global relationships require either many stacked layers (to grow receptive field) or explicit global operations (global pooling, attention): a single convolution only sees a local window.
 - The grid/locality assumption fits images and regularly-sampled signals well but fits graphs or irregular structures poorly (see Graph Neural Networks).
 - Very deep plain CNNs (pre-ResNet) suffered degrading training accuracy with added depth, which residual connections (He et al., 2015) were designed to fix.
 
 ## Architecture vs Training Objective
 
-The convolution operation and receptive field growth are fixed by the architecture. What the learned kernels detect — edges vs. textures vs. task-specific shapes — is entirely a function of the training data and loss (classification, segmentation, self-supervised contrastive objectives, etc.).
+The convolution operation and receptive field growth are fixed by the architecture. What the learned kernels detect; edges vs. textures vs. task-specific shapes. Is entirely a function of the training data and loss (classification, segmentation, self-supervised contrastive objectives, etc.).
 
 ## When to Use It
 

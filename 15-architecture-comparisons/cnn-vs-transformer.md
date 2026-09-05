@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-A CNN builds in locality: each layer only mixes information from nearby pixels, and the same filter is reused at every position. A Vision Transformer (ViT) builds in nothing about spatial structure — every patch can attend to every other patch from layer one — and has to learn locality from data instead. CNNs need less data to reach a given accuracy; ViTs can reach higher accuracy given enough data and pretraining.
+A CNN builds in locality: each layer only mixes information from nearby pixels, and the same filter is reused at every position. A Vision Transformer (ViT) builds in nothing about spatial structure. Every patch can attend to every other patch from layer one, and has to learn locality from data instead. CNNs need less data to reach a given accuracy; ViTs can reach higher accuracy given enough data and pretraining.
 
 ## Comparison
 
@@ -25,7 +25,7 @@ This is why CNNs remain competitive at high resolution and on smaller datasets: 
 
 ## Hybrid Possibilities
 
-Hybrid designs use convolutional stems or local-window attention (as in Swin Transformer) to get local, cheap early-stage processing, then apply full or coarser-grained global attention in later stages — combining a CNN's cheap local structure with a Transformer's ability to model long-range interactions where it matters.
+Hybrid designs use convolutional stems or local-window attention (as in Swin Transformer) to get local, cheap early-stage processing, then apply full or coarser-grained global attention in later stages: combining a CNN's cheap local structure with a Transformer's ability to model long-range interactions where it matters.
 
 ## References
 

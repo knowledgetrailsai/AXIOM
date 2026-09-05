@@ -13,7 +13,7 @@ Two visible directions currently populate this space. Latent predictive models s
 
 ## Open Question: Which Objective Learns Causal Structure
 
-The central unresolved question in this research area is specific: does an objective that predicts well on held-out passive video (or held-out latent embeddings) actually learn dynamics that generalize to novel action sequences never seen during training, or does it only learn correlational structure that happens to match the training distribution's action patterns? A model can achieve low prediction error on data resembling training while still producing wrong predictions the moment a planner asks about a genuinely novel action sequence outside that distribution — and public research as of this writing does not settle, for any of the leading architectures in this space, how far that generalization actually extends.
+The central unresolved question in this research area is specific: does an objective that predicts well on held-out passive video (or held-out latent embeddings) actually learn dynamics that generalize to novel action sequences never seen during training, or does it only learn correlational structure that happens to match the training distribution's action patterns? A model can achieve low prediction error on data resembling training while still producing wrong predictions the moment a planner asks about a genuinely novel action sequence outside that distribution, and public research as of this writing does not settle, for any of the leading architectures in this space, how far that generalization actually extends.
 
 ## References
 

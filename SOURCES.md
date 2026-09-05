@@ -101,4 +101,4 @@ Every citation used across this repository, verified against arXiv before being 
 
 A model name is not automatically an architecture. Separate public architectural facts from inference, marketing labels and benchmark claims. Every citation above was checked against a live web search before being written into a content file. No citation in this repository was invented.
 
-For frontier topics (world models, test-time learning, post-Transformer directions), re-check official sources and publication dates before updating any claim — these areas move fast, and a citation that was current when written can be superseded quickly.
+For frontier topics (world models, test-time learning, post-Transformer directions), re-check official sources and publication dates before updating any claim. These areas move fast, and a citation that was current when written can be superseded quickly.

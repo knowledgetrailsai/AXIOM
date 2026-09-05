@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-Autoregressive models generate one unit at a time, conditioned on everything generated so far, and compute exact likelihoods naturally. Diffusion models generate by iterative denoising, need many model calls per sample, and compute only an approximate (variational lower bound) likelihood. Flow / flow-matching models transport noise to data along a continuous path, need fewer model calls than typical diffusion, and (for classical invertible flows specifically) can give exact likelihoods; flow-matching's ODE-based sampling generally gives approximate likelihood in practice. None of the three is tied to one specific network backbone — a Transformer can implement the autoregressive predictor, the diffusion denoiser, or the flow's vector field.
+Autoregressive models generate one unit at a time, conditioned on everything generated so far, and compute exact likelihoods naturally. Diffusion models generate by iterative denoising, need many model calls per sample, and compute only an approximate (variational lower bound) likelihood. Flow / flow-matching models transport noise to data along a continuous path, need fewer model calls than typical diffusion, and (for classical invertible flows specifically) can give exact likelihoods; flow-matching's ODE-based sampling generally gives approximate likelihood in practice. None of the three is tied to one specific network backbone. A Transformer can implement the autoregressive predictor, the diffusion denoiser, or the flow's vector field.
 
 ## Comparison
 
@@ -18,11 +18,11 @@ Autoregressive models generate one unit at a time, conditioned on everything gen
 
 ## The Real Trade-off
 
-The three families trade off *when* computation happens relative to *how much* of the output is fixed at each step. Autoregressive generation commits to one unit at a time and can never revise an earlier choice, which gives exact likelihood but forces strictly sequential, low-parallelism generation. Diffusion and flow-matching instead refine the *entire* output jointly across many steps, so every step is fully parallel across positions, at the cost of needing multiple full passes through the network to produce one sample. Architecture (the backbone) is a separate axis entirely from this trade-off — a Transformer backbone appears in all three families, and the choice of family is really a choice about the *generation and training procedure*, not about which network architecture is allowed.
+The three families trade off *when* computation happens relative to *how much* of the output is fixed at each step. Autoregressive generation commits to one unit at a time and can never revise an earlier choice, which gives exact likelihood but forces strictly sequential, low-parallelism generation. Diffusion and flow-matching instead refine the *entire* output jointly across many steps, so every step is fully parallel across positions, at the cost of needing multiple full passes through the network to produce one sample. Architecture (the backbone) is a separate axis entirely from this trade-off, a Transformer backbone appears in all three families, and the choice of family is really a choice about the *generation and training procedure*, not about which network architecture is allowed.
 
 ## Hybrid Possibilities
 
-Some systems combine an autoregressive Transformer over discrete tokens (e.g. VQ-VAE codebook indices, see [autoencoders-vae-vqvae.md](autoencoders-vae-vqvae.md)) with a diffusion or flow-based decoder for the final continuous output, using each family where its trade-off is most favorable — autoregressive for a compact discrete sequence, diffusion or flow for high-fidelity continuous rendering.
+Some systems combine an autoregressive Transformer over discrete tokens (e.g. VQ-VAE codebook indices, see [autoencoders-vae-vqvae.md](autoencoders-vae-vqvae.md)) with a diffusion or flow-based decoder for the final continuous output, using each family where its trade-off is most favorable: autoregressive for a compact discrete sequence, diffusion or flow for high-fidelity continuous rendering.
 
 ## References
 

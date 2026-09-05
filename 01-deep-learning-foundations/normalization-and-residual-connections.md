@@ -4,7 +4,7 @@
 
 A residual connection adds a layer's input back to its output: `x_out = x + F(x)`. The network only has to learn the update `F(x)`, not the full transformation. Normalization rescales activations so their mean and variance stay in a fixed range as they pass through many layers.
 
-Together, these two patterns are why 100+ layer networks train at all. Neither is a complete architecture on its own — both are enabling patterns used inside CNNs, Transformers, and most hybrids.
+Together, these two patterns are why 100+ layer networks train at all. Neither is a complete architecture on its own. Both are enabling patterns used inside CNNs, Transformers, and most hybrids.
 
 ## Why This Architecture Exists
 
@@ -58,7 +58,7 @@ The output has mean 0 and unit variance across the feature dimension, regardless
 
 ### Placement: pre-norm vs post-norm
 
-Pre-norm applies normalization before the sublayer: `x = x + F(LN(x))`. Post-norm applies it after: `x = LN(x + F(x))`. Pre-norm keeps a clean, unnormalized residual stream that gradients can flow through without repeated rescaling, which is why nearly all large modern Transformers use pre-norm — post-norm trains less stably at large depth without careful learning-rate warmup.
+Pre-norm applies normalization before the sublayer: `x = x + F(LN(x))`. Post-norm applies it after: `x = LN(x + F(x))`. Pre-norm keeps a clean, unnormalized residual stream that gradients can flow through without repeated rescaling, which is why nearly all large modern Transformers use pre-norm, post-norm trains less stably at large depth without careful learning-rate warmup.
 
 ## Information Flow
 
@@ -99,13 +99,13 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- Pre-norm vs post-norm is not a free choice — post-norm at large depth is prone to training instability without careful warmup, while pre-norm can allow activation scale in the residual stream to grow unboundedly across many layers (addressed in some models by additional normalization, e.g. QK-norm or final normalization before the output head).
+- Pre-norm vs post-norm is not a free choice: post-norm at large depth is prone to training instability without careful warmup, while pre-norm can allow activation scale in the residual stream to grow unboundedly across many layers (addressed in some models by additional normalization, e.g. QK-norm or final normalization before the output head).
 - Normalization variant choice matters: RMSNorm (used in LLaMA-style models) drops the mean-centering step and only rescales by root-mean-square, which is cheaper but changes optimization dynamics slightly.
 - Residual streams can still develop scale pathologies (a few dimensions dominating the norm) in very large models, motivating techniques like scaled residual initialization.
 
 ## Architecture vs Training Objective
 
-Residual connections and normalization are architectural facts — fixed at design time — but they interact heavily with the choice of optimizer and learning-rate schedule. The same architecture can be untrainable with a poorly tuned learning rate and stable with a well-tuned one; normalization and residuals widen the range of hyperparameters that work, they do not guarantee training success independent of optimization choices.
+Residual connections and normalization are architectural facts; fixed at design time, but they interact heavily with the choice of optimizer and learning-rate schedule. The same architecture can be untrainable with a poorly tuned learning rate and stable with a well-tuned one; normalization and residuals widen the range of hyperparameters that work, they do not guarantee training success independent of optimization choices.
 
 ## When to Use It
 
@@ -113,7 +113,7 @@ Use residual connections in any network deeper than a handful of layers. Use Lay
 
 ## When Not to Use It
 
-Very shallow networks (a few layers) may not need residual connections or normalization at all — the added complexity has no stability benefit there. BatchNorm, not LayerNorm, is typically preferred in convolutional vision networks with large, consistent batch sizes, since it normalizes across the batch and spatial dimensions in a way that suits convolutional statistics.
+Very shallow networks (a few layers) may not need residual connections or normalization at all, the added complexity has no stability benefit there. BatchNorm, not LayerNorm, is typically preferred in convolutional vision networks with large, consistent batch sizes, since it normalizes across the batch and spatial dimensions in a way that suits convolutional statistics.
 
 ## Comparison with Alternatives
 

@@ -19,14 +19,14 @@ The target encoder is typically an exponential moving average of the context enc
 
 ## Why predict in latent space instead of raw space
 
-Raw reconstruction forces the model to spend capacity modeling every low-level detail of the target, including detail that is unpredictable given the context (exact pixel noise, exact word choice among synonyms). Latent prediction can ignore that unpredictable detail — a well-trained encoder maps such detail to similar or unstructured regions of latent space — and dedicate model capacity to abstract, predictable structure instead.
+Raw reconstruction forces the model to spend capacity modeling every low-level detail of the target, including detail that is unpredictable given the context (exact pixel noise, exact word choice among synonyms). Latent prediction can ignore that unpredictable detail. A well-trained encoder maps such detail to similar or unstructured regions of latent space, and dedicate model capacity to abstract, predictable structure instead.
 
 ## Concrete instance: JEPA
 
-JEPA-family models (I-JEPA, V-JEPA) mask part of an image or video, encode the visible context, encode the masked target region separately, and train a predictor to produce the target's latent representation from the context's latent representation — never reconstructing target pixels at all (see JEPA Family).
+JEPA-family models (I-JEPA, V-JEPA) mask part of an image or video, encode the visible context, encode the masked target region separately, and train a predictor to produce the target's latent representation from the context's latent representation: never reconstructing target pixels at all (see JEPA Family).
 
 ## Where this shows up
 
-Latent prediction generalizes beyond JEPA: any self-supervised scheme that predicts a target representation rather than target content (some contrastive and self-distillation methods share this structure) fits this pattern. It is one particular answer to the "what must the intermediate representation preserve" design question raised in the Encoder and Decoder Pattern — namely, "predictable structure, not exact content."
+Latent prediction generalizes beyond JEPA: any self-supervised scheme that predicts a target representation rather than target content (some contrastive and self-distillation methods share this structure) fits this pattern. It is one particular answer to the "what must the intermediate representation preserve" design question raised in the Encoder and Decoder Pattern; namely, "predictable structure, not exact content."
 
 [Back to index](../INDEX.md)

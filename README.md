@@ -1,6 +1,6 @@
 # Axiom
 
-A structured field guide to the architectures behind modern AI — spanning deep-learning foundations through Transformers, Mixture-of-Experts, state-space models, multimodal architectures, test-time memory, JEPA-style predictive models, world models and embodied AI.
+A structured field guide to the architectures behind modern AI. Spanning deep-learning foundations through Transformers, Mixture-of-Experts, state-space models, multimodal architectures, test-time memory, JEPA-style predictive models, world models and embodied AI.
 
 ```text
 FOUNDATIONS → CLASSICAL NETWORKS → ATTENTION/TRANSFORMERS → FOUNDATION MODELS
@@ -43,7 +43,7 @@ FOUNDATIONS → CLASSICAL NETWORKS → ATTENTION/TRANSFORMERS → FOUNDATION MOD
 
 ## Why This Exists
 
-AI discussions often mix primitives, architecture families, scaling patterns, learning objectives, model families and complete AI systems — this repository separates those layers.
+AI discussions often mix primitives, architecture families, scaling patterns, learning objectives, model families and complete AI systems, this repository separates those layers.
 
 Examples:
 
@@ -58,7 +58,7 @@ Examples:
 
 ### Learning Path
 
-The numbered folders form the learning path — each section starts simple, then layers on computational structure, trade-offs and representative research.
+The numbered folders form the learning path: each section starts simple, then layers on computational structure, trade-offs and representative research.
 
 ### How to Read a Page
 
@@ -71,7 +71,7 @@ Each architecture page answers the same practical questions:
 5. **When is it useful?** Concrete application scenarios and deployment constraints.
 6. **What should it be compared with?** Alternatives that solve a similar problem, and the trade-offs between them.
 
-Commercial model names are included as examples of where an architectural pattern has appeared in a public model or product. They are not proof that a company uses one exact implementation internally — proprietary details are often unavailable. The architecture, training objective, data, post-training and serving system should be evaluated separately.
+Commercial model names are included as examples of where an architectural pattern has appeared in a public model or product. They are not proof that a company uses one exact implementation internally; proprietary details are often unavailable. The architecture, training objective, data, post-training and serving system should be evaluated separately.
 
 See:
 - [Knowledge Map](00-navigation-and-methodology/knowledge-map.md)
@@ -82,13 +82,13 @@ See:
 
 ## Scope
 
-This repo focuses on **model architecture** — RAG, MCP, vector databases, tool calling and agent orchestration are intentionally kept outside the core taxonomy.
+This repo focuses on **model architecture**. RAG, MCP, vector databases, tool calling and agent orchestration are intentionally kept outside the core taxonomy.
 
 ## Relationship to companion repositories
 
-Axiom underpins [OASIS](https://github.com/knowledgetrailsai/OASIS) Chapter 14's model-selection guidance, but unlike Forge, Loom, Helm, Verity, Compass, and Fulcrum, it is not itself a Part III chapter companion — see the [Companion Repository Index](https://github.com/knowledgetrailsai/OASIS/blob/main/References/companion-repository-index.md) for the full map.
+Axiom underpins [OASIS](https://github.com/knowledgetrailsai/OASIS) Chapter 14's model-selection guidance, but unlike Forge, Loom, Helm, Verity, Compass, and Fulcrum, it is not itself a Part III chapter companion, see the [Companion Repository Index](https://github.com/knowledgetrailsai/OASIS/blob/main/References/companion-repository-index.md) for the full map.
 
-- **[Forge](https://github.com/knowledgetrailsai/Forge)** (Chapter 15, data and knowledge engineering): its [long-context-vs-rag.md](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md) and [embedding-model-selection.md](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md) make retrieval-architecture tradeoffs that depend on the attention-mechanism and embedding background covered in this repo's [long-context-and-efficient-attention.md](03-attention-and-transformers/long-context-and-efficient-attention.md) and [embeddings.md](01-deep-learning-foundations/embeddings.md) — Axiom owns the underlying mechanism, Forge owns the applied retrieval decision.
+- **[Forge](https://github.com/knowledgetrailsai/Forge)** (Chapter 15, data and knowledge engineering): its [long-context-vs-rag.md](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md) and [embedding-model-selection.md](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md) make retrieval-architecture tradeoffs that depend on the attention-mechanism and embedding background covered in this repo's [long-context-and-efficient-attention.md](03-attention-and-transformers/long-context-and-efficient-attention.md) and [embeddings.md](01-deep-learning-foundations/embeddings.md): Axiom owns the underlying mechanism, Forge owns the applied retrieval decision.
 - **[Ageis](https://github.com/knowledgetrailsai/Ageis)** uses "model" to mean a coding-tool deployment model, not model architecture; there is no direct content dependency between the two repos despite the shared word.
 
 ## Status
@@ -101,6 +101,6 @@ Licensed under [CC BY-SA 4.0](https://github.com/knowledgetrailsai/OASIS/blob/ma
 
 ## About Us
 
-**Shripadraj Mujumdar** is an Agentic AI & Automation Strategist, Advisor, and Responsible AI Expert with 28+ years of experience in enterprise architecture and AI-driven transformation, including deep hands-on work in Agentic AI, Generative AI, and enterprise data and knowledge platforms. His practice spans designing multi-agent systems, knowledge-graph and RAG architectures, accelerated delivery capabilities, and Responsible AI governance frameworks aligned to global regulatory standards. This methodology ecosystem distills that practitioner experience — architecture, delivery, evaluation, governance, and economics — into a single, reusable body of work.
+**Shripadraj Mujumdar** is an Agentic AI & Automation Strategist, Advisor, and Responsible AI Expert with 28+ years of experience in enterprise architecture and AI-driven transformation, including deep hands-on work in Agentic AI, Generative AI, and enterprise data and knowledge platforms. His practice spans designing multi-agent systems, knowledge-graph and RAG architectures, accelerated delivery capabilities, and Responsible AI governance frameworks aligned to global regulatory standards. This methodology ecosystem distills that practitioner experience; architecture, delivery, evaluation, governance, and economics. Into a single, reusable body of work.
 
 **Ankit Mirajkar** is a Data & AI Architect and technology consultant specializing in modern data platforms, enterprise data architecture, and Agentic AI. His expertise spans scalable data engineering, AI-ready data platforms, Generative AI, and cloud technologies, with a strong focus on turning complex data challenges into practical, production-ready solutions. He also works at the intersection of architecture, technology strategy, and innovation to help organizations build intelligent, scalable data ecosystems.

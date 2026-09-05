@@ -8,7 +8,7 @@ A GNN updates each node's representation by aggregating information from its gra
 
 In practical terms, **Graph Neural Networks** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Relational data — social networks, molecules, knowledge graphs, meshes — has no fixed grid or sequence order. A CNN's locality assumes a regular grid; an RNN's assumes a linear order. Neither fits a graph where each node can have a different, irregular number of neighbors.
+Relational data. Social networks, molecules, knowledge graphs, meshes, has no fixed grid or sequence order. A CNN's locality assumes a regular grid; an RNN's assumes a linear order. Neither fits a graph where each node can have a different, irregular number of neighbors.
 
 ## Core Architectural Idea
 
@@ -16,7 +16,7 @@ At layer `k`, node `v`'s representation is updated from its neighbors' represent
 
 `h_v^(k) = σ(W · AGGREGATE({h_u^(k-1) : u ∈ N(v)}))`
 
-`N(v)` is the neighbor set of `v`, `AGGREGATE` is a permutation-invariant function (sum, mean, or max — invariant because a node's neighbors have no inherent order), `W` is a learned weight matrix, and `σ` is a nonlinearity.
+`N(v)` is the neighbor set of `v`, `AGGREGATE` is a permutation-invariant function (sum, mean, or max: invariant because a node's neighbors have no inherent order), `W` is a learned weight matrix, and `σ` is a nonlinearity.
 
 The Graph Convolutional Network (Kipf & Welling, 2017) instantiates this with a normalized adjacency-matrix aggregation over the whole graph at once:
 
@@ -76,17 +76,17 @@ flowchart LR
 
 ## Limitations and Failure Modes
 
-- **Oversmoothing.** After many layers, repeated neighbor-averaging drives all node representations toward the same value, especially on densely connected graphs — deep GNNs (>4-6 layers) often perform worse than shallow ones.
-- Reaching distant nodes requires as many layers as hops, unlike attention's single-hop access to any position — a GNN needing 10-hop context needs 10 layers.
+- **Oversmoothing.** After many layers, repeated neighbor-averaging drives all node representations toward the same value, especially on densely connected graphs; deep GNNs (>4-6 layers) often perform worse than shallow ones.
+- Reaching distant nodes requires as many layers as hops, unlike attention's single-hop access to any position. A GNN needing 10-hop context needs 10 layers.
 - Highly irregular neighbor counts (some nodes with 2 neighbors, others with 10,000) complicate efficient batched computation.
 
 ## Architecture vs Training Objective
 
-The aggregation and update equations define the computation graph. What relational patterns a GNN learns to detect — functional groups in a molecule, communities in a social graph — depends on the training labels and objective (node classification, link prediction, graph-level regression, or self-supervised contrastive objectives on graphs).
+The aggregation and update equations define the computation graph. What relational patterns a GNN learns to detect, functional groups in a molecule, communities in a social graph: depends on the training labels and objective (node classification, link prediction, graph-level regression, or self-supervised contrastive objectives on graphs).
 
 ## When to Use It
 
-Use GNNs when the data's native structure is a graph with meaningful edges — molecules, social networks, knowledge graphs, meshes, circuit netlists — and when relational structure, not sequence or grid position, is the primary signal.
+Use GNNs when the data's native structure is a graph with meaningful edges; molecules, social networks, knowledge graphs, meshes, circuit netlists, and when relational structure, not sequence or grid position, is the primary signal.
 
 ## When Not to Use It
 

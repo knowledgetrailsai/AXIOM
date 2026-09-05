@@ -8,7 +8,7 @@ A GAN trains two networks against each other. A generator maps random noise to s
 
 In practical terms, **Generative Adversarial Networks** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Some generative approaches (like a VAE) require an explicit likelihood or an explicit reconstruction target. A GAN instead uses a learned critic — the discriminator — as the training signal, sidestepping the need to define or compute an explicit density over the data.
+Some generative approaches (like a VAE) require an explicit likelihood or an explicit reconstruction target. A GAN instead uses a learned critic. The discriminator, as the training signal, sidestepping the need to define or compute an explicit density over the data.
 
 ## Core Architectural Idea
 
@@ -20,7 +20,7 @@ min_G max_D  E_x~data[log D(x)] + E_z~prior[log(1 - D(G(z)))]
 
 Read plainly: D wants to output values near 1 for real x and near 0 for generated G(z), so it maximizes the sum of both terms. G only controls the second term, and wants D(G(z)) to be large (so 1 - D(G(z)) is small, making log(1 - D(G(z))) very negative), so it minimizes that same expression. Both networks are trained by alternating gradient steps: update D to get better at distinguishing real from fake, then update G to get better at fooling the current D. In practice, the naive form of the generator's loss saturates early in training (when D easily rejects G's samples, the gradient signal to G vanishes), so most implementations use a non-saturating variant that trains G to directly maximize log D(G(z)) instead of minimizing log(1 - D(G(z))), which provides a stronger gradient while pursuing the same adversarial goal.
 
-At the theoretical optimum of this game — with both networks having unlimited capacity — the generator's distribution matches the real data distribution exactly, and the discriminator can do no better than random guessing (D(x) = 0.5 everywhere). In practice, finite capacity and optimization dynamics mean this equilibrium is approached, not exactly reached.
+At the theoretical optimum of this game: with both networks having unlimited capacity; the generator's distribution matches the real data distribution exactly, and the discriminator can do no better than random guessing (D(x) = 0.5 everywhere). In practice, finite capacity and optimization dynamics mean this equilibrium is approached, not exactly reached.
 
 ## Information Flow
 
@@ -65,7 +65,7 @@ Training instability: the adversarial game can oscillate rather than converge, e
 
 ## Architecture vs Training Objective
 
-The generator and discriminator networks are architecture. The adversarial minimax objective is the training-time mechanism that shapes what they learn — the same generator network trained with a different objective (e.g. as a VAE decoder, or as a diffusion denoiser) is not doing adversarial training at all, even with an identical forward-pass structure.
+The generator and discriminator networks are architecture. The adversarial minimax objective is the training-time mechanism that shapes what they learn. The same generator network trained with a different objective (e.g. as a VAE decoder, or as a diffusion denoiser) is not doing adversarial training at all, even with an identical forward-pass structure.
 
 ## When to Use It
 
@@ -73,7 +73,7 @@ Applications prioritizing fast, single-pass sampling and sharp output quality, w
 
 ## When Not to Use It
 
-Applications needing stable, reproducible training with minimal hyperparameter sensitivity, or needing an explicit likelihood — diffusion models (see [diffusion-models.md](diffusion-models.md)) trade GANs' fast single-pass sampling for a much more stable training procedure.
+Applications needing stable, reproducible training with minimal hyperparameter sensitivity, or needing an explicit likelihood, diffusion models (see [diffusion-models.md](diffusion-models.md)) trade GANs' fast single-pass sampling for a much more stable training procedure.
 
 ## Comparison with Alternatives
 

@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-JEPA predicts a target's embedding; a generative predictor predicts the target itself — raw or decoded pixels/tokens. JEPA can ignore low-level detail that has no bearing on the task; a generative model has to model that detail in order to render anything at all. This is the same underlying trade-off as [predictive-vs-generative-world-models.md](../09-predictive-and-world-models/predictive-vs-generative-world-models.md), stated at the level of the prediction objective rather than the whole world-model system.
+JEPA predicts a target's embedding; a generative predictor predicts the target itself. Raw or decoded pixels/tokens. JEPA can ignore low-level detail that has no bearing on the task; a generative model has to model that detail in order to render anything at all. This is the same underlying trade-off as [predictive-vs-generative-world-models.md](../09-predictive-and-world-models/predictive-vs-generative-world-models.md), stated at the level of the prediction objective rather than the whole world-model system.
 
 ## Comparison
 
@@ -18,11 +18,11 @@ JEPA predicts a target's embedding; a generative predictor predicts the target i
 
 ## The Real Trade-off
 
-A JEPA-style predictor never has to decide the exact pixel value of every part of a scene it is not being asked about — it only has to get the target's embedding close enough for the loss to be small, and the embedding dimensionality (hundreds to low thousands, see [predictive-vs-generative-world-models.md](../09-predictive-and-world-models/predictive-vs-generative-world-models.md)) is fixed regardless of the raw observation's resolution. A generative predictor's loss is defined directly on the raw output space, so it has no way to skip modeling detail that does not matter for a downstream task — every pixel or token contributes to the loss whether or not it is useful.
+A JEPA-style predictor never has to decide the exact pixel value of every part of a scene it is not being asked about, it only has to get the target's embedding close enough for the loss to be small, and the embedding dimensionality (hundreds to low thousands, see [predictive-vs-generative-world-models.md](../09-predictive-and-world-models/predictive-vs-generative-world-models.md)) is fixed regardless of the raw observation's resolution. A generative predictor's loss is defined directly on the raw output space, so it has no way to skip modeling detail that does not matter for a downstream task: every pixel or token contributes to the loss whether or not it is useful.
 
 ## Hybrid Possibilities
 
-A system can plan and reason in JEPA-style latent space, and only invoke a separate generative decoder when a human needs to inspect what the model expects — combining latent-space efficiency for the bulk of computation with generative inspectability at the few points where it is actually needed.
+A system can plan and reason in JEPA-style latent space, and only invoke a separate generative decoder when a human needs to inspect what the model expects; combining latent-space efficiency for the bulk of computation with generative inspectability at the few points where it is actually needed.
 
 ## References
 

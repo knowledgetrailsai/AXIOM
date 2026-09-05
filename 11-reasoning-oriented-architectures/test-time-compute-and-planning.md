@@ -24,7 +24,7 @@ Given an inference budget, the system generates or searches over multiple candid
 | 4 | A |
 | 5 | B |
 
-Vote counts: A = 3, B = 2. Majority vote selects A, since 3 > 2 out of 5 samples. This requires no verifier — just running the same generator multiple times and counting.
+Vote counts: A = 3, B = 2. Majority vote selects A, since 3 > 2 out of 5 samples. This requires no verifier. Just running the same generator multiple times and counting.
 
 ## Information Flow
 
@@ -66,17 +66,17 @@ flowchart LR
 
 - Scales answer quality with available inference compute rather than requiring a larger trained model.
 - Can be layered on top of an existing backbone with no retraining, using only sampling and aggregation.
-- Majority vote in particular requires no extra trained component — just repeated sampling.
+- Majority vote in particular requires no extra trained component, just repeated sampling.
 
 ## Limitations and Failure Modes
 
 - Latency and cost rise with k or search depth, sometimes sharply for problems that need long reasoning chains.
-- Majority vote fails when the correct answer is a minority outcome across samples — it only helps when the model is more often right than any specific wrong answer.
+- Majority vote fails when the correct answer is a minority outcome across samples: it only helps when the model is more often right than any specific wrong answer.
 - Test-time compute is an inference strategy layered on a backbone, not a new backbone architecture; it does not fix a model that is systematically wrong rather than inconsistently right.
 
 ## Architecture vs Training Objective
 
-Test-time compute techniques (sampling more, searching more) require no architecture change — they are pure inference-time algorithms. Training a model specifically to produce useful long reasoning traces, or training a verifier to score candidates, are training-objective choices that make test-time compute more effective, but they are separate from the base architecture.
+Test-time compute techniques (sampling more, searching more) require no architecture change; they are pure inference-time algorithms. Training a model specifically to produce useful long reasoning traces, or training a verifier to score candidates, are training-objective choices that make test-time compute more effective, but they are separate from the base architecture.
 
 ## When to Use It
 
@@ -84,7 +84,7 @@ Use test-time compute when per-query latency and cost budgets allow multiple sam
 
 ## When Not to Use It
 
-Avoid it under tight latency budgets, or for problems where the model's errors are systematic rather than random — in that case, more samples just agree more confidently on the same wrong answer.
+Avoid it under tight latency budgets, or for problems where the model's errors are systematic rather than random. In that case, more samples just agree more confidently on the same wrong answer.
 
 ## Comparison with Alternatives
 

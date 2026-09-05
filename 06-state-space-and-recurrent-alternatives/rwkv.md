@@ -20,7 +20,7 @@ wkv_k = ( Σ_{i<k} e^{-(k-1-i)w + k_i} v_i  +  e^{u + k_k} v_k )
         ( Σ_{i<k} e^{-(k-1-i)w + k_i}       +  e^{u + k_k}     )
 ```
 
-Reading it plainly: it's a weighted average of all past values v_i, where the weight on an older value decays geometrically with distance via a learned per-channel decay rate w, and the current position gets a separate learned bonus weight u so it isn't drowned out by the decay term. This is structurally similar to a linear-attention formula, but because the weighting has an exponential-decay form, it can be computed as a running recurrence in constant space — carry forward a running weighted numerator and denominator, update them by one decay step per token, rather than keeping every past key and value around.
+Reading it plainly: it's a weighted average of all past values v_i, where the weight on an older value decays geometrically with distance via a learned per-channel decay rate w, and the current position gets a separate learned bonus weight u so it isn't drowned out by the decay term. This is structurally similar to a linear-attention formula, but because the weighting has an exponential-decay form, it can be computed as a running recurrence in constant space. Carry forward a running weighted numerator and denominator, update them by one decay step per token, rather than keeping every past key and value around.
 
 A "receptance" gate (a sigmoid over a separate learned projection) then modulates how much of this time-mixing output passes through, analogous to an output gate in an LSTM. A parallel channel-mixing block plays a role similar to a Transformer's feed-forward sublayer.
 
@@ -67,7 +67,7 @@ Compact, constant-size recurrent state makes long-context streaming generation m
 
 ## Limitations and Failure Modes
 
-There is no explicit full-history lookup — the exponential decay means very old tokens are down-weighted essentially exponentially, so exact recall of arbitrary far-back content is not guaranteed the way it is with full attention. RWKV has gone through multiple architecture generations (differing in gating and mixing details), so specific claims about "RWKV" should specify which version.
+There is no explicit full-history lookup, the exponential decay means very old tokens are down-weighted essentially exponentially, so exact recall of arbitrary far-back content is not guaranteed the way it is with full attention. RWKV has gone through multiple architecture generations (differing in gating and mixing details), so specific claims about "RWKV" should specify which version.
 
 ## Architecture vs Training Objective
 

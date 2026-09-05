@@ -12,9 +12,9 @@ Pure attention gives exact addressability over the full context but costs O(n²)
 
 ## Core Architectural Idea
 
-The network alternates or otherwise mixes two block types through its depth: standard Transformer blocks (self-attention + FFN) and SSM blocks (e.g. Mamba's selective state-space recurrence + FFN). The ratio and placement of the two block types is a design choice — some designs use a small number of attention layers spaced periodically through an otherwise SSM-dominated stack, keeping most of the sequence-length cost linear while retaining a few full-context lookup points.
+The network alternates or otherwise mixes two block types through its depth: standard Transformer blocks (self-attention + FFN) and SSM blocks (e.g. Mamba's selective state-space recurrence + FFN). The ratio and placement of the two block types is a design choice. Some designs use a small number of attention layers spaced periodically through an otherwise SSM-dominated stack, keeping most of the sequence-length cost linear while retaining a few full-context lookup points.
 
-**Concrete example — Jamba.** Jamba interleaves Transformer and Mamba layers, and adds MoE routing (see [transformer-plus-moe.md](transformer-plus-moe.md)) to some of the feed-forward sublayers to increase total capacity without proportionally increasing active compute. The result combines three separate architectural ideas in one stack: attention for addressable interaction at select layers, Mamba for cheap linear-time recurrence at most layers, and MoE for capacity that doesn't scale active compute — each mechanism assigned to the part of the problem it's best suited for, following the "which primitive should own which computation" framing in [why-hybrid-architectures.md](why-hybrid-architectures.md).
+**Concrete example, Jamba.** Jamba interleaves Transformer and Mamba layers, and adds MoE routing (see [transformer-plus-moe.md](transformer-plus-moe.md)) to some of the feed-forward sublayers to increase total capacity without proportionally increasing active compute. The result combines three separate architectural ideas in one stack: attention for addressable interaction at select layers, Mamba for cheap linear-time recurrence at most layers, and MoE for capacity that doesn't scale active compute: each mechanism assigned to the part of the problem it's best suited for, following the "which primitive should own which computation" framing in [why-hybrid-architectures.md](why-hybrid-architectures.md).
 
 ## Information Flow
 
@@ -50,7 +50,7 @@ flowchart LR
 
 ## Strengths
 
-Balances exact retrieval (from the attention layers) with cheap, linear-time recurrence (from the SSM layers). Reduces KV-cache memory pressure relative to a pure-attention model of the same depth, since only a subset of layers carry a growing cache. Layer-by-layer composition is flexible — the attention/SSM ratio can be tuned per use case.
+Balances exact retrieval (from the attention layers) with cheap, linear-time recurrence (from the SSM layers). Reduces KV-cache memory pressure relative to a pure-attention model of the same depth, since only a subset of layers carry a growing cache. Layer-by-layer composition is flexible; the attention/SSM ratio can be tuned per use case.
 
 ## Limitations and Failure Modes
 
@@ -62,15 +62,15 @@ The choice and placement of attention vs. SSM blocks is architecture, fixed at m
 
 ## When to Use It
 
-Long-context applications where a full-attention model's growing KV cache is the binding memory constraint, but some exact-retrieval capability over the context is still needed — a hybrid can reduce cache size substantially while retaining that capability at the attention layers.
+Long-context applications where a full-attention model's growing KV cache is the binding memory constraint, but some exact-retrieval capability over the context is still needed. A hybrid can reduce cache size substantially while retaining that capability at the attention layers.
 
 ## When Not to Use It
 
-Short-context applications where a pure-attention model's KV cache was never a binding constraint to begin with — the added systems complexity of a hybrid buys little in that regime. Also not a good fit for tasks that need explicit, precise retrieval essentially everywhere in the sequence, where a pure-attention model's more thorough addressability is preferable to a hybrid's reduced attention-layer coverage.
+Short-context applications where a pure-attention model's KV cache was never a binding constraint to begin with, the added systems complexity of a hybrid buys little in that regime. Also not a good fit for tasks that need explicit, precise retrieval essentially everywhere in the sequence, where a pure-attention model's more thorough addressability is preferable to a hybrid's reduced attention-layer coverage.
 
 ## Comparison with Alternatives
 
-Pure attention: better worst-case retrieval, worse long-context memory scaling. Pure SSM/Mamba: better long-context memory scaling, weaker exact-retrieval guarantees. The hybrid is explicitly a compromise on this axis rather than a strict improvement over either pure approach — see [06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md](../06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md) for the underlying trade-off this hybrid is navigating.
+Pure attention: better worst-case retrieval, worse long-context memory scaling. Pure SSM/Mamba: better long-context memory scaling, weaker exact-retrieval guarantees. The hybrid is explicitly a compromise on this axis rather than a strict improvement over either pure approach: see [06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md](../06-state-space-and-recurrent-alternatives/transformer-vs-ssm-vs-recurrent.md) for the underlying trade-off this hybrid is navigating.
 
 ## Representative Models
 

@@ -2,13 +2,13 @@
 
 ## The Problem
 
-A fixed subword vocabulary fragments rare strings, code identifiers, and low-resource languages into many small pieces, each consuming a token slot. That wastes context budget and can hurt quality on exactly the inputs a fixed vocabulary was worst at compressing. Processing raw bytes instead removes the fixed vocabulary entirely, but naive byte-level modeling makes sequences much longer — every character becomes its own position, multiplying sequence length and therefore compute cost for any architecture with cost that grows with sequence length.
+A fixed subword vocabulary fragments rare strings, code identifiers, and low-resource languages into many small pieces, each consuming a token slot. That wastes context budget and can hurt quality on exactly the inputs a fixed vocabulary was worst at compressing. Processing raw bytes instead removes the fixed vocabulary entirely, but naive byte-level modeling makes sequences much longer. Every character becomes its own position, multiplying sequence length and therefore compute cost for any architecture with cost that grows with sequence length.
 
 ## The Byte Latent Transformer (BLT) Approach
 
 BLT resolves this by making the unit of computation itself adaptive: instead of a fixed tokenizer producing fixed-size subword tokens, it dynamically groups bytes into variable-length patches, with patch boundaries determined by how predictable the next byte is. A run of highly predictable bytes (common substrings) is compressed into one large patch; a run of unpredictable bytes (rare or novel content) is split into smaller patches, giving the model more computation exactly where the input is harder to predict.
 
-This means compute granularity is no longer a fixed property of a vocabulary decided before training — it is decided dynamically per input, based on local predictability. A local byte-level submodel handles the fine-grained byte structure inside each patch, while a larger latent Transformer operates over the sequence of patches, at a much shorter effective sequence length than raw bytes would require.
+This means compute granularity is no longer a fixed property of a vocabulary decided before training, it is decided dynamically per input, based on local predictability. A local byte-level submodel handles the fine-grained byte structure inside each patch, while a larger latent Transformer operates over the sequence of patches, at a much shorter effective sequence length than raw bytes would require.
 
 ## Information Flow
 

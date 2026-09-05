@@ -23,7 +23,7 @@ Sparse 47B total, 13B active:         FLOPs/token ≈ 2 × 13×10^9 = 2.6×10^10
 Ratio = 9.4×10^10 / 2.6×10^10 ≈ 3.6×
 ```
 
-The sparse model does about 3.6 times less arithmetic per token than a fully dense model of the same total parameter count, while still storing all 47B parameters' worth of learned capacity. This is the entire economic argument for MoE: total weight memory rises, but FLOPs per token — and, if serving isn't memory-bound, latency — do not rise in step with it.
+The sparse model does about 3.6 times less arithmetic per token than a fully dense model of the same total parameter count, while still storing all 47B parameters' worth of learned capacity. This is the entire economic argument for MoE: total weight memory rises, but FLOPs per token, and, if serving isn't memory-bound, latency, do not rise in step with it.
 
 ## Information Flow
 
@@ -62,7 +62,7 @@ Sparse computation gets more total capacity per unit of inference compute. It's 
 
 ## Limitations and Failure Modes
 
-Irregular, data-dependent execution (which experts run, for which tokens) is harder for accelerators built around fixed-shape dense matrix multiplies. Total weight memory can still be the binding constraint even when active compute is small — a 47B-total/13B-active model needs enough device memory (or fast enough interconnect to page weights in) to hold all 47B parameters, not just the 13B touched per token.
+Irregular, data-dependent execution (which experts run, for which tokens) is harder for accelerators built around fixed-shape dense matrix multiplies. Total weight memory can still be the binding constraint even when active compute is small: a 47B-total/13B-active model needs enough device memory (or fast enough interconnect to page weights in) to hold all 47B parameters, not just the 13B touched per token.
 
 ## Architecture vs Training Objective
 
@@ -74,11 +74,11 @@ Sparse computation earns its complexity when the compute budget for training or 
 
 ## When Not to Use It
 
-When total weight memory, not FLOPs per token, is the binding constraint — sparse models don't help there, since a 47B-total sparse model still needs to store 47B parameters somewhere. Also not worthwhile at small scale, where dense computation is already cheap and routing overhead has no compute budget to save you from.
+When total weight memory, not FLOPs per token, is the binding constraint; sparse models don't help there, since a 47B-total sparse model still needs to store 47B parameters somewhere. Also not worthwhile at small scale, where dense computation is already cheap and routing overhead has no compute budget to save you from.
 
 ## Comparison with Alternatives
 
-MoE is parameter sparsity — it changes how many *weights* are active. Sparse attention is a different axis, interaction sparsity — it changes how many *token pairs* are compared, independent of how many FFN weights run. The two are compatible and orthogonal design choices.
+MoE is parameter sparsity. It changes how many *weights* are active. Sparse attention is a different axis, interaction sparsity, it changes how many *token pairs* are compared, independent of how many FFN weights run. The two are compatible and orthogonal design choices.
 
 ## Representative Models
 

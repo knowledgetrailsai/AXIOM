@@ -75,11 +75,11 @@ top_k is a hard, non-differentiable selection, so the router is normally trained
 
 ## Architecture vs Training Objective
 
-The gate matrix, top_k, and softmax are architecture — they define the forward pass. The capacity_factor and overflow policy are closer to a systems/serving choice: the same routing architecture behaves differently at capacity_factor 1.0 versus 2.0 without any change to the model's weights.
+The gate matrix, top_k, and softmax are architecture. They define the forward pass. The capacity_factor and overflow policy are closer to a systems/serving choice: the same routing architecture behaves differently at capacity_factor 1.0 versus 2.0 without any change to the model's weights.
 
 ## When to Use It
 
-Top-2 routing (as in Mixtral) is a reasonable default when you want redundancy — if one expert is a poor match, the second can compensate, and gradients reach two experts per token rather than one. Top-1 routing (as in Switch Transformer) is cheaper and halves dispatch volume when compute is the binding constraint.
+Top-2 routing (as in Mixtral) is a reasonable default when you want redundancy, if one expert is a poor match, the second can compensate, and gradients reach two experts per token rather than one. Top-1 routing (as in Switch Transformer) is cheaper and halves dispatch volume when compute is the binding constraint.
 
 ## When Not to Use It
 

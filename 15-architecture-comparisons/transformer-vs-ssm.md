@@ -18,7 +18,7 @@ A Transformer keeps history as an explicit, growing set of key/value activations
 
 ## The Real Trade-off
 
-Concretely: attending over a 100,000-token context means storing and scanning roughly 100,000 key/value pairs per layer, with cost and memory scaling with that number. A selective SSM processing the same 100,000-token stream keeps a single state vector of fixed dimensionality (commonly in the hundreds to low thousands) throughout, no matter how long the stream runs. The Transformer can, in principle, recall the exact wording of token 3 out of 100,000 by attending directly to it. The SSM's ability to recall that same token depends entirely on whether its input-dependent gating decided that token's information was worth keeping in the compressed state — there is no architectural guarantee either way.
+Concretely: attending over a 100,000-token context means storing and scanning roughly 100,000 key/value pairs per layer, with cost and memory scaling with that number. A selective SSM processing the same 100,000-token stream keeps a single state vector of fixed dimensionality (commonly in the hundreds to low thousands) throughout, no matter how long the stream runs. The Transformer can, in principle, recall the exact wording of token 3 out of 100,000 by attending directly to it. The SSM's ability to recall that same token depends entirely on whether its input-dependent gating decided that token's information was worth keeping in the compressed state. There is no architectural guarantee either way.
 
 ## Hybrid Possibilities
 

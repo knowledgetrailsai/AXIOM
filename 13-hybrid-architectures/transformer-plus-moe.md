@@ -12,9 +12,9 @@ A fully dense Transformer's feed-forward capacity scales in lockstep with its pe
 
 ## Core Architectural Idea
 
-Each Transformer block runs self-attention unchanged. The feed-forward sublayer, instead of being one dense FFN, becomes a router plus N expert FFNs, exactly as described in [mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md): `G(x) = softmax(top_k(x·W_g))`, k experts run per token, outputs combine into the residual stream. Which blocks get this treatment is itself a design choice — some Transformer-MoE architectures route every FFN layer, others alternate dense and MoE FFN layers through the depth of the network, keeping some layers fully dense for stability or capacity reasons.
+Each Transformer block runs self-attention unchanged. The feed-forward sublayer, instead of being one dense FFN, becomes a router plus N expert FFNs, exactly as described in [mixture-of-experts.md](../05-sparse-and-mixture-of-experts/mixture-of-experts.md): `G(x) = softmax(top_k(x·W_g))`, k experts run per token, outputs combine into the residual stream. Which blocks get this treatment is itself a design choice. Some Transformer-MoE architectures route every FFN layer, others alternate dense and MoE FFN layers through the depth of the network, keeping some layers fully dense for stability or capacity reasons.
 
-**Concrete example — Mixtral 8x7B.** Every layer keeps standard multi-head attention (dense, always fully active). Every layer's feed-forward sublayer is replaced by 8 experts with top-2 routing. Total parameters are approximately 47B; active parameters per token are approximately 13B, because attention and 2 of the 8 experts per layer are active, while the other 6 experts per layer are not. This matches the FLOPs-per-token calculation in [05-sparse-and-mixture-of-experts/dense-vs-sparse-computation.md](../05-sparse-and-mixture-of-experts/dense-vs-sparse-computation.md): roughly 3.6× fewer FLOPs per token than a fully dense 47B model, for the same total capacity.
+**Concrete example, Mixtral 8x7B.** Every layer keeps standard multi-head attention (dense, always fully active). Every layer's feed-forward sublayer is replaced by 8 experts with top-2 routing. Total parameters are approximately 47B; active parameters per token are approximately 13B, because attention and 2 of the 8 experts per layer are active, while the other 6 experts per layer are not. This matches the FLOPs-per-token calculation in [05-sparse-and-mixture-of-experts/dense-vs-sparse-computation.md](../05-sparse-and-mixture-of-experts/dense-vs-sparse-computation.md): roughly 3.6× fewer FLOPs per token than a fully dense 47B model, for the same total capacity.
 
 ## Information Flow
 
@@ -56,15 +56,15 @@ Preserves the Transformer's proven token-interaction mechanism unchanged. Adds s
 
 ## Limitations and Failure Modes
 
-All-to-all dispatch cost is added on top of the Transformer's existing compute, which matters most at small batch sizes (see [05-sparse-and-mixture-of-experts/moe-systems-tradeoffs.md](../05-sparse-and-mixture-of-experts/moe-systems-tradeoffs.md)). Total weight memory is large relative to active compute — serving infrastructure needs to hold every expert even though only k run per token. Routing imbalance (see [05-sparse-and-mixture-of-experts/load-balancing-and-specialization.md](../05-sparse-and-mixture-of-experts/load-balancing-and-specialization.md)) is a training-time risk inherited from the MoE component.
+All-to-all dispatch cost is added on top of the Transformer's existing compute, which matters most at small batch sizes (see [05-sparse-and-mixture-of-experts/moe-systems-tradeoffs.md](../05-sparse-and-mixture-of-experts/moe-systems-tradeoffs.md)). Total weight memory is large relative to active compute: serving infrastructure needs to hold every expert even though only k run per token. Routing imbalance (see [05-sparse-and-mixture-of-experts/load-balancing-and-specialization.md](../05-sparse-and-mixture-of-experts/load-balancing-and-specialization.md)) is a training-time risk inherited from the MoE component.
 
 ## Architecture vs Training Objective
 
-Self-attention and the MoE router/expert structure are architecture. The load-balancing auxiliary loss, expert-parallel placement, and capacity factor are training/systems choices layered on top of that fixed structure — see the corresponding sections in the MoE pages this file cross-references.
+Self-attention and the MoE router/expert structure are architecture. The load-balancing auxiliary loss, expert-parallel placement, and capacity factor are training/systems choices layered on top of that fixed structure; see the corresponding sections in the MoE pages this file cross-references.
 
 ## When to Use It
 
-Large-scale pretraining where more total capacity is wanted without proportionally more compute per token, and where expert-parallel serving infrastructure is available — Mixtral 8x7B is the clearest public demonstration of this trade-off paying off.
+Large-scale pretraining where more total capacity is wanted without proportionally more compute per token, and where expert-parallel serving infrastructure is available. Mixtral 8x7B is the clearest public demonstration of this trade-off paying off.
 
 ## When Not to Use It
 
@@ -72,7 +72,7 @@ Small models or latency-critical low-batch serving, where MoE's dispatch overhea
 
 ## Comparison with Alternatives
 
-A fully dense Transformer at the same active-parameter count is operationally simpler but cannot match the total capacity of the MoE variant without matching its FLOPs per token. Transformer + SSM hybrids (see [transformer-plus-ssm.md](transformer-plus-ssm.md)) address a different bottleneck — sequence-length compute and inference memory — and are compatible with also adding MoE FFN layers, as some hybrid systems (e.g. Jamba) do.
+A fully dense Transformer at the same active-parameter count is operationally simpler but cannot match the total capacity of the MoE variant without matching its FLOPs per token. Transformer + SSM hybrids (see [transformer-plus-ssm.md](transformer-plus-ssm.md)) address a different bottleneck, sequence-length compute and inference memory, and are compatible with also adding MoE FFN layers, as some hybrid systems (e.g. Jamba) do.
 
 ## Representative Models
 

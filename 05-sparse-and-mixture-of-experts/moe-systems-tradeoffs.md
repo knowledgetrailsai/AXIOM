@@ -14,14 +14,14 @@ A FLOPs count assumes compute is the bottleneck. Once experts are spread across 
 
 Expert parallelism places different experts on different accelerators (or groups of accelerators). For each MoE layer, the runtime:
 
-1. Computes routing decisions locally (cheap — router is small).
+1. Computes routing decisions locally (cheap. Router is small).
 2. Dispatches each token's hidden state to the device(s) hosting its top-k experts (an all-to-all communication step).
 3. Runs the expert FFN on the receiving device.
 4. Gathers results back to the token's originating device and combines them (a second all-to-all).
 
 Two all-to-all operations per MoE layer means communication cost scales with (batch size × hidden dimension × k), not with the number of experts N directly. This is why increasing N (to add capacity) is nearly free in communication terms, while increasing batch size or hidden dimension directly increases the data volume that must cross the network every layer.
 
-**Batch size sensitivity.** If a batch is small, each expert receives few tokens, so the useful compute per dispatch is small relative to the fixed latency of initiating and completing an all-to-all. Larger batches amortize that fixed cost — this is why MoE inference commonly needs batching (many concurrent requests) to reach the FLOPs advantage the architecture promises on paper.
+**Batch size sensitivity.** If a batch is small, each expert receives few tokens, so the useful compute per dispatch is small relative to the fixed latency of initiating and completing an all-to-all. Larger batches amortize that fixed cost, this is why MoE inference commonly needs batching (many concurrent requests) to reach the FLOPs advantage the architecture promises on paper.
 
 ## Information Flow
 
@@ -60,7 +60,7 @@ High capacity per active FLOP, as with base MoE. This pattern is specifically we
 
 ## Limitations and Failure Modes
 
-At small batch sizes, dispatch latency can exceed the compute time it's supposed to enable, making the sparse layer slower in wall-clock terms than an equivalent dense layer would have been. All-to-all communication volume and latency scale with the interconnect topology; a system with weaker inter-device bandwidth (e.g. across nodes rather than within one) pays disproportionately for the same MoE architecture. Uneven routing (see [load-balancing-and-specialization.md](load-balancing-and-specialization.md)) means some devices finish their expert compute early and idle while waiting on others — a straggler problem layered on top of the communication cost.
+At small batch sizes, dispatch latency can exceed the compute time it's supposed to enable, making the sparse layer slower in wall-clock terms than an equivalent dense layer would have been. All-to-all communication volume and latency scale with the interconnect topology; a system with weaker inter-device bandwidth (e.g. across nodes rather than within one) pays disproportionately for the same MoE architecture. Uneven routing (see [load-balancing-and-specialization.md](load-balancing-and-specialization.md)) means some devices finish their expert compute early and idle while waiting on others: a straggler problem layered on top of the communication cost.
 
 ## Architecture vs Training Objective
 
@@ -72,11 +72,11 @@ Very large clusters with high-bandwidth interconnect (e.g. within a single high-
 
 ## When Not to Use It
 
-Single-machine or low-bandwidth-interconnect deployments, or workloads with persistently small batch sizes (e.g. single-user, low-concurrency serving) — in both cases, dispatch overhead is likely to erase the FLOPs advantage.
+Single-machine or low-bandwidth-interconnect deployments, or workloads with persistently small batch sizes (e.g. single-user, low-concurrency serving); in both cases, dispatch overhead is likely to erase the FLOPs advantage.
 
 ## Comparison with Alternatives
 
-Dense models are operationally simpler: no routing, no all-to-all, no capacity tuning, no straggler risk. MoE only wins when the system — cluster topology, batch scheduling, capacity tuning — actually converts the FLOPs savings into throughput; otherwise a dense model at the active-parameter scale can be the faster real-world choice despite doing more total arithmetic per token in isolation.
+Dense models are operationally simpler: no routing, no all-to-all, no capacity tuning, no straggler risk. MoE only wins when the system. Cluster topology, batch scheduling, capacity tuning, actually converts the FLOPs savings into throughput; otherwise a dense model at the active-parameter scale can be the faster real-world choice despite doing more total arithmetic per token in isolation.
 
 ## Representative Models
 

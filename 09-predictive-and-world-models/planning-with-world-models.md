@@ -19,7 +19,7 @@ The loop has four steps, repeated at every control step:
 3. Score each predicted trajectory against a goal (e.g. distance in state space, or a learned value function).
 4. Execute only the first action of the best-scoring sequence, observe the real outcome, and replan from the new state.
 
-Step 4 — replanning after every single action rather than executing a whole planned sequence blindly — is what makes this model-predictive control rather than open-loop planning. It corrects for world-model error using fresh real observations at every step.
+Step 4. Replanning after every single action rather than executing a whole planned sequence blindly, is what makes this model-predictive control rather than open-loop planning. It corrects for world-model error using fresh real observations at every step.
 
 **Worked example.** Suppose the planner samples 3 candidate 2-step action sequences and rolls each through the world model, producing a predicted reward for reaching the goal:
 
@@ -67,7 +67,7 @@ flowchart LR
 ## Strengths
 
 - Explicit counterfactual evaluation before acting, rather than a single unexamined action choice.
-- One learned dynamics model can be reused across many different goals — only the scoring function changes.
+- One learned dynamics model can be reused across many different goals: only the scoring function changes.
 - Replanning at every step corrects for model error using real feedback, which is the core idea behind MPC.
 
 ## Limitations and Failure Modes
@@ -78,7 +78,7 @@ flowchart LR
 
 ## Architecture vs Training Objective
 
-The world model's architecture (see [what-is-a-world-model.md](what-is-a-world-model.md)) is trained once, independent of any particular planning problem. The planning loop itself — how candidates are sampled, how many are evaluated, how scoring works — is an inference-time algorithm layered on top, not part of the trained architecture.
+The world model's architecture (see [what-is-a-world-model.md](what-is-a-world-model.md)) is trained once, independent of any particular planning problem. The planning loop itself; how candidates are sampled, how many are evaluated, how scoring works. Is an inference-time algorithm layered on top, not part of the trained architecture.
 
 ## When to Use It
 

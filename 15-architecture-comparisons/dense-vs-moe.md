@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-A dense model runs every parameter for every token. A mixture-of-experts (MoE) model routes each token to a small subset of expert sub-networks, so total parameter count can be far larger than the compute cost per token. MoE only pays off when the serving system has enough batch size and communication bandwidth to keep those routed experts actually busy — otherwise the extra capacity sits idle while its communication overhead still has to be paid.
+A dense model runs every parameter for every token. A mixture-of-experts (MoE) model routes each token to a small subset of expert sub-networks, so total parameter count can be far larger than the compute cost per token. MoE only pays off when the serving system has enough batch size and communication bandwidth to keep those routed experts actually busy. Otherwise the extra capacity sits idle while its communication overhead still has to be paid.
 
 ## Comparison
 

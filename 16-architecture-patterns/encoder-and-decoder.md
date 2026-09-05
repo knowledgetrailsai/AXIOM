@@ -14,9 +14,9 @@ flowchart LR
 
 The pattern is fixed; what varies is what the intermediate representation `Z` is required to preserve, and how the decoder is allowed to access it:
 
-- **Seq2seq (RNN, pre-attention)**: `Z` is one fixed-size vector — the encoder's final hidden state. This is an information bottleneck for long inputs (see Encoder-Decoder and Sequence-to-Sequence).
-- **Transformer encoder-decoder (T5, original Transformer)**: `Z` is one vector *per source position*, and the decoder reads all of them via cross-attention: `CrossAttn(Q=decoder, K=Z, V=Z)` — no single-vector bottleneck.
-- **VAE**: `Z` is a distribution (mean and variance) over a latent space, not a single deterministic vector — the decoder samples from it.
+- **Seq2seq (RNN, pre-attention)**: `Z` is one fixed-size vector. The encoder's final hidden state. This is an information bottleneck for long inputs (see Encoder-Decoder and Sequence-to-Sequence).
+- **Transformer encoder-decoder (T5, original Transformer)**: `Z` is one vector *per source position*, and the decoder reads all of them via cross-attention: `CrossAttn(Q=decoder, K=Z, V=Z)`, no single-vector bottleneck.
+- **VAE**: `Z` is a distribution (mean and variance) over a latent space, not a single deterministic vector: the decoder samples from it.
 - **JEPA / latent prediction**: `Z` is an embedding the model is trained to *predict*, not reconstruct raw content from (see Latent Prediction).
 
 ## Design question

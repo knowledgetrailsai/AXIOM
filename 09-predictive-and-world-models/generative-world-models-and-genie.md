@@ -2,7 +2,7 @@
 
 ## Context and Plain-Language Explanation
 
-A generative world model produces literal future observations — frames of video or images — conditioned on past observations and an action. Genie goes further: it learns a latent action space from unlabeled video, then generates an interactive, playable environment frame-by-frame conditioned on those latent actions.
+A generative world model produces literal future observations. Frames of video or images, conditioned on past observations and an action. Genie goes further: it learns a latent action space from unlabeled video, then generates an interactive, playable environment frame-by-frame conditioned on those latent actions.
 
 ## Why This Architecture Exists
 
@@ -12,7 +12,7 @@ Training agents needs diverse environments. Hand-built simulators are expensive 
 
 ## Core Architectural Idea
 
-Genie has three trained components. A video tokenizer compresses video frames into discrete tokens. A latent action model observes pairs of consecutive frames and infers a small discrete latent action that explains the transition between them — this is trained without any ground-truth action labels, purely by having the model predict the next frame's tokens given the previous frame and its own inferred latent action. A dynamics model (an autoregressive Transformer) then predicts the next frame's tokens given past frame tokens and a latent action, trained on the outputs of the tokenizer and latent action model.
+Genie has three trained components. A video tokenizer compresses video frames into discrete tokens. A latent action model observes pairs of consecutive frames and infers a small discrete latent action that explains the transition between them: this is trained without any ground-truth action labels, purely by having the model predict the next frame's tokens given the previous frame and its own inferred latent action. A dynamics model (an autoregressive Transformer) then predicts the next frame's tokens given past frame tokens and a latent action, trained on the outputs of the tokenizer and latent action model.
 
 At generation time a user (or a controller) supplies one of a small number of latent action codes at each step, and the dynamics model generates the next frame conditioned on it. Repeating this frame-by-frame turns a single starting image into a playable, action-controllable video.
 
@@ -55,7 +55,7 @@ flowchart LR
 ## Strengths
 
 - Learns a controllable, interactive world model from unlabeled video, with no action annotations required.
-- Produces human-inspectable output — every predicted step is a viewable frame.
+- Produces human-inspectable output; every predicted step is a viewable frame.
 - Generalizes the notion of "environment" beyond hand-built simulators to anything present in the training video distribution.
 
 ## Limitations and Failure Modes
@@ -74,7 +74,7 @@ Use a Genie-style generative world model when you need a human-inspectable, play
 
 ## When Not to Use It
 
-Do not use it when the goal is cheap latent-space planning rather than visual generation — a JEPA-style latent predictive model (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)) is far cheaper per rollout step because it never decodes a frame.
+Do not use it when the goal is cheap latent-space planning rather than visual generation. A JEPA-style latent predictive model (see [predictive-vs-generative-world-models.md](predictive-vs-generative-world-models.md)) is far cheaper per rollout step because it never decodes a frame.
 
 ## Comparison with Alternatives
 

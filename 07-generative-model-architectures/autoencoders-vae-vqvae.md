@@ -85,11 +85,11 @@ Compact latent representations useful for downstream compression, retrieval, or 
 
 ## Limitations and Failure Modes
 
-Reconstruction quality can lose fine detail, especially when the latent bottleneck is aggressive. The KL regularization in a VAE creates a direct tension with reconstruction fidelity — pushing harder toward the prior (a higher-weighted KL term) tends to produce smoother, less detailed reconstructions ("posterior collapse" in the extreme case, where the latent is ignored entirely).
+Reconstruction quality can lose fine detail, especially when the latent bottleneck is aggressive. The KL regularization in a VAE creates a direct tension with reconstruction fidelity. Pushing harder toward the prior (a higher-weighted KL term) tends to produce smoother, less detailed reconstructions ("posterior collapse" in the extreme case, where the latent is ignored entirely).
 
 ## Architecture vs Training Objective
 
-The encoder/decoder structure is architecture. The ELBO objective (reconstruction plus KL), the reparameterization trick, and the codebook quantization are all part of how the model is trained and what its latent space represents — the same encoder/decoder skeleton without the KL term is just a plain autoencoder with no guarantee its latent space is sampleable.
+The encoder/decoder structure is architecture. The ELBO objective (reconstruction plus KL), the reparameterization trick, and the codebook quantization are all part of how the model is trained and what its latent space represents, the same encoder/decoder skeleton without the KL term is just a plain autoencoder with no guarantee its latent space is sampleable.
 
 ## When to Use It
 
@@ -97,7 +97,7 @@ VAEs when you need a continuous, sampleable latent space, e.g. as the compressed
 
 ## When Not to Use It
 
-When exact, lossless reconstruction is required — the latent bottleneck inherently discards some information. When there's no need for a structured or sampleable latent space at all, a plain autoencoder (no KL term, no codebook) is simpler and reconstructs better for the same bottleneck size.
+When exact, lossless reconstruction is required: the latent bottleneck inherently discards some information. When there's no need for a structured or sampleable latent space at all, a plain autoencoder (no KL term, no codebook) is simpler and reconstructs better for the same bottleneck size.
 
 ## Comparison with Alternatives
 

@@ -8,7 +8,7 @@ MoE training has to solve two goals that pull in opposite directions. Experts sh
 
 In practical terms, **Load Balancing and Expert Specialization** is useful because it addresses a limitation that simpler approaches face. The next paragraph explains that limitation in technical detail; first, keep in mind the real-world goal: making the model more useful, efficient, reliable, or capable for a particular kind of task.
 
-Left unconstrained, the router's own optimization dynamics are self-reinforcing: an expert that receives slightly more tokens gets slightly more gradient updates, which can make it slightly better, which attracts still more tokens. Without a countervailing force, this runs away and most experts end up rarely used — wasting their parameters and undertraining them.
+Left unconstrained, the router's own optimization dynamics are self-reinforcing: an expert that receives slightly more tokens gets slightly more gradient updates, which can make it slightly better, which attracts still more tokens. Without a countervailing force, this runs away and most experts end up rarely used. Wasting their parameters and undertraining them.
 
 ## Core Architectural Idea
 
@@ -68,7 +68,7 @@ Better hardware utilization: experts that would otherwise sit idle receive enoug
 
 ## Limitations and Failure Modes
 
-Setting α too high fights specialization directly — a model can trade away useful task performance for load uniformity. Setting α too low doesn't prevent collapse. Expert "roles" that emerge from balanced routing are not guaranteed to be interpretable or stable across training runs or checkpoints; two runs with the same data and setup can specialize experts differently.
+Setting α too high fights specialization directly, a model can trade away useful task performance for load uniformity. Setting α too low doesn't prevent collapse. Expert "roles" that emerge from balanced routing are not guaranteed to be interpretable or stable across training runs or checkpoints; two runs with the same data and setup can specialize experts differently.
 
 ## Architecture vs Training Objective
 
@@ -76,7 +76,7 @@ Balance is enforced by the training loss, not by the forward-pass architecture. 
 
 ## When to Use It
 
-Any MoE training run at meaningful scale should include a load-balancing loss by default — the collapse failure mode is well documented and the fix is cheap (one extra loss term, no architectural change).
+Any MoE training run at meaningful scale should include a load-balancing loss by default: the collapse failure mode is well documented and the fix is cheap (one extra loss term, no architectural change).
 
 ## When Not to Use It
 
