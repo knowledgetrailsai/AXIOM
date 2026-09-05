@@ -25,7 +25,7 @@ Jamba (see [transformer-plus-ssm.md](transformer-plus-ssm.md)) interleaves atten
 
 ## The design question
 
-Adding a mechanism is only justified if it removes a real bottleneck the existing stack has. Before adding a new primitive to a design, name the specific bottleneck it removes (compute, memory, exact retrieval, capacity, persistence, or planning) and check that no existing component in the stack already handles it adequately. Composition without a clear ownership boundary; which mechanism is responsible for which computation. Usually increases implementation and tuning complexity faster than it increases capability.
+Adding a mechanism is only justified if it removes a real bottleneck the existing stack has. Before adding a new primitive to a design, name the specific bottleneck it removes (compute, memory, exact retrieval, capacity, persistence, or planning) and check that no existing component in the stack already handles it adequately. Composition without a clear ownership boundary, which mechanism is responsible for which computation, usually increases implementation and tuning complexity faster than it increases capability.
 
 The recurring architecture question, across every hybrid design in this section, is: **which primitive should own which computation?**
 

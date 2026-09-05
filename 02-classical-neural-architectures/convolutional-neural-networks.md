@@ -91,7 +91,7 @@ flowchart LR
 
 ## Architecture vs Training Objective
 
-The convolution operation and receptive field growth are fixed by the architecture. What the learned kernels detect; edges vs. textures vs. task-specific shapes. Is entirely a function of the training data and loss (classification, segmentation, self-supervised contrastive objectives, etc.).
+The convolution operation and receptive field growth are fixed by the architecture. What the learned kernels detect, edges vs. textures vs. task-specific shapes, is entirely a function of the training data and loss (classification, segmentation, self-supervised contrastive objectives, etc.).
 
 ## When to Use It
 

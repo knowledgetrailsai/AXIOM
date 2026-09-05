@@ -76,7 +76,7 @@ Single-machine or low-bandwidth-interconnect deployments, or workloads with pers
 
 ## Comparison with Alternatives
 
-Dense models are operationally simpler: no routing, no all-to-all, no capacity tuning, no straggler risk. MoE only wins when the system. Cluster topology, batch scheduling, capacity tuning, actually converts the FLOPs savings into throughput; otherwise a dense model at the active-parameter scale can be the faster real-world choice despite doing more total arithmetic per token in isolation.
+Dense models are operationally simpler: no routing, no all-to-all, no capacity tuning, no straggler risk. MoE only wins when the system, cluster topology, batch scheduling, capacity tuning, actually converts the FLOPs savings into throughput; otherwise a dense model at the active-parameter scale can be the faster real-world choice despite doing more total arithmetic per token in isolation.
 
 ## Representative Models
 

@@ -78,7 +78,7 @@ flowchart LR
 
 ## Architecture vs Training Objective
 
-The world model's architecture (see [what-is-a-world-model.md](what-is-a-world-model.md)) is trained once, independent of any particular planning problem. The planning loop itself; how candidates are sampled, how many are evaluated, how scoring works. Is an inference-time algorithm layered on top, not part of the trained architecture.
+The world model's architecture (see [what-is-a-world-model.md](what-is-a-world-model.md)) is trained once, independent of any particular planning problem. The planning loop itself, how candidates are sampled, how many are evaluated, how scoring works, is an inference-time algorithm layered on top, not part of the trained architecture.
 
 ## When to Use It
 
