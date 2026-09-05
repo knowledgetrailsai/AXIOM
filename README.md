@@ -1,6 +1,6 @@
 # Axiom
 
-A structured field guide to the architectures behind modern AI — from deep-learning foundations through Transformers, Mixture-of-Experts, state-space models, multimodal architectures, test-time memory, JEPA-style predictive models, world models and embodied AI.
+A structured field guide to the architectures behind modern AI — spanning deep-learning foundations through Transformers, Mixture-of-Experts, state-space models, multimodal architectures, test-time memory, JEPA-style predictive models, world models and embodied AI.
 
 ```text
 FOUNDATIONS → CLASSICAL NETWORKS → ATTENTION/TRANSFORMERS → FOUNDATION MODELS
@@ -18,32 +18,32 @@ FOUNDATIONS → CLASSICAL NETWORKS → ATTENTION/TRANSFORMERS → FOUNDATION MOD
   - [Architecture Template](templates/architecture-page-template.md)
   - [Sources](SOURCES.md)
 - [Learning Path](#learning-path)
-  - [00 — Navigation and Methodology](00-navigation-and-methodology/README.md)
-  - [01 — Deep-Learning Foundations](01-deep-learning-foundations/README.md)
-  - [02 — Classical Neural Architectures](02-classical-neural-architectures/README.md)
-  - [03 — Attention and Transformers](03-attention-and-transformers/README.md)
-  - [04 — Foundation Model Architectures](04-foundation-model-architectures/README.md)
-  - [05 — Sparse and Mixture-of-Experts](05-sparse-and-mixture-of-experts/README.md)
-  - [06 — State-Space and Recurrent Alternatives](06-state-space-and-recurrent-alternatives/README.md)
-  - [07 — Generative Model Architectures](07-generative-model-architectures/README.md)
-  - [08 — Multimodal Architectures](08-multimodal-architectures/README.md)
-  - [09 — Predictive and World Models](09-predictive-and-world-models/README.md)
-  - [10 — Memory and Adaptive Computation](10-memory-and-adaptive-computation/README.md)
-  - [11 — Reasoning-Oriented Architectures](11-reasoning-oriented-architectures/README.md)
-  - [12 — Embodied and Robotics Models](12-embodied-and-robotics-models/README.md)
-  - [13 — Hybrid Architectures](13-hybrid-architectures/README.md)
-  - [14 — Model Efficiency and Inference](14-model-efficiency-and-inference/README.md)
-  - [15 — Architecture Comparisons](15-architecture-comparisons/README.md)
-  - [16 — Architecture Patterns](16-architecture-patterns/README.md)
-  - [17 — Reference Model Families](17-reference-model-families/README.md)
-  - [18 — Research Frontier](18-research-frontier/README.md)
+  - [00 - Navigation and Methodology](00-navigation-and-methodology/README.md)
+  - [01 - Deep-Learning Foundations](01-deep-learning-foundations/README.md)
+  - [02 - Classical Neural Architectures](02-classical-neural-architectures/README.md)
+  - [03 - Attention and Transformers](03-attention-and-transformers/README.md)
+  - [04 - Foundation Model Architectures](04-foundation-model-architectures/README.md)
+  - [05 - Sparse and Mixture-of-Experts](05-sparse-and-mixture-of-experts/README.md)
+  - [06 - State-Space and Recurrent Alternatives](06-state-space-and-recurrent-alternatives/README.md)
+  - [07 - Generative Model Architectures](07-generative-model-architectures/README.md)
+  - [08 - Multimodal Architectures](08-multimodal-architectures/README.md)
+  - [09 - Predictive and World Models](09-predictive-and-world-models/README.md)
+  - [10 - Memory and Adaptive Computation](10-memory-and-adaptive-computation/README.md)
+  - [11 - Reasoning-Oriented Architectures](11-reasoning-oriented-architectures/README.md)
+  - [12 - Embodied and Robotics Models](12-embodied-and-robotics-models/README.md)
+  - [13 - Hybrid Architectures](13-hybrid-architectures/README.md)
+  - [14 - Model Efficiency and Inference](14-model-efficiency-and-inference/README.md)
+  - [15 - Architecture Comparisons](15-architecture-comparisons/README.md)
+  - [16 - Architecture Patterns](16-architecture-patterns/README.md)
+  - [17 - Reference Model Families](17-reference-model-families/README.md)
+  - [18 - Research Frontier](18-research-frontier/README.md)
 - [Scope](#scope)
 - [Status](#status)
 - [License](#license)
 
 ## Why This Exists
 
-AI discussions often mix primitives, architecture families, scaling patterns, learning objectives, model families and complete AI systems. This repository separates those layers.
+AI discussions often mix primitives, architecture families, scaling patterns, learning objectives, model families and complete AI systems — this repository separates those layers.
 
 Examples:
 
@@ -58,7 +58,7 @@ Examples:
 
 ### Learning Path
 
-The numbered folders form the learning path. Each section starts simple, then adds computational structure, trade-offs and representative research.
+The numbered folders form the learning path — each section starts simple, then layers on computational structure, trade-offs and representative research.
 
 ### How to Read a Page
 
@@ -71,7 +71,7 @@ Each architecture page answers the same practical questions:
 5. **When is it useful?** Concrete application scenarios and deployment constraints.
 6. **What should it be compared with?** Alternatives that solve a similar problem, and the trade-offs between them.
 
-Commercial model names are included as examples of where an architectural pattern has appeared in a public model or product. They are not proof that a company uses one exact implementation internally; proprietary details are often unavailable. The architecture, training objective, data, post-training and serving system should be evaluated separately.
+Commercial model names are included as examples of where an architectural pattern has appeared in a public model or product. They are not proof that a company uses one exact implementation internally — proprietary details are often unavailable. The architecture, training objective, data, post-training and serving system should be evaluated separately.
 
 See:
 - [Knowledge Map](00-navigation-and-methodology/knowledge-map.md)
@@ -82,14 +82,14 @@ See:
 
 ## Scope
 
-This repo focuses on **model architecture**. RAG, MCP, vector databases, tool calling and agent orchestration are intentionally kept outside the core taxonomy.
+This repo focuses on **model architecture** — RAG, MCP, vector databases, tool calling and agent orchestration are intentionally kept outside the core taxonomy.
 
 ## Relationship to companion repositories
 
-Axiom is a background reference underpinning [OASIS](https://github.com/knowledgetrailsai/OASIS) Chapter 14's model-selection guidance — it is not itself a Part III chapter companion the way Forge, Loom, Helm, Verity, Compass, and Fulcrum are. See the [Companion Repository Index](https://github.com/knowledgetrailsai/OASIS/blob/main/References/companion-repository-index.md) for the full map.
+Axiom underpins [OASIS](https://github.com/knowledgetrailsai/OASIS) Chapter 14's model-selection guidance, but unlike Forge, Loom, Helm, Verity, Compass, and Fulcrum, it is not itself a Part III chapter companion — see the [Companion Repository Index](https://github.com/knowledgetrailsai/OASIS/blob/main/References/companion-repository-index.md) for the full map.
 
-- **[Forge](https://github.com/knowledgetrailsai/Forge)** (Chapter 15, data and knowledge engineering) — Forge's [long-context-vs-rag.md](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md) and [embedding-model-selection.md](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md) make retrieval-architecture tradeoffs that depend on the attention-mechanism and embedding background in this repo's [long-context-and-efficient-attention.md](03-attention-and-transformers/long-context-and-efficient-attention.md) and [embeddings.md](01-deep-learning-foundations/embeddings.md) — Axiom owns the underlying mechanism, Forge owns the applied retrieval decision.
-- **[Ageis](https://github.com/knowledgetrailsai/Ageis)** — uses "model" to mean a coding-tool deployment model, not model architecture; there is no direct content dependency between the two repos despite the shared word.
+- **[Forge](https://github.com/knowledgetrailsai/Forge)** (Chapter 15, data and knowledge engineering): its [long-context-vs-rag.md](https://github.com/knowledgetrailsai/Forge/blob/main/07-advanced-retrieval-architectures/long-context-vs-rag.md) and [embedding-model-selection.md](https://github.com/knowledgetrailsai/Forge/blob/main/08-embeddings-and-indexing/embedding-model-selection.md) make retrieval-architecture tradeoffs that depend on the attention-mechanism and embedding background covered in this repo's [long-context-and-efficient-attention.md](03-attention-and-transformers/long-context-and-efficient-attention.md) and [embeddings.md](01-deep-learning-foundations/embeddings.md) — Axiom owns the underlying mechanism, Forge owns the applied retrieval decision.
+- **[Ageis](https://github.com/knowledgetrailsai/Ageis)** uses "model" to mean a coding-tool deployment model, not model architecture; there is no direct content dependency between the two repos despite the shared word.
 
 ## Status
 
